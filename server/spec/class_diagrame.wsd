@@ -1,0 +1,101 @@
+@startuml class_diagrame
+class User {
+    _id: objectID
+    username: string
+    categories: list
+    vote: list
+    unvote: list
+    list_follow: list
+}
+
+class Account {
+    _id: objectID
+    userId: User
+    gmail: string
+    pass: string
+}
+
+class Question {
+    _id: objectID
+    title: string
+    content: text
+    image: string
+    categories: Categery
+    tags: Tag
+    views: int
+    userId: User
+    time:datetime
+    likes: list
+}
+
+class Comment {
+    _id: objectID
+    userId: User
+    questionId: Question
+    content: string
+    image: string
+    time: datetime
+}
+
+class Categery {
+    _id: objectID
+    name: string
+}
+
+class Tag {
+    _id: objectID
+    name: string
+}
+
+class Notification {
+    _id: objectID
+    userRecieve: User
+    userSend: User
+    questionId: Question
+    isRead: boolean
+    time: datetime
+}
+
+class Mark {
+    _id: objectID
+    userId: User
+    questionId: Question
+    time: datetime
+}
+
+class Follow {
+    _id: objectID
+    userId: User
+    questionId: Question
+}
+
+class Vote {
+    _id: objectID
+    userId: User
+    questionId: Question
+}
+
+class Unvote {
+    _id: objectID
+    userId: User
+    questionId: Question
+}
+
+Account -down-> User 
+Question -left-> User
+Comment -left-> User
+Comment -down-> Question
+Question -down-> Categery
+Question -down-> Tag
+Notification -left-> User
+Notification -left-> Question
+Mark -left-> User
+Mark -down-> Question
+Follow -right-> User
+Follow -> Question
+Vote -left-> User
+Vote -right-> Question
+Unvote -right-> User
+Unvote -right-> Question
+
+@enduml

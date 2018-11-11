@@ -1,0 +1,28 @@
+@startuml Models
+class User {
+    username: string
+    pasword: string_md5
+    firstname: string
+    lastname: string
+    birthday: datetime
+}
+
+class Post {
+    user: User
+    title: string
+    content: string
+    _create: datetime
+    _updated: datetime
+}
+
+class Comment {
+    userId: User
+    postId: Post
+    content: string
+}
+
+Post -> User
+Comment -> User
+Comment -> Post
+
+@enduml

@@ -1,0 +1,8 @@
+@startuml
+actor Users
+rectangle ManageInfor{
+    Users -right- (ManageInfor)
+    (ManageInfor) .- (UpdateInfor) : <<extends>>
+    (ManageInfor) .- (ChangePassword) : <<extends>>
+}
+@enduml

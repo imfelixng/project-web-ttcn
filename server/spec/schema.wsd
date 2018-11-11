@@ -1,0 +1,127 @@
+FEATURE
+Schema
+
+User system:
+	Create user
+		url: /user
+		method: POST
+		content-type: json
+
+	Update user
+		url: /user/
+		method: PATCH
+		content-type: json
+
+Account:
+	Create account:
+		url: /user
+		method: POST
+		content-type: json
+
+	Update account:
+		url: /account/
+		method: PATCH
+		content-type: json
+
+Question:
+	Get list question
+		url: /question
+		method: GET
+		content-type: json
+
+	Get question item
+		url: /question/question_id
+		method: GET
+		content-type: json
+
+	Create question
+		url: /question
+		method: POST
+		content-type: json
+
+	Edit question
+		url: /question/question_id
+		method: PATCH
+		content-type: json
+
+	Delete question
+		url: /question/question_id
+		method: DELETE
+
+Comment:
+	Get list comment of a Question
+		url: /question/<question_id>/comment
+		method: GET
+		content-type: json
+
+	Add comment to a question
+		url: /question/<question_id>/comment
+		method: POST
+		content-type: json
+		
+	Remove a comment of a question
+		url: /question/<question_id>/comment/<comment_id>
+		method: DELETE
+
+	Edit a comment of a question
+		url: /question/<question_id>/comment/<comment_id>
+		method: DELETE
+
+Category:
+	Get list category
+		url: /category
+		method: GET
+		content-type: json
+
+	Add category
+		url: /category
+		method: POST
+		content-type: json
+		
+	Remove a category
+		url: /category/<category_id>
+		method: DELETE
+
+	Edit a category
+		url: /category/<category_id>
+		method: DELETE
+
+Tag:
+	Get list tag
+		url: /tag
+		method: GET
+		content-type: json
+
+	Add tag
+		url: /tag
+		method: POST
+		content-type: json
+		
+	Remove a tag
+		url: /tag/<tag_id>
+		method: DELETE
+
+	Edit a tag
+		url: /tag/tag_id>
+		method: DELETE
+
+Notification:
+	Get list notification
+		url: /notification
+		method: GET
+		content-type: json
+
+	Add notification
+		url: /notification
+		method: POST
+		content-type: json
+		
+	Remove a notification
+		url: /notification/<notification_id>
+		method: DELETE
+
+	Edit a notification
+		url: /notification/notification_id>
+		method: DELETE
+
+

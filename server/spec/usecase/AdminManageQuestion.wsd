@@ -1,0 +1,10 @@
+@startuml
+actor Admin
+rectangle ManageQuestion{
+    Admin -right- (ManageQuestion)
+    (ManageQuestion) .- (CreateQuestion) : <<extends>>
+    (ManageQuestion) .- (EditQuestion) : <<extends>>
+    (ManageQuestion) .- (ViewQuestion) : <<extends>>
+    (ManageQuestion) .- (DeleteQuestion) : <<extends>>
+}
+@enduml

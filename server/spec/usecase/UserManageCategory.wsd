@@ -1,0 +1,10 @@
+@startuml
+actor User
+rectangle ManageCategory{
+    User -right- (ManageCategory)
+    (ManageCategory) .- (CreateCategory) : <<extends>>
+    (ManageCategory) .- (UpdateCategory) : <<extends>>
+    (ManageCategory) .- (ViewCategory) : <<extends>>
+    (ManageCategory) .- (DeleteCategory) : <<extends>>
+}
+@enduml

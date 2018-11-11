@@ -1,0 +1,16 @@
+@startuml
+actor Users
+rectangle usecase{
+    Users -right- (Manage Question)
+    (Follow) <|-up-(Manage Question) : <<extends>>
+    (Sign in) <.up- (Manage Question) : <<include>>
+    (Create) <|-up-(Manage Question) : <<extends>>
+    (Update) <|-up-(Manage Question) : <<extends>>
+    (Delete) <|-up-(Manage Question) : <<extends>>
+    (Mark) <|-up-(Manage Question) : <<extends>>
+    (Comment) <|-up-(Manage Question) : <<extends>>
+    Users -- (Manage Info)
+    (Update Info) <|-left- (Manage Info) : <<extends>>
+    Users -right- (Follow category)
+}
+@enduml

@@ -1,0 +1,11 @@
+@startuml
+actor Admin
+rectangle ManageUser{
+    Admin -right- (ManageUser)
+    (ManageUser) .- (CreateUser) : <<extends>>
+    (ManageUser) .- (UpdateUser) : <<extends>>
+    (ManageUser) .- (LockUser) : <<extends>>
+    (ManageUser) .- (UnLockUser) : <<extends>>
+    (ManageUser) .- (DeleteUser) : <<extends>>
+}
+@enduml
