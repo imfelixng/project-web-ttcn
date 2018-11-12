@@ -9,8 +9,8 @@ from .helpers import CamelCase2Snake
 
 
 class BaseModel(Model, MongoInterface):
-    _id      = MongoID(serialize_when_none=False)
-    _etag    = StringType()
+    _id = MongoID(serialize_when_none=False)
+    _etag = StringType()
     _updated = DateTimeType(default=datetime.datetime.now)
     _created = DateTimeType(default=datetime.datetime.now)
 

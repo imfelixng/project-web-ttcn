@@ -22,4 +22,4 @@ X_DOMAINS = ['http://localhost:5000',  # The domain where Swagger UI is running
 
 X_HEADERS = ['Content-Type', 'If-Match']  # Needed for the "Try it out" buttons
 
-AUTH_FIELD = "anonymous"
+AUTH_FIELD = "auth"

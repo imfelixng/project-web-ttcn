@@ -2,8 +2,8 @@ FEATURE
 Schema
 
 User system:
-	Create user
-		url: /user
+	Register user
+		url: /register
 		method: POST
 		content-type: json
 
@@ -12,25 +12,30 @@ User system:
 		method: PATCH
 		content-type: json
 
-Account:
-	Create account:
-		url: /user
+Auth:
+	Login
+		url: /login
 		method: POST
 		content-type: json
 
-	Update account:
-		url: /account/
-		method: PATCH
+	logout
+		url: /logout
+		method: GET
 		content-type: json
-
+			
 Question:
+	Get all question of user
+		url: /user/<userId>/question
+		method: GET
+		content-type: json
+		
 	Get list question
 		url: /question
 		method: GET
 		content-type: json
 
 	Get question item
-		url: /question/question_id
+		url: /question/questionId
 		method: GET
 		content-type: json
 
@@ -40,31 +45,36 @@ Question:
 		content-type: json
 
 	Edit question
-		url: /question/question_id
+		url: /question/questionId
 		method: PATCH
 		content-type: json
 
 	Delete question
-		url: /question/question_id
+		url: /question/questionId
 		method: DELETE
 
 Comment:
+	Get all comment of question
+		url: /question/<questionId>/comment
+		method: GET
+		content-type: json
+
 	Get list comment of a Question
-		url: /question/<question_id>/comment
+		url: /question/<questionId>/comment
 		method: GET
 		content-type: json
 
 	Add comment to a question
-		url: /question/<question_id>/comment
+		url: /question/<questionId>/comment
 		method: POST
 		content-type: json
 		
 	Remove a comment of a question
-		url: /question/<question_id>/comment/<comment_id>
+		url: /question/<questionId>/comment/<commentId>
 		method: DELETE
 
 	Edit a comment of a question
-		url: /question/<question_id>/comment/<comment_id>
+		url: /question/<questionId>/comment/<commentId>
 		method: DELETE
 
 Category:

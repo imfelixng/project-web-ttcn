@@ -36,7 +36,7 @@ class ObjectApiServer(Flask):
         g.user = None
         if session.get("username"):
             g.user = session.get("username")
-        if config["AUTH_FIELD"] == "user":
+        if config["AUTH_FIELD"] == "auth":
             session["AUTH_FIELD"] = True
         else:
             session["AUTH_FIELD"] = False
@@ -67,15 +67,15 @@ class ObjectApiServer(Flask):
             self.add_url_rule(resource_list, "get_list_%s" %
                               name, baseApi.get, methods=['GET'])
             self.add_url_rule(resource_item, "get_item_%s" %
-                              name, baseApi.get_item, methods=['GET'])
+                              name, self.login_required(baseApi.get_item), methods=['GET'])
 
             self.add_url_rule(resource_list, "create_%s" %
-                              name, baseApi.create, methods=['POST'])
+                              name, self.login_required(baseApi.create), methods=['POST'])
             self.add_url_rule(resource_item, "update_%s" % name,
-                              baseApi.update_item, methods=['PATCH'])
+                              self.login_required(baseApi.update_item), methods=['PATCH'])
 
             self.add_url_rule(resource_item, "delete_%s" % name,
-                              baseApi.delete_item, methods=['DELETE'])
+                              self.login_required(baseApi.delete_item), methods=['DELETE'])
 
     def setup_module(self):
         modules = config['MODULES']

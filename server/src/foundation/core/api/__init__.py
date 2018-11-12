@@ -14,7 +14,7 @@ class BaseAPI:
         query = {'_id': ObjectId(_id)}
         return query
 
-    def get(self, query=None):
+    def get(self, query=None, questionId=None):
         data = self.data.find(self.resource, query)
         data = list(data)
         return make_resource_response(self.resource, data)
@@ -34,7 +34,7 @@ class BaseAPI:
         try:
             data = request.json or request.form.to_dict()
             if session.get("AUTH_FIELD"):
-                data["user"] = session.get("username")
+                data["userId"] = session.get("username")
             model = self.Model(data)
             model.save()
             return make_resource_response(self.resource, model.to_primitive())
@@ -49,12 +49,14 @@ class BaseAPI:
             model.save()
             return make_resource_response(self.resource, model.to_primitive())
         except Exception as e:
-            raise UnprocessableEntity('RC_400', message=e.to_primitive())
+            return UnprocessableEntity('RC_400', message="you don't have permission")
 
     def delete_item(self, _id):
         model = self.Model(self.return_query(_id))
         done = model.delete()
+        import logging
+        logging.warn("delete item %s" % done)
         if done:
             return Response(status=204)
         else:
-            raise UnprocessableEntity('RC_400', message='Delete fail')
+            return UnprocessableEntity('RC_400', message='Delete fail')

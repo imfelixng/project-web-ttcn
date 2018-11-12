@@ -4,11 +4,12 @@ from flask_cors import CORS
 
 config = getConfig(__name__)
 MODULES = [
-    'resource.apps.student',
     'resource.apps.auth',
     'resource.apps.question',
     'resource.apps.tag',
-    'resource.apps.category'
+    'resource.apps.category',
+    'resource.apps.comment',
+    'resource.apps.test'
 ]
 
 app = ObjectApiServer(__name__, config, modules=MODULES, taskapp=None)

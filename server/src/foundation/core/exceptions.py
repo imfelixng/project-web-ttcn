@@ -36,7 +36,8 @@ class AppException(HTTPException):
         text = bson_dumps(payload, indent=2)
         resp = make_response(text, self.status_code)
         resp.mimetype = "application/json"
-
+        import logging
+        logging.warn("this is a test %s", resp)
         return resp
 
 
