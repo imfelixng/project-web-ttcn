@@ -7,8 +7,9 @@ import Error404Screen from './../../Error404/components/Error404Screen';
 import Header from '../../../commons/Header/components/Header';
 import QuestionDetail from '../../QuestionDetail/components/QuestionDetail';
 import LoginScreen from '../../Login/components/LoginScreen';
-
+import loadjs from 'loadjs';
 export default class HomeScreen extends Component {
+  
   render() {
     return (
       <React.Fragment>

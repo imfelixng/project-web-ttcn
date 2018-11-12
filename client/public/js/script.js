@@ -1,10 +1,8 @@
-$(window).on("load", function() {
-    "use strict";
-
-
+    
     //  ============= SIGNIN CONTROL FUNCTION =========
 
     $('.sign-control li').on("click", function(){
+        console.log("OK");
         var tab_id = $(this).attr('data-tab');
         $('.sign-control li').removeClass('current');
         $('.sign_in_sec').removeClass('current');
@@ -169,12 +167,12 @@ $(window).on("load", function() {
 
 
     $(".ed-opts-open").on("click", function(){
-        console.log("onclick");
+        console.log($(this).next(".ed-options"));
         $(this).next(".ed-options").toggleClass("active");
         //return false;
     });
 
-
+    
     // ============== Menu Script =============
 
     $(".menu-btn > a").on("click", function(){
@@ -243,11 +241,5 @@ $(window).on("load", function() {
 
 
     });
-
-
-
-
-
-});
 
 

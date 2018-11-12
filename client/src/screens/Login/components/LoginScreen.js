@@ -12,17 +12,17 @@ export default class LoginScreen extends Component {
                     <div className="col-lg-6">
                         <div className="cmp-info">
                         <div className="cm-logo">
-                            <img src="images/cm-logo.png" alt />
+                            <img src="images/cm-logo.png"  />
                             <p>Workwise,  is a global freelancing platform and social networking where businesses and independent professionals connect and collaborate remotely</p>
                         </div>{/*cm-logo end*/}	
-                        <img src="images/cm-main-img.png" alt />			
+                        <img src="images/cm-main-img.png"  />			
                         </div>{/*cmp-info end*/}
                     </div>
                     <div className="col-lg-6">
                         <div className="login-sec">
                         <ul className="sign-control">
-                            <li data-tab="tab-1" className="current"><a title>Sign in</a></li>				
-                            <li data-tab="tab-2"><a  title>Sign up</a></li>				
+                            <li data-tab="tab-1" className="current"><a >Sign in</a></li>				
+                            <li data-tab="tab-2"><a  >Sign up</a></li>				
                         </ul>			
                         <div className="sign_in_sec current" id="tab-1">
                             <h3>Sign in</h3>
@@ -31,7 +31,7 @@ export default class LoginScreen extends Component {
                                 <div className="col-lg-12 no-pdd">
                                         <div className="sn-field">
                                         <input type="text" name="email" placeholder="Email" />
-                                        <i class="la la-envelope-o"></i>
+                                        <i className="la la-envelope-o"></i>
                                         </div>
                                     </div>
                                 <div className="col-lg-12 no-pdd">
@@ -49,7 +49,7 @@ export default class LoginScreen extends Component {
                                     </label>
                                     <small>Remember me</small>
                                     </div>{/*fgt-sec end*/}
-                                    <a href="#" title>Forgot Password?</a>
+                                    <a href="#" >Forgot Password?</a>
                                 </div>
                                 </div>
                                 <div className="col-lg-12 no-pdd">
@@ -60,8 +60,8 @@ export default class LoginScreen extends Component {
                             <div className="login-resources">
                             <h4>Login Via Social Account</h4>
                             <ul>
-                                <li><a href="#" title className="fb"><i className="fa fa-facebook" />Login Via Facebook</a></li>
-                                <li><a href="#" title className="tw"><i className="fa fa-twitter" />Login Via Twitter</a></li>
+                                <li><a href="#"  className="fb"><i className="fa fa-facebook" />Login Via Facebook</a></li>
+                                <li><a href="#"  className="tw"><i className="fa fa-twitter" />Login Via Twitter</a></li>
                             </ul>
                             </div>{/*login-resources end*/}
                         </div>{/*sign_in_sec end*/}
@@ -72,7 +72,7 @@ export default class LoginScreen extends Component {
                                 <div className="col-lg-12 no-pdd">
                                     <div className="sn-field">
                                     <input type="text" name="email" placeholder="Email" />
-                                    <i class="la la-envelope-o"></i>
+                                    <i className="la la-envelope-o"></i>
                                     </div>
                                 </div>
                                 <div className="col-lg-12 no-pdd">

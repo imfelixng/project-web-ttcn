@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 
-import { EditorState, convertToRaw, ContentState } from 'draft-js';
+import { EditorState, convertToRaw, ContentState, convertFromRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import draftToHtml from 'draftjs-to-html';
 import htmlToDraft from 'html-to-draftjs';
 
 import DropzoneComponent from 'react-dropzone-component';
+
+const content = {"entityMap":{},"blocks":[{"key":"637gr","text":"Initialized from content state.","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}]};
 
 export default class QuestionTopbar extends Component {
 
@@ -23,17 +25,17 @@ export default class QuestionTopbar extends Component {
             postUrl: 'no-url'
         };
 
+        const contentState = convertFromRaw(content);
+        this.state = {
+          contentState,
 
+        }
 
     }
-
-    state = {
-        editorState: EditorState.createEmpty(),
-      }
     
-      onEditorStateChange = (editorState) => {
+    onContentStateChange = (contentState) => {
         this.setState({
-          editorState,
+          contentState,
         });
       };
 
@@ -47,14 +49,19 @@ export default class QuestionTopbar extends Component {
     handleFileAdded(file) {
         console.log(file);
     }
+
+    handleFileRemoved(file) {
+        console.log(file);
+    }
     
   render() {
     const config = this.componentConfig;
     const djsConfig = this.djsConfig;
     const eventHandlers = {
-        addedfile: this.handleFileAdded.bind(this)
+        addedfile: this.handleFileAdded.bind(this),
+        removedfile: this.handleFileRemoved.bind(this)
     }
-    const { editorState } = this.state;
+    const { contentState } = this.state;
     return (
       <React.Fragment>
             <div className="post-topbar">
@@ -64,10 +71,9 @@ export default class QuestionTopbar extends Component {
                 <div className="post-st">
                     <div className = "post-content">
                         <Editor
-                            editorState={editorState}
-                            wrapperClassName="demo-wrapper"
-                            editorClassName="demo-editor"
-                            onEditorStateChange={this.onEditorStateChange}
+                                    wrapperClassName="demo-wrapper"
+                                    editorClassName="demo-editor"
+                                    onContentStateChange={this.onContentStateChange}
                         />
                     </div>
                     
