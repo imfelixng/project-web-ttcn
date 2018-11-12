@@ -1,25 +1,42 @@
 from .schema import User
-from pymongo import MongoClient
 from foundation.core.api.helper import make_error, make_resource_response
-from flask import request
-
-
-client = MongoClient(
-    'mongodb://data:chritsmasgood12@ds143971.mlab.com:43971/nvphu1306')
-db = client.nvphu1306
-user = db.user
+from flask import request, session, Response
+import json
 
 
 def __setup__(module):
     module.resource("user", User)
 
-    @module.endpoint("/user/register", methods=["POST"])
+    @module.endpoint("/register", methods=["POST"])
     def register():
         data = request.json or request.form.to_dict()
-        if user.find_one({"username": data.get("username")}) is not None:
+        if module.data.check("user", {"username": data.get("username")}):
             return make_error(400, description="Username is exist")
-        if user.find_one({"email": data.get("email")}) is not None:
+        if module.data.check("user", {"email": data.get("email", None)}):
             return make_error(400, description="email is exist")
         model = User(data)
         model.save()
         return make_resource_response("resource", model.to_primitive())
+
+    @module.endpoint("/login", methods=["POST"])
+    def login():
+        dt = request.json or request.form.to_dict()
+        if not module.data.check("user", {"username": dt.get("username")}):
+            return make_error(400, description="Username is wrong")
+        if not module.data.check("user", {"username": dt.get("password")}):
+            return make_error(400, description="password is wrong")
+        session["username"] = dt.get("username")
+        data_response = {
+            "status": 200,
+            "description": "ok"
+        }
+        return Response(response=json.dumps(data_response), status=200, content_type='application/json')
+
+    @module.endpoint("/logout", methods=["GET"])
+    def logout():
+        session.clear()
+        data_response = {
+            "status": 200,
+            "description": "ok"
+        }
+        return Response(response=json.dumps(data_response), status=200, content_type='application/json')

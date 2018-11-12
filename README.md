@@ -3,7 +3,7 @@
 # Run server by using docker:
 
 Command line:
-	# build
+	# build: remmember replace the volume path in docker-compose.yml
 	cd docker
 	docker-compose build
 

@@ -10,9 +10,10 @@ services:
     #     ports:
     #         - "27017:27017"
 
+    # remmember replace the volume path
     app_srv:
         build: .
         volumes:
-            - /Users/nguyenphu/Desktop/document/gitlab/project-web-thuc-tap-cong-nhan/server:/app/server
+            - path/server:/app/server
         ports:
             - 8080:5000
