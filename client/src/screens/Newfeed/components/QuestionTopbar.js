@@ -27,8 +27,8 @@ export default class QuestionTopbar extends Component {
 
         const contentState = convertFromRaw(content);
         this.state = {
-          contentState,
-
+            contentState,
+            listImg: []
         }
 
     }
@@ -39,19 +39,18 @@ export default class QuestionTopbar extends Component {
         });
       };
 
-
-    onChange = ({value}) => {
-        this.setState({
-            value
-        });
-    }
-
     handleFileAdded(file) {
-        console.log(file);
+        this.setState({
+            listImg: [...this.state.listImg, file]
+        });
     }
 
     handleFileRemoved(file) {
         console.log(file);
+        let imgID = file.upload.uuid;
+        this.setState({
+            listImg: this.state.listImg.filter(img => img.upload.uuid != imgID)
+        });
     }
     
   render() {
