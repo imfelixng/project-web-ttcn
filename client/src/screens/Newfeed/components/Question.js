@@ -2,6 +2,17 @@ import React, { Component } from 'react'
 import {NavLink} from 'react-router-dom';
 
 export default class Question extends Component {
+
+    state = {
+        isOpenFunctional: false
+    }
+
+    onOpenFunctional = () => {
+        this.setState({
+            isOpenFunctional: !this.state.isOpenFunctional
+        })
+    }
+
   render() {
     return (
       <React.Fragment>
@@ -15,12 +26,15 @@ export default class Question extends Component {
                                         </div>
                                         </div>
                                         <div className="ed-opts">
-                                            <a  className="ed-opts-open"><i className="la la-ellipsis-v" /></a>
-                                            <ul className="ed-options">
-                                                <li><a href="#" >Edit Post</a></li>
-                                                <li><a href="#" >Unsaved</a></li>
-                                                <li><a href="#" >Report</a></li>
-                                            </ul>
+                                            <a  className="ed-opts-open" onClick = {this.onOpenFunctional}><i className="la la-ellipsis-v" /></a>
+                                            {
+                                                this.state.isOpenFunctional && 
+                                                <ul className="ed-options active">
+                                                    <li><a href="#" >Edit Post</a></li>
+                                                    <li><a href="#" >Unsaved</a></li>
+                                                    <li><a href="#" >Report</a></li>
+                                                </ul>
+                                            }
                                         </div>
                                     </div>
             <div className="epi-sec">
