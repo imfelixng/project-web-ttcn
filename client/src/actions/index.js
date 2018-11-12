@@ -10,4 +10,15 @@ export const getAllQuestions = () => {
     }
 };
 
+export const addNewQuestionRequest = () => {
+    console.log("Goi API");
+};
+
+export const addNewQuestion = (questionItem) => {
+    return {
+        type: types.ADD_NEW_QUESTION,
+        questionItem
+    }
+};
+
 

@@ -10,18 +10,26 @@ export default class NewfeedScreen extends Component {
     this.props.getQuestions();
   }
   
+  showQuestion = (questions) => {
+    return questions.map((question, index) => {
+      return <Question 
+        key = {index}
+        question = {question}
+      />
+    });
+  }
+
   render() {
     return (
       <React.Fragment>
         <Main>
           <div className="wrapper">
-              <QuestionTopbar />
+              <QuestionTopbar 
+                addNewQuestion = {this.props.addNewQuestion}
+              />
               <div className="posts-section">
-                                      <Question />
-                                      <Question />
-                                      <Question />
-                                      <Question />
-                                      <LoadMore />
+                {this.showQuestion(this.props.questions)}
+                <LoadMore />
               </div>{/*posts-section end*/}
           </div>{/*theme-layout end*/}
         </Main>

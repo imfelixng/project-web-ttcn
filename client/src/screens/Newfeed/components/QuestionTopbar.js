@@ -28,7 +28,7 @@ export default class QuestionTopbar extends Component {
         const contentState = convertFromRaw(content);
         this.state = {
             contentState,
-            listImg: []
+            images: []
         }
 
     }
@@ -41,7 +41,7 @@ export default class QuestionTopbar extends Component {
 
     handleFileAdded(file) {
         this.setState({
-            listImg: [...this.state.listImg, file]
+            images: [...this.state.images, file]
         });
     }
 
@@ -49,8 +49,22 @@ export default class QuestionTopbar extends Component {
         console.log(file);
         let imgID = file.upload.uuid;
         this.setState({
-            listImg: this.state.listImg.filter(img => img.upload.uuid != imgID)
+            images: this.state.images.filter(img => img.upload.uuid != imgID)
         });
+    }
+
+    onAddNewQuestion = () => {
+
+        let questionItem = {
+            questionID: new Date().getTime() + "",
+            content: '',
+            images: [],
+            topComment: {},
+            category: '',
+            tags: [],
+            userID: ''
+        }
+        this.props.addNewQuestion(questionItem);
     }
     
   render() {
@@ -98,7 +112,7 @@ export default class QuestionTopbar extends Component {
                         </div>
                     </div>
                     <ul className="text-right">
-                        <li><a className="post-jb active" href="#" >Post this question</a></li>
+                        <li><a className="post-jb active" onClick = {this.onAddNewQuestion}>Post this question</a></li>
                     </ul>
                 </div>{/*post-st end*/}
             </div>{/*post-topbar end*/}

@@ -12,6 +12,9 @@ const mapDispatchToProps = (dispatch, props) => {
     return {
         getQuestions: () => {
             dispatch(actions.getAllQuestions())
+        },
+        addNewQuestion: (questionItem) => {
+            dispatch(actions.addNewQuestion(questionItem));
         }
     }
 }

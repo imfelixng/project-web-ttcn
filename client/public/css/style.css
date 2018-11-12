@@ -5443,3 +5443,7 @@ a:hover {
 	padding: 0;
 	margin: 20px 0px;
 }
+
+a {
+	cursor: pointer;
+}

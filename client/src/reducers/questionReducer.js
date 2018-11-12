@@ -10,6 +10,12 @@ const question = (state = initialState, action) => {
     switch(action.type) {
         case types.GET_ALL_QUETIONS:
             return state;
+        case types.ADD_NEW_QUESTION:
+            console.log(action.questionItem);
+            return {
+                ...state,
+                questions: [action.questionItem, ...state.questions]
+            }
         default:
             return state;
     }
