@@ -11,10 +11,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch, props) => {
     return {
         getQuestions: () => {
-            dispatch(actions.getAllQuestions())
+            dispatch(actions.getAllQuestionRequest())
         },
         addNewQuestion: (questionItem) => {
-            dispatch(actions.addNewQuestion(questionItem));
+            dispatch(actions.addNewQuestionRequest(questionItem));
         }
     }
 }

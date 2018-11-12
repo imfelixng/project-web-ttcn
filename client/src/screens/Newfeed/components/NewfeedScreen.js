@@ -11,12 +11,15 @@ export default class NewfeedScreen extends Component {
   }
   
   showQuestion = (questions) => {
-    return questions.map((question, index) => {
-      return <Question 
-        key = {index}
-        question = {question}
-      />
-    });
+    if(questions.length > 0) {
+      return questions.map((question, index) => {
+        return <Question 
+          key = {index}
+          question = {question}
+        />
+      });
+    }
+    
   }
 
   render() {

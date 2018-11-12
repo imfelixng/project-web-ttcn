@@ -1,3 +1,24 @@
 {
-    "questions": []
+  "questions": [
+  ],
+  "users": [],
+  "categories": [
+    {
+      "categoryID": "1",
+      "name": "Toán Học"
+    },
+    {
+      "categoryID": "2",
+      "name": "Hóa Học"
+    },
+    {
+      "categoryID": "3",
+      "name": "Lập Trình"
+    },
+    {
+      "categoryID": "4",
+      "name": "Toeic"
+    }
+  ],
+  "tags": []
 }

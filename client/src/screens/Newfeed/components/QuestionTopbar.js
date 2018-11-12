@@ -58,7 +58,7 @@ export default class QuestionTopbar extends Component {
         let questionItem = {
             questionID: new Date().getTime() + "",
             content: '',
-            images: [],
+            images: this.state.images,
             topComment: {},
             category: '',
             tags: [],
