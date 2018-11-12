@@ -4,7 +4,12 @@ import Question from './Question';
 import LoadMore from '../../../commons/LoadMore/components/LoadMore';
 import Main from '../../../commons/Main/components/Main';
 
-export default class HomeScreen extends Component {
+export default class NewfeedScreen extends Component {
+
+  componentDidMount = () => {
+    this.props.getQuestions();
+  }
+  
   render() {
     return (
       <React.Fragment>
