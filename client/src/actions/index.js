@@ -3,9 +3,9 @@ import * as APIs from '../api/callAPI';
 
 export const getAllQuestionRequest = () => {
     return async (dispatch) => {
-        let questions = await APIs.callQuestionAPI("questions", "GET", null);
+        let questions = await APIs.callAPI("questions", "GET", null);
         if(questions != null) {
-            dispatch(getAllQuestions(questions.data));
+            dispatch(getAllQuestions(questions.data.reverse()));
         }
     }
 
@@ -20,7 +20,7 @@ export const getAllQuestions = (questions) => {
 
 export const addNewQuestionRequest = (questionItem) => {
     return async (dispatch) => {
-        let questions = await APIs.callQuestionAPI("questions", "POST", questionItem);
+        let questions = await APIs.callAPI("questions", "POST", questionItem);
         if(questions != null) {
             dispatch(addNewQuestion(questionItem));
         }
@@ -34,4 +34,19 @@ export const addNewQuestion = (questionItem) => {
     }
 };
 
+export const getAllCategoryRequest = () => {
+    return async (dispatch) => {
+        let categories = await APIs.callAPI("categories", "GET", null);
+        if(categories != null) {
+            dispatch(getAllCategories(categories.data));
+        }
+    }
 
+};
+
+export const getAllCategories = (categories) => {
+    return {
+        type: types.GET_ALL_CATEGORIES,
+        categories
+    }
+};

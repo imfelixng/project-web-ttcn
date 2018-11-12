@@ -3,8 +3,10 @@ import * as actions from '../../../actions/index';
 import NewfeedScreen from '../components/NewfeedScreen';
 
 const mapStateToProps = (state) => {
+
     return{
-        questions: state.questionReducer.questions
+        questions: state.questionReducer.questions,
+        categories: state.categoryReducer.categories
     }
 }
 
@@ -15,6 +17,9 @@ const mapDispatchToProps = (dispatch, props) => {
         },
         addNewQuestion: (questionItem) => {
             dispatch(actions.addNewQuestionRequest(questionItem));
+        },
+        getCategories: () => {
+            dispatch(actions.getAllCategoryRequest());
         }
     }
 }

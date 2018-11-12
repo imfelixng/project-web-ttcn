@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import {NavLink} from 'react-router-dom';
-
+import { EditorState, convertToRaw, ContentState } from 'draft-js';
+import draftToHtml from 'draftjs-to-html';
 export default class Question extends Component {
 
     state = {
@@ -13,6 +14,11 @@ export default class Question extends Component {
         })
     }
 
+    showContent = (contentBlock) => {
+        if (contentBlock) {
+            return {__html: draftToHtml(contentBlock)};
+          }
+    }
   render() {
     return (
       <React.Fragment>
@@ -41,8 +47,7 @@ export default class Question extends Component {
                                         <ul className="descp">
                                         <li>
                                             <ul className="job-dt">
-                                            <li><a href="#" >Full Time</a></li>
-                                            <li><a href="#" >Part Time</a></li>
+                                            <li><a href="#" >{this.props.question.categoryID}</a></li>
                                             </ul>
                                         </li>
                                         </ul>
@@ -53,7 +58,10 @@ export default class Question extends Component {
                                     </div>
             <div className="job_descp">
                                         <h3>Senior Wordpress Developer</h3>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam luctus hendrerit metus, ut ullamcorper quam finibus at. Etiam id magna sit amet... <a href="#" >view more</a></p>
+                                        <div 
+                                            className = "question__content" 
+                                            dangerouslySetInnerHTML = {this.showContent(this.props.question.content)}>
+                                        </div>
                                         <ul className="skill-tags">
                                         <li><a href="#" >HTML</a></li>
                                         <li><a href="#" >PHP</a></li>

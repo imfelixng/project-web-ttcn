@@ -2,10 +2,10 @@ import axios from 'axios';
 import * as configs from '../constants/configs';
 
 
-let callQuestionAPI = async (endpoint, method = 'GET', data) => {
-    let questionAPI = null;
+let callAPI = async (endpoint, method = 'GET', data) => {
+    let dataAPI = null;
     try {
-        questionAPI = await axios({
+        dataAPI = await axios({
             method,
             url: `${configs.Url}/${endpoint}`,
             data,
@@ -14,7 +14,7 @@ let callQuestionAPI = async (endpoint, method = 'GET', data) => {
         console.log(e);
     }
     
-    return questionAPI;
+    return dataAPI;
 }
 
-export {callQuestionAPI};
+export {callAPI}

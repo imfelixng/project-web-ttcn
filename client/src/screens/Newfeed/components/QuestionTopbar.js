@@ -28,7 +28,9 @@ export default class QuestionTopbar extends Component {
         const contentState = convertFromRaw(content);
         this.state = {
             contentState,
-            images: []
+            images: [],
+            categoryID: 'null',
+            tags: []
         }
 
     }
@@ -55,18 +57,36 @@ export default class QuestionTopbar extends Component {
 
     onAddNewQuestion = () => {
 
+        if(this.state.categoryID === "null") {
+            alert("Vui lòng chọn chuyên mục cho câu hỏi!");
+            return false;
+        }
         let questionItem = {
             questionID: new Date().getTime() + "",
-            content: '',
+            content: this.state.contentState,
             images: this.state.images,
             topComment: {},
-            category: '',
+            categoryID: this.state.categoryID,
             tags: [],
             userID: ''
         }
         this.props.addNewQuestion(questionItem);
     }
     
+    showCategories  = (categories) => {
+        if(categories.length > 0) {
+            return categories.map((category, index) => {
+                return <option key = {index} value = {category.categoryID}>{category.name}</option>
+            });
+        }
+    }
+
+    handleChange = (e) => {
+        this.setState({
+            categoryID: e.target.value    
+        });
+    }
+
   render() {
     const config = this.componentConfig;
     const djsConfig = this.djsConfig;
@@ -99,9 +119,9 @@ export default class QuestionTopbar extends Component {
                     <div className= "post-relation">
                         <div className = "post-category">
                             <span> Chuyên mục: </span>
-                            <select>
-                                <option>Toan</option>
-                                <option>Ly</option>
+                            <select className = "post-category__select" onChange = {this.handleChange}>
+                                <option value = "null">Chọn Chuyên Mục</option>
+                                {this.showCategories(this.props.categories)}
                             </select>
                         </div>
                         <div className = "post-tag">
