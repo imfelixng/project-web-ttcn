@@ -9,12 +9,12 @@ logger = getLogger(__name__)
 class MongoInterface(object):
     # client = MongoClient('mongodb://localhost:27017/')
     def __init__(self):
-        # self.client = MongoClient(
-            # 'mongodb://data:chritsmasgood12@ds143971.mlab.com:43971/nvphu1306')
-        self.client = MongoClient()
+        self.client = MongoClient(
+            'mongodb://data:chritsmasgood12@ds143971.mlab.com:43971/nvphu1306')
+        # self.client = MongoClient()
 
     @property
-    def db(self, dbname="test_module"):
+    def db(self, dbname="nvphu1306"):
         return self.client[dbname]
 
     def datasource(self, resource, query=None):
