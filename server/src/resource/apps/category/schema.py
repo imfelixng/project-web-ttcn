@@ -3,4 +3,5 @@ from foundation.core.schema.model import BaseModel
 
 
 class Category(BaseModel):
-    name = StringType()
+    categoryID = StringType(required=True)
+    name = StringType(required=True)

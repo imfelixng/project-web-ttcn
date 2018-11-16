@@ -1,13 +1,14 @@
 from foundation.core.schema.model import BaseModel
-from schematics.types import StringType, ListType
+from schematics.types import StringType, ListType, DictType
 
 
 class Question(BaseModel):
+    questionID = StringType(required=True)
     title = StringType(required=True)
     content = StringType(required=True)
-    image = StringType()
-    tag = ListType(StringType)
-    category = ListType(StringType)
+    userID = StringType(required=True)
+    image = ListType(StringType)
+    tags = ListType(StringType)
+    categoryID = StringType()
     views = ListType(StringType)
-    userId = StringType()
     likes = ListType(StringType)

@@ -3,16 +3,16 @@ from foundation.core.api.helper import make_resource_response
 
 
 def __setup__(module):
-    module.resource("question", Question)
+    module.resource("questions", Question)
 
-    @module.endpoint("/question/<_id>/comment", methods=["GET"])
-    def getAllComments(_id):
+    @module.endpoint("/questions/<questionID>/comments", methods=["GET"])
+    def getAllComments(questionID):
         data = module.data.find_embedded(
-            "question", "comment", _id, "_id", "questionId")
+            "question", "comment", questionID, "questionID", "questionID")
         return make_resource_response("resource", list(data))
 
-    @module.endpoint("/user/<userId>/question", methods=["GET"])
-    def getAllQuestion(userId):
-        data = module.data.find_embedded_user(
-            "user", "question", userId, "username", "userId")
+    @module.endpoint("/users/<userID>/questions", methods=["GET"])
+    def getAllQuestion(userID):
+        data = module.data.find_embedded(
+            "user", "question", userID, "userID", "userID")
         return make_resource_response("resource", list(data))

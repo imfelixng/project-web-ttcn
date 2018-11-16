@@ -3,4 +3,5 @@ from foundation.core.schema.model import BaseModel
 
 
 class Tag(BaseModel):
-    name = StringType()
+    tagID = StringType(required=True)
+    name = StringType(required=True)

@@ -34,8 +34,8 @@ class ObjectApiServer(Flask):
 
     def before_request(self):
         g.user = None
-        if session.get("username"):
-            g.user = session.get("username")
+        if session.get("userID"):
+            g.user = session.get("userID")
         if config["AUTH_FIELD"] == "auth":
             session["AUTH_FIELD"] = True
         else:
@@ -62,7 +62,7 @@ class ObjectApiServer(Flask):
             baseApi = BaseAPI(self.data, model)
 
             resource_list = '/' + name
-            resource_item = "/%s/<_id>" % name
+            resource_item = "/%s/<ID>" % name
 
             self.add_url_rule(resource_list, "get_list_%s" %
                               name, baseApi.get, methods=['GET'])

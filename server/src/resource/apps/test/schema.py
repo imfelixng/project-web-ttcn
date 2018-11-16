@@ -1,8 +1,8 @@
-from schematics.types import StringType
+from schematics.types import StringType, DictType, IntType, ModelType, ListType
 from foundation.core.schema.model import BaseModel
-from bson import ObjectId
+from schematics.models import Model
 
 
 class Test(BaseModel):
-    name = StringType()
-    objectID = ObjectId()
+    name = StringType(required=True)
+    userID = StringType()

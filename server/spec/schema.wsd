@@ -25,113 +25,108 @@ Auth:
 			
 Question:
 	Get all question of user
-		url: /user/<userId>/question
+		url: /user/<userID>/question
 		method: GET
 		content-type: json
 		
 	Get list question
-		url: /question
+		url: /questions
 		method: GET
 		content-type: json
 
 	Get question item
-		url: /question/questionId
+		url: /questions/questionID
 		method: GET
 		content-type: json
 
 	Create question
-		url: /question
+		url: /questions
 		method: POST
 		content-type: json
 
 	Edit question
-		url: /question/questionId
+		url: /questions/questionID
 		method: PATCH
-		content-type: json
+		content-type: json]
 
 	Delete question
-		url: /question/questionId
+		url: /questions/questionID
 		method: DELETE
 
 Comment:
 	Get all comment of question
-		url: /question/<questionId>/comment
-		method: GET
-		content-type: json
-
-	Get list comment of a Question
-		url: /question/<questionId>/comment
+		url: /question/<questionID>/comments
 		method: GET
 		content-type: json
 
 	Add comment to a question
-		url: /question/<questionId>/comment
+		url: /comments
 		method: POST
 		content-type: json
 		
 	Remove a comment of a question
-		url: /question/<questionId>/comment/<commentId>
+		url: /comment/<commentID>
 		method: DELETE
 
 	Edit a comment of a question
-		url: /question/<questionId>/comment/<commentId>
-		method: DELETE
+		url: /comment/<commentID>
+		method: PATCH
+		content-type: json
+
 
 Category:
 	Get list category
-		url: /category
+		url: /categories
 		method: GET
 		content-type: json
 
 	Add category
-		url: /category
+		url: /categories
 		method: POST
 		content-type: json
 		
 	Remove a category
-		url: /category/<category_id>
+		url: /categories/<categoryID>
 		method: DELETE
 
 	Edit a category
-		url: /category/<category_id>
+		url: /categories/<categoryID>
 		method: DELETE
 
 Tag:
 	Get list tag
-		url: /tag
+		url: /tags
 		method: GET
 		content-type: json
 
 	Add tag
-		url: /tag
+		url: /tags
 		method: POST
 		content-type: json
 		
-	Remove a tag
-		url: /tag/<tag_id>
+	Remove a tags
+		url: /tag/<tagID>
 		method: DELETE
 
-	Edit a tag
-		url: /tag/tag_id>
+	Edit a tags
+		url: /tag/tagID>
 		method: DELETE
 
 Notification:
 	Get list notification
-		url: /notification
+		url: /notifications
 		method: GET
 		content-type: json
 
 	Add notification
-		url: /notification
+		url: /notifications
 		method: POST
 		content-type: json
 		
 	Remove a notification
-		url: /notification/<notification_id>
+		url: /notifications/<notificationID>
 		method: DELETE
 
 	Edit a notification
-		url: /notification/notification_id>
+		url: /notifications/notificationID>
 		method: DELETE
-
-
