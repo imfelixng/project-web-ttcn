@@ -1,7 +1,7 @@
-from bson import ObjectId
 from flask import request, Response, session
 from foundation.core.exceptions import UnprocessableEntity, NotFoundException
 from .helper import make_resource_response
+import datetime
 
 
 class BaseAPI:
@@ -10,18 +10,18 @@ class BaseAPI:
         self.data = datalayer
         self.resource = self.Model.RI()
 
-    def return_query(self, _id):
-        query = {'_id': ObjectId(_id)}
+    def return_query(self, ID):
+        query = {self.resource + "ID": ID}
         return query
 
-    def get(self, query=None, questionId=None):
+    def get(self, query=None):
         data = self.data.find(self.resource, query)
         data = list(data)
         return make_resource_response(self.resource, data)
 
-    def get_item(self, _id):
+    def get_item(self, ID):
         try:
-            dt = self.data.find_one(self.resource, _id)
+            dt = self.data.find_one(self.resource, ID)
             if dt:
                 return make_resource_response(self.resource, data=dt)
             else:
@@ -34,28 +34,30 @@ class BaseAPI:
         try:
             data = request.json or request.form.to_dict()
             if session.get("AUTH_FIELD"):
-                data["userId"] = session.get("username")
+                data["userID"] = session.get("userID")
             model = self.Model(data)
             model.save()
             return make_resource_response(self.resource, model.to_primitive())
         except Exception as e:
             raise UnprocessableEntity('RC_400', message=e.to_primitive())
 
-    def update_item(self, _id):
+    def update_item(self, ID):
         try:
             data = request.json or request.form.to_dict()
-            data.update(self.return_query(_id))
-            model = self.Model(data)
-            model.save()
-            return make_resource_response(self.resource, model.to_primitive())
+            data['_updated'] = datetime.datetime.now()
+            query = self.return_query(ID)
+            if session.get("AUTH_FIELD") and self.resource != "user":
+                query["userID"] = session.get("userID")
+            result = self.data.db[self.resource].find_one_and_update(
+                query, {'$set': data})["_id"]
+            resp = self.data.db[self.resource].find_one(
+                {"_id": result})
+            return make_resource_response(self.resource, resp)
         except Exception as e:
             return UnprocessableEntity('RC_400', message="you don't have permission")
 
-    def delete_item(self, _id):
-        model = self.Model(self.return_query(_id))
-        done = model.delete()
-        import logging
-        logging.warn("delete item %s" % done)
+    def delete_item(self, ID):
+        done = self.data.delete_one(self.resource, ID)
         if done:
             return Response(status=204)
         else:

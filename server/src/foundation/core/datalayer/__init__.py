@@ -10,7 +10,7 @@ class MongoInterface(object):
     # client = MongoClient('mongodb://localhost:27017/')
     def __init__(self):
         # self.client = MongoClient(
-        #     'mongodb://data:chritsmasgood12@ds143971.mlab.com:43971/nvphu1306')
+            # 'mongodb://data:chritsmasgood12@ds143971.mlab.com:43971/nvphu1306')
         self.client = MongoClient()
 
     @property
@@ -22,16 +22,19 @@ class MongoInterface(object):
         if query is None:
             query = {}
         if session.get("AUTH_FIELD") and resource != "user":
-            query["userId"] = session.get("username")
+            query["userID"] = session.get("userID")
         return (source, query)
 
-    def find_one(self, resource, _id):
-        # source, query = self.datasource(resource, {'_id': ObjectId(_id)})
-        data = self.db[resource].find_one({'_id': ObjectId(_id)})
+    def find_one(self, resource, ID):
+        # source, query = self.datasource(resource, ID=ID)
+        source = self.db[resource]
+        query = {resource + "ID": ID}
+        data = source.find_one(query)
         return data
 
     def find(self, resource, query=None):
-        source, query = self.datasource(resource, query)
+        source = self.db[resource]
+        query = {}
         data = source.find(query)
         return data
 
@@ -47,8 +50,9 @@ class MongoInterface(object):
         logging.warn("update by another user %s" % data)
         return data
 
-    def delete_one(self, resource, _id):
-        source, query = self.datasource(resource, {'_id': ObjectId(_id)})
+    def delete_one(self, resource, ID):
+        query = {resource + "ID": ID}
+        source, query = self.datasource(resource, query)
         if source.find_one(query) is None:
             return False
         resp = source.delete_one(query)
@@ -60,7 +64,7 @@ class MongoInterface(object):
         else:
             return False
 
-    def find_embedded(self, source, dist, _id, localField, foreignField):
+    def find_embedded_id(self, source, dist, _id, localField, foreignField):
         h = self.db[source].aggregate([
             {
                 "$lookup":
@@ -75,7 +79,7 @@ class MongoInterface(object):
         ])
         return h
 
-    def find_embedded_user(self, source, dist, _id, localField, foreignField):
+    def find_embedded(self, source, dist, _id, localField, foreignField):
         h = self.db[source].aggregate([
             {
                 "$lookup":
@@ -86,7 +90,7 @@ class MongoInterface(object):
                     "as": dist
                 }
             },
-            {"$match": {"username": _id}},
+            {"$match": {localField: _id}},
             {"$project": {"password": 0}}
         ])
         return h

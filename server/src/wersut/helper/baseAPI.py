@@ -82,7 +82,6 @@ class BaseAPI:
         else:
             if postId is not None:
                 request_data["postId"] = ObjectId(postId)
-            # request_data["user"] = session.get("username")
             request_data["_create"] = datetime.now()
             request_data["_updated"] = datetime.now()
             result = coll.insert_one(request_data)

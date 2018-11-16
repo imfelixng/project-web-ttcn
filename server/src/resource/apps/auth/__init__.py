@@ -5,14 +5,13 @@ import json
 
 
 def __setup__(module):
-    module.resource("user", User)
+    module.resource("users", User)
 
     @module.endpoint("/register", methods=["POST"])
     def register():
         data = request.json or request.form.to_dict()
-        if module.data.check("user", {"username": data.get("username")}):
-            return make_error(400, description="Username is exist")
-        if module.data.check("user", {"email": data.get("email", None)}):
+        database = module.data.db
+        if database.user.find_one({"email": data.get("email")}) is not None:
             return make_error(400, description="email is exist")
         model = User(data)
         model.save()
@@ -21,11 +20,15 @@ def __setup__(module):
     @module.endpoint("/login", methods=["POST"])
     def login():
         dt = request.json or request.form.to_dict()
-        if not module.data.check("user", {"username": dt.get("username")}):
-            return make_error(400, description="Username is wrong")
-        if not module.data.check("user", {"username": dt.get("password")}):
+        database = module.data.db
+
+        if database.user.find_one({"email": dt.get("email")}) is None:
+            return make_error(400, description="Email is wrong")
+        if database.user.find_one({"password": dt.get("password")}) is None:
             return make_error(400, description="password is wrong")
-        session["username"] = dt.get("username")
+
+        session["userID"] = module.data.db.user.find_one(
+            {"email": dt.get("email")})["userID"]
         data_response = {
             "status": 200,
             "description": "ok"
