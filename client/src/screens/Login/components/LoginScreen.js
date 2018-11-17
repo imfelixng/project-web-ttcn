@@ -11,12 +11,39 @@ export default class LoginScreen extends Component {
         fullname: '',
         password_signup: '',
         repeat_password_signup: '',
+        check_password_signup: true
     }
 
     showSignIn = (isSignIn) => {
         this.setState({
             isSignIn
         });
+    }
+
+    onSignUp = (e) => {
+        e.preventDefault();
+        let {password_signup, repeat_password_signup} = this.state;
+
+        if(password_signup !== repeat_password_signup) {
+            this.setState({
+                check_password_signup: false
+            });
+            return false;
+        }
+
+        let user = {
+            email: this.state.email,
+            password: this.state.password,
+            fullname: this.state.fullname,
+            username: '',
+            vote: 0,
+            unvote: 0
+        }
+    }
+
+    onSignIn = (e) => {
+        e.preventDefault();
+        alert("AAAA");
     }
 
     onLoginSocial = (name) => {
@@ -63,7 +90,7 @@ export default class LoginScreen extends Component {
                         </ul>			
                         <div className={this.state.isSignIn ? "sign_in_sec current" : "sign_in_sec"} id="tab-1">
                             <h3>Sign in</h3>
-                            <form method="post">
+                            <form method="post" onSubmit = {this.onSignIn}>
                             <div className="row">
                                 <div className="col-lg-12 no-pdd">
                                         <div className="sn-field">
@@ -92,7 +119,7 @@ export default class LoginScreen extends Component {
                         <div className={!this.state.isSignIn ? "sign_in_sec current" : "sign_in_sec"} id="tab-2">
                             <div className="dff-tab current" id="tab-3">
                             <h3>Sign up</h3>
-                            <form method = "post">
+                            <form method = "post" onSubmit = {this.onSignUp}>
                                 <div className="row">
                                 <div className="col-lg-12 no-pdd">
                                     <div className="sn-field">
@@ -113,6 +140,7 @@ export default class LoginScreen extends Component {
                                     <i className="la la-lock" />
                                     </div>
                                 </div>
+                                {!this.state.check_password_signup && <span className = "sign_error">Mật khẩu không khớp</span>}
                                 <div className="col-lg-12 no-pdd">
                                     <div className="sn-field">
                                     <input type="password" name="repeat_password_signup" placeholder="Repeat Password" onChange = {this.handleChange} value = {this.state.repeat_password_signup} required/>

@@ -9,6 +9,7 @@ export default class NewfeedScreen extends Component {
   componentDidMount = () => {
     this.props.getQuestions();
     this.props.getCategories();
+    this.props.getTags();
   }
   
   showQuestion = (questions) => {
@@ -31,6 +32,8 @@ export default class NewfeedScreen extends Component {
               <QuestionTopbar 
                 addNewQuestion = {this.props.addNewQuestion}
                 categories = {this.props.categories}
+                suggestions = {this.props.tags}
+                addNewTags = {this.props.addNewTags}
               />
               <div className="posts-section">
                 {this.showQuestion(this.props.questions)}

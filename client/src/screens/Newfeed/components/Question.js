@@ -19,7 +19,14 @@ export default class Question extends Component {
             return {__html: draftToHtml(contentBlock)};
           }
     }
+
+    showTags(tagIDs) {
+        return tagIDs.map((tagID, index) => {
+            return <li key = {index}><a href="#" >{tagID}</a></li>;
+        });
+    }
   render() {
+    let {question} = this.props;
     return (
       <React.Fragment>
         <div className="post-bar">
@@ -47,7 +54,7 @@ export default class Question extends Component {
                                         <ul className="descp">
                                         <li>
                                             <ul className="job-dt">
-                                            <li><a href="#" >{this.props.question.categoryID}</a></li>
+                                            <li><a href="#" >{question.categoryID}</a></li>
                                             </ul>
                                         </li>
                                         </ul>
@@ -60,14 +67,10 @@ export default class Question extends Component {
                                         <h3>Senior Wordpress Developer</h3>
                                         <div 
                                             className = "question__content" 
-                                            dangerouslySetInnerHTML = {this.showContent(this.props.question.content)}>
+                                            dangerouslySetInnerHTML = {this.showContent(question.content)}>
                                         </div>
                                         <ul className="skill-tags">
-                                        <li><a href="#" >HTML</a></li>
-                                        <li><a href="#" >PHP</a></li>
-                                        <li><a href="#" >CSS</a></li>
-                                        <li><a href="#" >Javascript</a></li>
-                                        <li><a href="#" >Wordpress</a></li> 	
+                                            {this.showTags(question.tagIDs)}
                                         </ul>
                                     </div>
             <div className="job-status-bar">

@@ -6,20 +6,27 @@ const mapStateToProps = (state) => {
 
     return{
         questions: state.questionReducer.questions,
-        categories: state.categoryReducer.categories
+        categories: state.categoryReducer.categories,
+        tags: state.tagReducer.tags
     }
 }
 
 const mapDispatchToProps = (dispatch, props) => {
     return {
         getQuestions: () => {
-            dispatch(actions.getAllQuestionRequest())
+            return dispatch(actions.getAllQuestionRequest())
         },
         addNewQuestion: (questionItem) => {
-            dispatch(actions.addNewQuestionRequest(questionItem));
+            return dispatch(actions.addNewQuestionRequest(questionItem));
         },
         getCategories: () => {
-            dispatch(actions.getAllCategoryRequest());
+            return dispatch(actions.getAllCategoryRequest());
+        },
+        getTags: () => {
+            return dispatch(actions.getAllTagsRequest());
+        },
+        addNewTags: (tags) => {
+            return dispatch(actions.addNewTagsRequest(tags));
         }
     }
 }

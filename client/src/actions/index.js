@@ -50,3 +50,37 @@ export const getAllCategories = (categories) => {
         categories
     }
 };
+
+export const getAllTagsRequest = () => {
+    return async (dispatch) => {
+        let tags = await APIs.callAPI("tags", "GET", null);
+        if(tags != null) {
+            dispatch(getAllTags(tags.data));
+        }
+    }
+}
+
+export const getAllTags = (tags) => {
+    return {
+        type: types.GET_ALL_TAGS,
+        tags
+    }
+}
+
+export const addNewTagsRequest = (tags) => {
+    return async (dispatch) => {
+        for (let i = 0 ; i < tags.length ;i++) {
+            let newTag = await APIs.callAPI("tags", "POST", tags[i]);
+            if(newTag != null) {
+                dispatch(addNewTag(tags[i]));
+            }
+        }
+    }
+}
+
+export const addNewTag = (tag) => {
+    return {
+        type: types.ADD_NEW_TAGS,
+        tag
+    }
+}
