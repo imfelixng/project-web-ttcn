@@ -6,8 +6,7 @@ import TagScreen from './../../Tag/components/TagScreen';
 import Error404Screen from './../../Error404/components/Error404Screen';
 import Header from '../../../commons/Header/components/Header';
 import QuestionDetail from '../../QuestionDetail/components/QuestionDetail';
-import LoginScreen from '../../Login/components/LoginScreen';
-import loadjs from 'loadjs';
+import LoginContainer from '../../Login/containers/LoginContainer';
 export default class HomeScreen extends Component {
   
   render() {
@@ -19,7 +18,7 @@ export default class HomeScreen extends Component {
               <Route path = "/categories" component = {CategoryScreen}/>
               <Route path = "/tags" component = {TagScreen}/>
               <Route path = "/questions/:idQuestion" component = {QuestionDetail}/>
-              <Route path = "/sign-in" component = {LoginScreen}/>
+              <Route path = "/sign-in" component = {LoginContainer}/>
               <Route component = {Error404Screen} />
           </Switch>
       </React.Fragment>

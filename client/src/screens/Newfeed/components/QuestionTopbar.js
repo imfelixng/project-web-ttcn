@@ -68,11 +68,11 @@ export default class QuestionTopbar extends Component {
             alert("Vui lòng chọn chuyên mục cho câu hỏi!");
             return false;
         }
-        console.log(this.state.tags);
+
         this.props.addNewTags(this.state.tags);
 
         let questionItem = {
-            questionID: new Date().getTime() + "",
+            questionID: "q_" + new Date().getTime(),
             content: this.state.contentState,
             images: this.state.images,
             topComment: {},
@@ -133,7 +133,6 @@ export default class QuestionTopbar extends Component {
     }
 
     static getDerivedStateFromProps(props, state) {
-        console.log(props.suggestions);
         return {
             suggestions: props.suggestions
         };

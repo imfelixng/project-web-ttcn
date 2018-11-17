@@ -84,3 +84,36 @@ export const addNewTag = (tag) => {
         tag
     }
 }
+
+export const createUserRequest = (user) => {
+    return async (dispatch) => {
+        let result = await APIs.callAPI("users", "POST", user);
+            if(result != null) {
+                dispatch(createUser(result));
+            }
+    }
+}
+
+export const createUser = (result) => {
+    return {
+        type: types.CREATE_USER,
+        result
+    }
+}
+
+export const checkUserRequest = (user) => {
+    return async (dispatch) => {
+        let result = await APIs.callAPI("users", "POST", user);
+            if(result != null) {
+                dispatch(checkUser(result));
+            }
+    }
+}
+
+export const checkUser = (result) => {
+    return {
+        type: types.SIGN_IN,
+        result
+    }
+}
+
