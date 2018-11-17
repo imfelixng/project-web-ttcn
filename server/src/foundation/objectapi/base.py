@@ -63,14 +63,14 @@ class ObjectApiServer(Flask):
 
             resource_list = '/' + name
             resource_item = "/%s/<ID>" % name
-
+            ignore_resource = ["questions", "users"]
             self.add_url_rule(resource_list, "get_list_%s" %
                               name, baseApi.get, methods=['GET'])
             self.add_url_rule(resource_item, "get_item_%s" %
                               name, self.login_required(baseApi.get_item), methods=['GET'])
-
-            self.add_url_rule(resource_list, "create_%s" %
-                              name, self.login_required(baseApi.create), methods=['POST'])
+            if name not in ignore_resource:
+                self.add_url_rule(resource_list, "create_%s" %
+                                  name, self.login_required(baseApi.create), methods=['POST'])
             self.add_url_rule(resource_item, "update_%s" % name,
                               self.login_required(baseApi.update_item), methods=['PATCH'])
 

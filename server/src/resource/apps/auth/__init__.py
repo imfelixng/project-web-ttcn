@@ -7,7 +7,7 @@ import json
 def __setup__(module):
     module.resource("users", User)
 
-    @module.endpoint("/register", methods=["POST"])
+    @module.endpoint("/signup", methods=["POST"])
     def register():
         data = request.json or request.form.to_dict()
         database = module.data.db
@@ -17,7 +17,7 @@ def __setup__(module):
         model.save()
         return make_resource_response("resource", model.to_primitive())
 
-    @module.endpoint("/login", methods=["POST"])
+    @module.endpoint("/signin", methods=["POST"])
     def login():
         dt = request.json or request.form.to_dict()
         database = module.data.db
@@ -31,7 +31,8 @@ def __setup__(module):
             {"email": dt.get("email")})["userID"]
         data_response = {
             "status": 200,
-            "description": "ok"
+            "description": "ok",
+            "userID": session["userID"]
         }
         return Response(response=json.dumps(data_response), status=200, content_type='application/json')
 

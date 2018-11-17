@@ -1,5 +1,10 @@
 from .schema import Question
 from foundation.core.api.helper import make_resource_response
+from flask import request
+
+
+def convert_base64_to_image(base):
+    pass
 
 
 def __setup__(module):
@@ -16,3 +21,9 @@ def __setup__(module):
         data = module.data.find_embedded(
             "user", "question", userID, "userID", "userID")
         return make_resource_response("resource", list(data))
+
+    # @module.endpoint("/questions", methods=["POST"])
+    # def create():
+    #     data = request.json
+    #     for image in images_raw:
+    #         dataURL = image["dataURL"]
