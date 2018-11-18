@@ -1,8 +1,40 @@
 import React, { Component } from 'react'
 import {NavLink} from 'react-router-dom';
-
+import { EditorState, convertToRaw, ContentState } from 'draft-js';
+import draftToHtml from 'draftjs-to-html';
 export default class Question extends Component {
+
+    state = {
+        isOpenFunctional: false,
+        currentUserID: ''
+    }
+
+    onOpenFunctional = () => {
+        this.setState({
+            isOpenFunctional: !this.state.isOpenFunctional
+        })
+    }
+
+    showContent = (contentBlock) => {
+        if (contentBlock) {
+            return {__html: draftToHtml(contentBlock)};
+          }
+    }
+
+    showTags(tagIDs) {
+        return tagIDs.map((tagID, index) => {
+            return <li key = {index}><a href="#" >{tagID}</a></li>;
+        });
+    }
+
+    static getDerivedStateFromProps(props, state) {
+        return {
+            currentUserID: props.currentUserID
+        }
+    }
+
   render() {
+    let {question} = this.props;
     return (
       <React.Fragment>
         <div className="post-bar">
@@ -15,37 +47,44 @@ export default class Question extends Component {
                                         </div>
                                         </div>
                                         <div className="ed-opts">
-                                            <a  className="ed-opts-open"><i className="la la-ellipsis-v" /></a>
-                                            <ul className="ed-options">
-                                                <li><a href="#" >Edit Post</a></li>
-                                                <li><a href="#" >Unsaved</a></li>
-                                                <li><a href="#" >Report</a></li>
-                                            </ul>
+                                            {
+                                                this.state.currentUserID &&
+                                                <a  className="ed-opts-open" onClick = {this.onOpenFunctional}><i className="la la-ellipsis-v" /></a>
+                                            }
+                                            {
+                                                this.state.isOpenFunctional &&
+                                                <ul className="ed-options active">
+                                                    <li><a href="#" >Edit Post</a></li>
+                                                    <li><a href="#" >Delete</a></li>
+                                                    <li><a href="#" >UnMarked</a></li>
+                                                    <li><a href="#" >Report</a></li>
+                                                </ul>
+                                            }
                                         </div>
                                     </div>
             <div className="epi-sec">
                                         <ul className="descp">
                                         <li>
                                             <ul className="job-dt">
-                                            <li><a href="#" >Full Time</a></li>
-                                            <li><a href="#" >Part Time</a></li>
+                                            <li><a href="#" >{question.categoryID}</a></li>
                                             </ul>
                                         </li>
                                         </ul>
-                                        <ul className="bk-links">
-                                        <li><a href="#" ><i className="la la-bookmark" /></a></li>
-                                        <li><a href="#" ><i className="la la-bell" /></a></li>
-                                        </ul>
+                                        {
+                                            this.state.currentUserID && 
+                                            <ul className="bk-links">
+                                                <li><a href="#" ><i className="la la-bookmark" /></a></li>
+                                                <li><a href="#" ><i className="la la-bell" /></a></li>
+                                            </ul>
+                                        }
                                     </div>
             <div className="job_descp">
-                                        <h3>Senior Wordpress Developer</h3>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam luctus hendrerit metus, ut ullamcorper quam finibus at. Etiam id magna sit amet... <a href="#" >view more</a></p>
+                                        <div 
+                                            className = "question__content" 
+                                            dangerouslySetInnerHTML = {this.showContent(question.content)}>
+                                        </div>
                                         <ul className="skill-tags">
-                                        <li><a href="#" >HTML</a></li>
-                                        <li><a href="#" >PHP</a></li>
-                                        <li><a href="#" >CSS</a></li>
-                                        <li><a href="#" >Javascript</a></li>
-                                        <li><a href="#" >Wordpress</a></li> 	
+                                            {this.showTags(question.tagIDs)}
                                         </ul>
                                     </div>
             <div className="job-status-bar">

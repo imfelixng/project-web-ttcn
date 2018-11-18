@@ -1,14 +1,20 @@
 import React, { Component } from 'react'
 
-import { EditorState, convertToRaw, ContentState, convertFromRaw } from 'draft-js';
+import { convertFromRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
-import draftToHtml from 'draftjs-to-html';
-import htmlToDraft from 'html-to-draftjs';
 
 import DropzoneComponent from 'react-dropzone-component';
 
+import { WithContext as ReactTags } from 'react-tag-input';
+
 const content = {"entityMap":{},"blocks":[{"key":"637gr","text":"Initialized from content state.","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}]};
 
+const KeyCodes = {
+    comma: 188,
+    enter: 13,
+  };
+
+  const delimiters = [KeyCodes.comma, KeyCodes.enter];
 export default class QuestionTopbar extends Component {
 
     constructor(props) {
@@ -25,42 +31,131 @@ export default class QuestionTopbar extends Component {
             postUrl: 'no-url'
         };
 
-        const contentState = convertFromRaw(content);
+        this.contentState = convertFromRaw(content);
         this.state = {
-            contentState,
-            listImg: []
+            contentState: this.contentState,
+            images: [],
+            categoryID: 'none',
+            tags: [],
+            suggestions: []
         }
 
     }
-    
+
     onContentStateChange = (contentState) => {
         this.setState({
           contentState,
         });
       };
 
-    handleFileAdded(file) {
+    handleFileAdded = (file) => {
         this.setState({
-            listImg: [...this.state.listImg, file]
+            images: [...this.state.images, file]
         });
     }
 
-    handleFileRemoved(file) {
+    handleFileRemoved = (file) => {
         console.log(file);
         let imgID = file.upload.uuid;
         this.setState({
-            listImg: this.state.listImg.filter(img => img.upload.uuid != imgID)
+            images: this.state.images.filter(img => img.upload.uuid !== imgID)
         });
     }
+
+    onAddNewQuestion = () => {
+
+        console.log(this.contentState);
+
+        if(this.state.categoryID === "none") {
+            alert("Vui lòng chọn chuyên mục cho câu hỏi!");
+            return false;
+        }
+
+        this.props.addNewTags(this.state.tags);
+
+        let questionItem = {
+            questionID: "q_" + new Date().getTime(),
+            content: this.state.contentState,
+            images: this.state.images,
+            topComment: {},
+            categoryID: this.state.categoryID,
+            tagIDs: this.state.tags.map((tag) => tag.id),
+            userID: ''
+        }
+        this.props.addNewQuestion(questionItem);
+
+        this.setState({
+            contentState: this.contentState,
+            images: [],
+            categoryID: 'none',
+            tags: [],
+        });
+
+    }
     
+    showCategories  = (categories) => {
+        if(categories.length > 0) {
+            return categories.map((category, index) => {
+                return <option key = {index} value = {category.categoryID}>{category.name}</option>
+            });
+        }
+    }
+
+    handleChange = (e) => {
+        this.setState({
+            categoryID: e.target.value    
+        });
+    }
+
+    handleDelete = (i) => {
+        const { tags } = this.state;
+        this.setState({
+         tags: tags.filter((tag, index) => index !== i),
+        });
+    }
+
+    handleAddition = (tag) => {
+        if(tag.text.length < 2) {
+            alert("Tag quá ngắn, Vui lòng nhập tối thiểu 2 kí tự!");
+            return false;
+        }
+        
+        this.setState(state => ({ tags: [...state.tags, tag] }));
+    }
+
+    handleDrag = (tag, currPos, newPos) => {
+        const tags = [...this.state.tags];
+        const newTags = tags.slice();
+ 
+        newTags.splice(currPos, 1);
+        newTags.splice(newPos, 0, tag);
+ 
+        // re-render
+        this.setState({ tags: newTags });
+    }
+
+    handleFilterSuggestions = (textInputValue, possibleSuggestionsArray) => {
+        var lowerCaseQuery = textInputValue.toLowerCase()
+        
+        return possibleSuggestionsArray.filter((suggestion) => {
+            return suggestion.text.toLowerCase().indexOf(lowerCaseQuery) === 0;
+        });
+    }
+
+    static getDerivedStateFromProps(props, state) {
+        return {
+            suggestions: props.suggestions
+        };
+    }
+
   render() {
     const config = this.componentConfig;
     const djsConfig = this.djsConfig;
     const eventHandlers = {
-        addedfile: this.handleFileAdded.bind(this),
-        removedfile: this.handleFileRemoved.bind(this)
+        addedfile: this.handleFileAdded,
+        removedfile: this.handleFileRemoved
     }
-    const { contentState } = this.state;
+    const { tags, suggestions } = this.state;
     return (
       <React.Fragment>
             <div className="post-topbar">
@@ -85,20 +180,27 @@ export default class QuestionTopbar extends Component {
                     <div className= "post-relation">
                         <div className = "post-category">
                             <span> Chuyên mục: </span>
-                            <select>
-                                <option>Toan</option>
-                                <option>Ly</option>
+                            <select className = "post-category__select" onChange = {this.handleChange} value = {this.state.categoryID}>
+                                <option value = "none">Chọn Chuyên Mục</option>
+                                {this.showCategories(this.props.categories)}
                             </select>
                         </div>
                         <div className = "post-tag">
-                            <form>
                                 <span>Thẻ </span>
-                                <input />
-                            </form>
+                                <ReactTags tags={tags}
+                                    suggestions={suggestions}
+                                    handleDelete={this.handleDelete}
+                                    handleAddition={this.handleAddition}
+                                    handleDrag={this.handleDrag}
+                                    delimiters={delimiters} 
+                                    autocomplete = {1}
+                                    handleFilterSuggestions = {this.handleFilterSuggestions}
+                                    minQueryLength = {1}
+                                />
                         </div>
                     </div>
                     <ul className="text-right">
-                        <li><a className="post-jb active" href="#" >Post this question</a></li>
+                        <li><a className="post-jb active" onClick = {this.onAddNewQuestion}>Post this question</a></li>
                     </ul>
                 </div>{/*post-st end*/}
             </div>{/*post-topbar end*/}

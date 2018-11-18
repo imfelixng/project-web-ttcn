@@ -1,6 +1,17 @@
 import React, { Component } from 'react'
 
 export default class QuestionDetail extends Component {
+
+    state = {
+        isOpenFunctional: false
+    }
+
+    onOpenFunctional = () => {
+        this.setState({
+            isOpenFunctional: !this.state.isOpenFunctional
+        })
+    }
+
   render() {
     return (
       <React.Fragment>
@@ -21,14 +32,17 @@ export default class QuestionDetail extends Component {
                                         </div>
                                     </div>
                                     <div className="ed-opts">
-                                        <a href="#" title className="ed-opts-open"><i className="la la-ellipsis-v" /></a>
-                                        <ul className="ed-options">
-                                        <li><a href="#" title>Edit Post</a></li>
-                                        <li><a href="#" title>Unsaved</a></li>
-                                        <li><a href="#" title>Unbid</a></li>
-                                        <li><a href="#" title>Close</a></li>
-                                        <li><a href="#" title>Hide</a></li>
-                                        </ul>
+                                        <a onClick = {this.onOpenFunctional} className="ed-opts-open"><i className="la la-ellipsis-v" /></a>
+                                        {
+                                            this.state.isOpenFunctional &&
+                                            <ul className="ed-options active">
+                                                <li><a href="#" title>Edit Post</a></li>
+                                                <li><a href="#" title>Unsaved</a></li>
+                                                <li><a href="#" title>Unbid</a></li>
+                                                <li><a href="#" title>Close</a></li>
+                                                <li><a href="#" title>Hide</a></li>
+                                            </ul>
+                                        }
                                     </div>
                                     </div>
                                     <div className="epi-sec">
