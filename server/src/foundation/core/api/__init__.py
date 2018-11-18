@@ -33,7 +33,8 @@ class BaseAPI:
     def create(self):
         try:
             data = request.json or request.form.to_dict()
-            if session.get("AUTH_FIELD"):
+            resource_ignore = ["tag", "category"]
+            if session.get("AUTH_FIELD") and self.resource not in resource_ignore:
                 data["userID"] = session.get("userID")
             model = self.Model(data)
             model.save()

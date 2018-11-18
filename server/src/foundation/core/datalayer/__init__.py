@@ -8,14 +8,14 @@ logger = getLogger(__name__)
 
 class MongoInterface(object):
     # client = MongoClient('mongodb://localhost:27017/')
-    def __init__(self):
+    def __init__(self, MONGOHOS=None, MONGGODB=None):
         self.client = MongoClient(
-            'mongodb://data:chritsmasgood12@ds143971.mlab.com:43971/nvphu1306')
-        # self.client = MongoClient()
+            "mongodb://data:chritsmasgood12@ds143971.mlab.com:43971/nvphu1306")
+        self.mongodb = "nvphu1306"
 
     @property
-    def db(self, dbname="nvphu1306"):
-        return self.client[dbname]
+    def db(self):
+        return self.client[self.mongodb]
 
     def datasource(self, resource, query=None):
         source = self.db[resource]
@@ -40,7 +40,8 @@ class MongoInterface(object):
 
     def insert_one(self, resource, data):
         source, _ = self.datasource(resource)
-        return source.insert_one(data).inserted_id
+        resp = source.insert_one(data).inserted_id
+        return source.find_one({"_id": ObjectId(resp)})
 
     def update_one(self, resource, _id, update, **kwargs):
         if not isinstance(_id, ObjectId):

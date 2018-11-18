@@ -1,10 +1,8 @@
 from .schema import Question
 from foundation.core.api.helper import make_resource_response
 from flask import request
-
-
-def convert_base64_to_image(base):
-    pass
+import os
+from .helper import save_image
 
 
 def __setup__(module):
@@ -22,8 +20,18 @@ def __setup__(module):
             "user", "question", userID, "userID", "userID")
         return make_resource_response("resource", list(data))
 
-    # @module.endpoint("/questions", methods=["POST"])
-    # def create():
-    #     data = request.json
-    #     for image in images_raw:
-    #         dataURL = image["dataURL"]
+    @module.endpoint("/questions", methods=["POST"])
+    def create():
+        data = request.json
+        for i in range(0, len(data["images"]), 1):
+            image_raw = data["images"][i]
+            imgString = image_raw["dataURL"][22:]
+            filename = image_raw["upload"]["filename"]
+            path = os.getcwd()
+            path = path[:path.find("project-web-ttcn")] + \
+                "project-web-ttcn/public/images/questions/" + filename
+            save_image(imgString, path)
+            data["images"][i]["dataURL"] = "/images/questions/" + filename
+
+        rs = module.data.insert_one("question", data)
+        return make_resource_response("resource", rs)

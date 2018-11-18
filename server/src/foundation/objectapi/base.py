@@ -16,7 +16,7 @@ class ObjectApiServer(Flask):
         self.modules = kwargs.pop('modules', None)
 
         datalayer = kwargs.pop('datalayer', MongoInterface)
-        self.data = datalayer()
+        self.data = datalayer(config["MONGO_HOST"], config["MONGGO_DB"])
 
         self.__resource__ = {}
         self.__routes__ = []
@@ -67,7 +67,7 @@ class ObjectApiServer(Flask):
             self.add_url_rule(resource_list, "get_list_%s" %
                               name, baseApi.get, methods=['GET'])
             self.add_url_rule(resource_item, "get_item_%s" %
-                              name, self.login_required(baseApi.get_item), methods=['GET'])
+                              name, baseApi.get_item, methods=['GET'])
             if name not in ignore_resource:
                 self.add_url_rule(resource_list, "create_%s" %
                                   name, self.login_required(baseApi.create), methods=['POST'])

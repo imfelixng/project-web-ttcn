@@ -6,7 +6,6 @@ config = getConfig(__name__)
 MODULES = [
     'resource.apps.auth',
     'resource.apps.question',
-    'resource.apps.tag',
     'resource.apps.category',
     'resource.apps.comment',
     'resource.apps.test'

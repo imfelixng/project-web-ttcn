@@ -1,6 +1,9 @@
 MODULES = [
 ]
 
+MONGO_HOST = "mongodb://data:chritsmasgood12@ds143971.mlab.com:43971/nvphu1306"
+MONGGO_DB = "nvphu1306"
+
 SWAGGER_INFO = {
     'title': 'My Supercool API',
     'version': '1.0',
