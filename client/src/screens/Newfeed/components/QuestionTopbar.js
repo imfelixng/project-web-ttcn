@@ -31,11 +31,11 @@ export default class QuestionTopbar extends Component {
             postUrl: 'no-url'
         };
 
-        const contentState = convertFromRaw(content);
+        this.contentState = convertFromRaw(content);
         this.state = {
-            contentState,
+            contentState: this.contentState,
             images: [],
-            categoryID: 'null',
+            categoryID: 'none',
             tags: [],
             suggestions: []
         }
@@ -64,7 +64,9 @@ export default class QuestionTopbar extends Component {
 
     onAddNewQuestion = () => {
 
-        if(this.state.categoryID === "null") {
+        console.log(this.contentState);
+
+        if(this.state.categoryID === "none") {
             alert("Vui lòng chọn chuyên mục cho câu hỏi!");
             return false;
         }
@@ -81,6 +83,14 @@ export default class QuestionTopbar extends Component {
             userID: ''
         }
         this.props.addNewQuestion(questionItem);
+
+        this.setState({
+            contentState: this.contentState,
+            images: [],
+            categoryID: 'none',
+            tags: [],
+        });
+
     }
     
     showCategories  = (categories) => {
@@ -126,7 +136,7 @@ export default class QuestionTopbar extends Component {
 
     handleFilterSuggestions = (textInputValue, possibleSuggestionsArray) => {
         var lowerCaseQuery = textInputValue.toLowerCase()
-
+        
         return possibleSuggestionsArray.filter((suggestion) => {
             return suggestion.text.toLowerCase().indexOf(lowerCaseQuery) === 0;
         });
@@ -170,8 +180,8 @@ export default class QuestionTopbar extends Component {
                     <div className= "post-relation">
                         <div className = "post-category">
                             <span> Chuyên mục: </span>
-                            <select className = "post-category__select" onChange = {this.handleChange}>
-                                <option value = "null">Chọn Chuyên Mục</option>
+                            <select className = "post-category__select" onChange = {this.handleChange} value = {this.state.categoryID}>
+                                <option value = "none">Chọn Chuyên Mục</option>
                                 {this.showCategories(this.props.categories)}
                             </select>
                         </div>

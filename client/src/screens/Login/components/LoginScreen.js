@@ -46,14 +46,12 @@ export default class LoginScreen extends Component {
 
         this.props.onCreateUser(user).then(res => {
             if(this.props.statusCreated) {
-                console.log("AHIHI");
                 this.setState({
                     email_signup: '',
                     fullname: '',
                     password_signup: '',
                     repeat_password_signup: '',
                     check_password_signup: true,
-                    isSuccess: true
                 });
             } else {
                 this.setState({
@@ -68,7 +66,29 @@ export default class LoginScreen extends Component {
 
     onSignIn = (e) => {
         e.preventDefault();
-        
+        let {password, email} = this.state;
+
+        let user = {
+            email,
+            password,
+        }
+
+        this.props.onSignIn(user).then(res => {
+            if(this.props.statusSignIn) {
+                console.log("Đã Login");
+                this.setState({
+                    email: '',
+                    password: '',
+                });
+            } else {
+                this.setState({
+                    error: "Đã có lỗi xãy ra!"
+                });
+            }
+        }).catch(err => {
+            console.log(err);
+        });
+
     }
 
     onLoginSocial = (name) => {
@@ -88,6 +108,12 @@ export default class LoginScreen extends Component {
                 [name]: value
             }
         )
+    }
+
+    static getDerivedStateFromProps(props) {
+        return {
+            isSuccess: props.isSuccess
+        }
     }
 
   render() {

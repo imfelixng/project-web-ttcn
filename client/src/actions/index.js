@@ -5,7 +5,8 @@ export const getAllQuestionRequest = () => {
     return async (dispatch) => {
         let questions = await APIs.callAPI("questions", "GET", null);
         if(questions != null) {
-            dispatch(getAllQuestions(questions.data.reverse()));
+            console.log(questions);
+            dispatch(getAllQuestions(questions.data._items.reverse()));
         }
     }
 
@@ -38,7 +39,7 @@ export const getAllCategoryRequest = () => {
     return async (dispatch) => {
         let categories = await APIs.callAPI("categories", "GET", null);
         if(categories != null) {
-            dispatch(getAllCategories(categories.data));
+            dispatch(getAllCategories(categories.data._items));
         }
     }
 
@@ -55,7 +56,7 @@ export const getAllTagsRequest = () => {
     return async (dispatch) => {
         let tags = await APIs.callAPI("tags", "GET", null);
         if(tags != null) {
-            dispatch(getAllTags(tags.data));
+            dispatch(getAllTags(tags.data._items));
         }
     }
 }
@@ -87,8 +88,10 @@ export const addNewTag = (tag) => {
 
 export const createUserRequest = (user) => {
     return async (dispatch) => {
-        let result = await APIs.callAPI("users", "POST", user);
+        let result = await APIs.callAPI("signup", "POST", user);
+        console.log(result);
             if(result != null) {
+
                 dispatch(createUser(result));
             }
     }
@@ -103,7 +106,8 @@ export const createUser = (result) => {
 
 export const checkUserRequest = (user) => {
     return async (dispatch) => {
-        let result = await APIs.callAPI("users", "POST", user);
+        let result = await APIs.callAPI("signin", "POST", user);
+        console.log(result);
             if(result != null) {
                 dispatch(checkUser(result));
             }

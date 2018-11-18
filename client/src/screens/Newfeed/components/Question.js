@@ -47,9 +47,12 @@ export default class Question extends Component {
                                         </div>
                                         </div>
                                         <div className="ed-opts">
-                                            <a  className="ed-opts-open" onClick = {this.onOpenFunctional}><i className="la la-ellipsis-v" /></a>
                                             {
-                                                this.state.isOpenFunctional && 
+                                                this.state.currentUserID &&
+                                                <a  className="ed-opts-open" onClick = {this.onOpenFunctional}><i className="la la-ellipsis-v" /></a>
+                                            }
+                                            {
+                                                this.state.isOpenFunctional &&
                                                 <ul className="ed-options active">
                                                     <li><a href="#" >Edit Post</a></li>
                                                     <li><a href="#" >Delete</a></li>
@@ -67,13 +70,15 @@ export default class Question extends Component {
                                             </ul>
                                         </li>
                                         </ul>
-                                        <ul className="bk-links">
-                                        <li><a href="#" ><i className="la la-bookmark" /></a></li>
-                                        <li><a href="#" ><i className="la la-bell" /></a></li>
-                                        </ul>
+                                        {
+                                            this.state.currentUserID && 
+                                            <ul className="bk-links">
+                                                <li><a href="#" ><i className="la la-bookmark" /></a></li>
+                                                <li><a href="#" ><i className="la la-bell" /></a></li>
+                                            </ul>
+                                        }
                                     </div>
             <div className="job_descp">
-                                        <h3>Senior Wordpress Developer</h3>
                                         <div 
                                             className = "question__content" 
                                             dangerouslySetInnerHTML = {this.showContent(question.content)}>
