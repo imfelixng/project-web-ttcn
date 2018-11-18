@@ -18,6 +18,7 @@ export default class NewfeedScreen extends Component {
         return <Question 
           key = {index}
           question = {question}
+          currentUserID  = {this.props.currentUserID}
         />
       });
     }

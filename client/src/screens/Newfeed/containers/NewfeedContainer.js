@@ -7,7 +7,8 @@ const mapStateToProps = (state) => {
     return{
         questions: state.questionReducer.questions,
         categories: state.categoryReducer.categories,
-        tags: state.tagReducer.tags
+        tags: state.tagReducer.tags,
+        currentUserID: state.userReducer.currentUserID
     }
 }
 

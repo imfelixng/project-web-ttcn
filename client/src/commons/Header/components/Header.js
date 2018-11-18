@@ -6,6 +6,7 @@ export default class Header extends Component {
     state = {
         isOpenInfo: false,
         isLogout: false,
+        currentUserID: ''
     }
 
     onToggleInfo = () => {
@@ -16,10 +17,19 @@ export default class Header extends Component {
 
     onLogout = () => {
         this.onToggleInfo();
+        this.props.onLogout();
         this.setState({
             isLogout: true
-        })
+        });
     }
+
+    static getDerivedStateFromProps(prevProps, prevState) {
+        return {
+            isLogout: prevProps.isLogout,
+            currentUserID: prevProps.currentUserID
+        }
+    }
+
 
   render() {
     return (
@@ -37,37 +47,46 @@ export default class Header extends Component {
                     <button type="submit"><i className="la la-search" /></button>
                     </form>
                 </div>{/*search-bar end*/}
-                <nav>
-                    <ul>
-                    <li>
-                        <NavLink to="/categories" >
-                        <span><img src="/images/icon2.png" /></span>
-                        Category
-                        </NavLink>
-                    </li>
-                    <li>
-                        <NavLink to="/tags" >
-                        <span><img src="/images/icon4.png" /></span>
-                        Tag
-                        </NavLink>
-                    </li>
-                    <li>
-                        <NavLink to = "/notifications">
-                        <span><img src="/images/icon7.png" /></span>
-                        Notification
-                        </NavLink>
-                    </li>
-                    </ul>
-                </nav>{/*nav end*/}
+                    <nav>
+                        <ul>
+                        <li>
+                            <NavLink to="/categories" >
+                            <span><img src="/images/icon2.png" /></span>
+                            Category
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="/tags" >
+                            <span><img src="/images/icon4.png" /></span>
+                            Tag
+                            </NavLink>
+                        </li>
+                        {
+                            this.state.currentUserID && 
+                            <li>
+                                <NavLink to = "/notifications">
+                                <span><img src="/images/icon7.png" /></span>
+                                Notification
+                                </NavLink>
+                            </li>
+                        }
+                        </ul>
+                    </nav>
                 <div className="menu-btn">
-                    <a href="#" ><i className="fa fa-bars" /></a>
+                    <a href="javascript:void()" ><i className="fa fa-bars" /></a>
                 </div>{/*menu-btn end*/}
                 <div className="user-account">
-                    <div className="user-info" onClick = {this.onToggleInfo}>
-                    <img src="/images/resources/user.png" />
-                    <a href="#" >John</a>
-                    <i className="la la-sort-down" />
-                    </div>
+                    {
+                        this.state.currentUserID ?
+                        <div className="user-info" >
+                            <NavLink to = "/user/U_12345">
+                                <img src="/images/resources/user.png" />
+                                <span>John</span>
+                            </NavLink>
+                            <i className="la la-sort-down" onClick = {this.onToggleInfo}/>
+                        </div> : 
+                        <NavLink className = "btn btn-light" to = "/sign-in">Sign In</NavLink>
+                    }
                     {
                         this.state.isOpenInfo && 
                         <div className="user-account-settingss active">

@@ -117,3 +117,11 @@ export const checkUser = (result) => {
     }
 }
 
+export const logoutUser = () => {
+    return {
+        type: types.LOG_OUT
+    }
+}
+
+
+

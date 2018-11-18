@@ -5,7 +5,8 @@ import draftToHtml from 'draftjs-to-html';
 export default class Question extends Component {
 
     state = {
-        isOpenFunctional: false
+        isOpenFunctional: false,
+        currentUserID: ''
     }
 
     onOpenFunctional = () => {
@@ -25,6 +26,13 @@ export default class Question extends Component {
             return <li key = {index}><a href="#" >{tagID}</a></li>;
         });
     }
+
+    static getDerivedStateFromProps(props, state) {
+        return {
+            currentUserID: props.currentUserID
+        }
+    }
+
   render() {
     let {question} = this.props;
     return (
@@ -44,7 +52,8 @@ export default class Question extends Component {
                                                 this.state.isOpenFunctional && 
                                                 <ul className="ed-options active">
                                                     <li><a href="#" >Edit Post</a></li>
-                                                    <li><a href="#" >Unsaved</a></li>
+                                                    <li><a href="#" >Delete</a></li>
+                                                    <li><a href="#" >UnMarked</a></li>
                                                     <li><a href="#" >Report</a></li>
                                                 </ul>
                                             }

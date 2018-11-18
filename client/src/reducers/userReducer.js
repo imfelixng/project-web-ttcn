@@ -3,7 +3,9 @@ import * as types from '../constants/index';
 const initialState = {
     users: [],
     statusCreated: false,
-    statusSignIn: false
+    statusSignIn: false,
+    currentUserID: localStorage.getItem('userID') ? localStorage.getItem('userID') : '',
+    isLogout: false,
 }
 
 let user = (state = initialState, action) => {
@@ -13,7 +15,17 @@ let user = (state = initialState, action) => {
             localStorage.setItem("userID", userID);
             return {
                 ...state,
-                statusCreated: !state.statusCreated
+                statusCreated: !state.statusCreated,
+                currentUserID: userID,
+                isLogout: false
+            }
+        case types.LOG_OUT:
+            localStorage.removeItem("userID");
+            return {
+                ...state,
+                currentUserID: '',
+                isLogout: true,
+                statusCreated: false
             }
         default:
             return state;

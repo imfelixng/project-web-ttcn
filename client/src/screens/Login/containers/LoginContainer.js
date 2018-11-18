@@ -4,7 +4,6 @@ import * as actions from '../../../actions/index';
 
 
 const mapStateToProps = (state) => {
-    console.log(state);
     return {
         statusCreated: state.userReducer.statusCreated
     }
