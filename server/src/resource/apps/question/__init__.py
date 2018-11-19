@@ -34,7 +34,7 @@ def __setup__(module):
             imgString = image_raw["dataURL"][22:]
             filename = image_raw["upload"]["filename"]
             # path = os.getcwd()
-            path = "/root/project-web-ttcn/public/images/questions/" + filename
+            path = "/server/public/images/questions/" + filename
             save_image(imgString, path)
             data["images"][i]["dataURL"] = "/images/questions/" + filename
 

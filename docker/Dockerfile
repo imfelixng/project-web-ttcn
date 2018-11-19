@@ -14,4 +14,4 @@ RUN pip install --trusted-host pypi.python.org -r requirements.txt
 ENV PYTHONPATH /app/server/server/src
 ENV FLASK_ENV development
 
-CMD ["python", "/app/server/bin/x-run.py"]
+CMD ["python", "/app/server/server/bin/x-run.py"]
