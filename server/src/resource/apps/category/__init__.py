@@ -13,3 +13,9 @@ def __setup__(module):
         data = request.json
         resp = module.data.insert_one("tag", data)
         return make_resource_response("resource", resp)
+
+    @module.endpoint("/categories", methods=["POST"])
+    def category():
+        data = request.json
+        resp = module.data.insert_one("category", data)
+        return make_resource_response("resource", resp)

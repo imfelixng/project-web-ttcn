@@ -7,7 +7,7 @@ from .helper import save_image
 
 def is_exist(array, index):
     for i in array:
-        if index == i["tagID"]:
+        if index == i["id"]:
             return True
             break
     return False
