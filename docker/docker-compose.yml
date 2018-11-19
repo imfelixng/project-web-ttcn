@@ -14,6 +14,6 @@ services:
     app_srv:
         build: .
         volumes:
-            - path/server:/app/server
+            - /root/project-web-ttcn/server:/app/server
         ports:
             - 8080:5000

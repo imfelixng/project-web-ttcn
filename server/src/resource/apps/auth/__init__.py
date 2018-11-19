@@ -12,7 +12,7 @@ def __setup__(module):
         data = request.json or request.form.to_dict()
         database = module.data.db
         if database.user.find_one({"email": data.get("email")}) is not None:
-            return make_error(400, description="email is exist")
+            return make_error(200, description="email is exist")
         model = User(data)
         model.save()
         return make_resource_response("resource", model.to_primitive())
@@ -23,9 +23,9 @@ def __setup__(module):
         database = module.data.db
 
         if database.user.find_one({"email": dt.get("email")}) is None:
-            return make_error(400, description="Email is wrong")
+            return make_error(200, description="Email is wrong")
         if database.user.find_one({"password": dt.get("password")}) is None:
-            return make_error(400, description="password is wrong")
+            return make_error(200, description="password is wrong")
 
         session["userID"] = module.data.db.user.find_one(
             {"email": dt.get("email")})["userID"]

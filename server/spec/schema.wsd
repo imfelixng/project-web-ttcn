@@ -3,18 +3,18 @@ Schema
 
 User system:
 	Register user
-		url: /register
+		url: /signup
 		method: POST
 		content-type: json
 
 	Update user
-		url: /user/
+		url: /users
 		method: PATCH
 		content-type: json
 
 Auth:
 	Login
-		url: /login
+		url: /signin
 		method: POST
 		content-type: json
 
