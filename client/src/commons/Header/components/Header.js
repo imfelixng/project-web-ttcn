@@ -88,7 +88,7 @@ export default class Header extends Component {
                         this.state.currentUserID ?
                         <div className="user-info" >
                             <NavLink to = "/user/U_12345">
-                                <img src= {this.props.currentUser ? this.props.currentUser.avatar : '/images/user/img_avatar_default.png'} />
+                                <img src= {this.props.currentUser ? this.props.currentUser.avatar : '/images/users/img_avatar_default.png'} />
                                 <span>{this.props.currentUser ? this.showFullName(this.props.currentUser.fullname) : 'name'}</span>
                             </NavLink>
                             <i className="la la-sort-down" onClick = {this.onToggleInfo}/>
