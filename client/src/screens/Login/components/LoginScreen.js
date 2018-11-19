@@ -14,8 +14,10 @@ export default class LoginScreen extends Component {
         check_password_signup: true,
         isSuccess: false,
         errMsgSignIn: '',
-        errMsgSignUp: ''
+        errMsgSignUp: '',
     }
+
+    _isMounted = false;
 
     showSignIn = (isSignIn) => {
         this.setState({
@@ -47,13 +49,13 @@ export default class LoginScreen extends Component {
 
         this.props.onCreateUser(user).then(res => {
             if(this.props.statusCreated) {
-                this.setState({
-                    email_signup: '',
-                    fullname: '',
-                    password_signup: '',
-                    repeat_password_signup: '',
-                    check_password_signup: true,
-                });
+                    this.setState({
+                        email_signup: '',
+                        fullname: '',
+                        password_signup: '',
+                        repeat_password_signup: '',
+                        check_password_signup: true,
+                    });
             } else {
                 this.setState({
                     error: "Đã có lỗi xãy ra!"
@@ -76,14 +78,18 @@ export default class LoginScreen extends Component {
 
         this.props.onSignIn(user).then(res => {
             if(this.props.statusSignIn) {
-                this.setState({
-                    email: '',
-                    password: '',
-                });
+                if(this._isMounted) {
+                    this.setState({
+                        email: '',
+                        password: '',
+                    });
+                }
             } else {
-                this.setState({
-                    error: "Đã có lỗi xãy ra!"
-                });
+                if(this._isMounted) {
+                    this.setState({
+                        error: "Đã có lỗi xãy ra!"
+                    });
+                }
             }
         }).catch(err => {
             console.log(err);
@@ -116,6 +122,14 @@ export default class LoginScreen extends Component {
             errMsgSignIn: props.errMsgSignIn,
             errMsgSignUp: props.errMsgSignUp
         }
+    }
+
+    componentDidMount() {
+        this._isMounted = true;
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false;
     }
 
   render() {

@@ -8,14 +8,15 @@ const initialState = {
     isLogout: false,
     isSuccess: false,
     errMsgSignIn: '',
-    errMsgSignUp: ''
+    errMsgSignUp: '',
+    currentUser: null
 }
 
 let user = (state = initialState, action) => {
     switch (action.type) {
         case types.CREATE_USER:
         {
-            let {userID, isSuccess,description} = action.result.data;
+            let {userID, isSuccess,description} = action.result;
             if(isSuccess && userID) {
                 localStorage.setItem("userID", userID);
             }
@@ -31,7 +32,7 @@ let user = (state = initialState, action) => {
             
         case types.SIGN_IN: 
         {
-            let {userID, isSuccess, description} = action.result.data;
+            let {userID, isSuccess, description} = action.result;
             if(isSuccess && userID) {
                 localStorage.setItem("userID", userID);
             }
@@ -45,7 +46,14 @@ let user = (state = initialState, action) => {
                 errMsgSignIn: description ? description : ''
             }
         }
-            
+        
+        case types.GET_USER: {
+            let {user} = action;
+            return {
+                ...state,
+                currentUser: user
+            }
+        }
         case types.LOG_OUT:
         {
             localStorage.removeItem("userID");

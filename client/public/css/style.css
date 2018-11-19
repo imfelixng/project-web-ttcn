@@ -5468,3 +5468,11 @@ a {
 	display: block;
     margin-top: 10px;
 }
+
+.user-account-settingss > h3 {
+	cursor: pointer;
+}
+
+.user-info img  {
+	width: 30px;
+}

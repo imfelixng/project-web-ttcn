@@ -9,3 +9,5 @@ export const ADD_NEW_TAGS = "ADD_NEW_TAGS";
 export const CREATE_USER = "CREATE_USER";
 export const SIGN_IN = "SIGN_IN";
 export const LOG_OUT = "LOG_OUT";
+
+export const GET_USER = "GET_USER";

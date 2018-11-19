@@ -22,9 +22,11 @@ export default class Question extends Component {
     }
 
     showTags(tagIDs) {
-        return tagIDs.map((tagID, index) => {
-            return <li key = {index}><a href="#" >{tagID}</a></li>;
-        });
+        if(tagIDs.length > 0) {
+            return tagIDs.map((tagID, index) => {
+                return <li key = {index}><a href="#" >{tagID}</a></li>;
+            });
+        }
     }
 
     static getDerivedStateFromProps(props, state) {

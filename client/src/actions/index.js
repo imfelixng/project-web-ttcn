@@ -92,7 +92,7 @@ export const createUserRequest = (user) => {
         console.log(result);
             if(result != null) {
 
-                dispatch(createUser(result));
+                dispatch(createUser(result.data));
             }
     }
 }
@@ -108,7 +108,7 @@ export const checkUserRequest = (user) => {
     return async (dispatch) => {
         let result = await APIs.callAPI("signin", "POST", user);
             if(result != null) {
-                dispatch(checkUser(result));
+                dispatch(checkUser(result.data));
             }
     }
 }
@@ -126,5 +126,19 @@ export const logoutUser = () => {
     }
 }
 
+export const getUserRequest = (userID) => {
+    return async (dispatch) => {
+        let result = await APIs.callAPI("users/" + userID, "GET");
+            if(result != null) {
+                dispatch(getUser(result.data));
+            }
+    }
+}
 
+export const getUser = (user) => {
+    return {
+        type: types.GET_USER,
+        user
+    }
+}
 

@@ -8,7 +8,8 @@ const mapStateToProps = (state) => {
         questions: state.questionReducer.questions,
         categories: state.categoryReducer.categories,
         tags: state.tagReducer.tags,
-        currentUserID: state.userReducer.currentUserID
+        currentUserID: state.userReducer.currentUserID,
+        currentUser: state.userReducer.currentUser
     }
 }
 
@@ -28,6 +29,9 @@ const mapDispatchToProps = (dispatch, props) => {
         },
         addNewTags: (tags) => {
             return dispatch(actions.addNewTagsRequest(tags));
+        },
+        getUser: (userID) => {
+            dispatch(actions.getUserRequest(userID));
         }
     }
 }

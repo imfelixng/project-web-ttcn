@@ -6,10 +6,16 @@ import Main from '../../../commons/Main/components/Main';
 
 export default class NewfeedScreen extends Component {
 
+  state = {
+    currentUserID: '',
+    currentUser: null
+  }
+
   componentDidMount = () => {
     this.props.getQuestions();
     this.props.getCategories();
     this.props.getTags();
+    this.props.getUser(this.props.currentUserID);
   }
   
   showQuestion = (questions) => {
@@ -19,10 +25,18 @@ export default class NewfeedScreen extends Component {
           key = {index}
           question = {question}
           currentUserID  = {this.props.currentUserID}
+          currentUser = {this.state.currentUser}
         />
       });
     }
     
+  }
+
+  static getDerivedStateFromProps(props) {
+    return {
+      currentUserID: props.currentUserID,
+      currentUser: props.currentUser
+    }
   }
 
   render() {
@@ -30,12 +44,16 @@ export default class NewfeedScreen extends Component {
       <React.Fragment>
         <Main>
           <div className="wrapper">
-              <QuestionTopbar 
-                addNewQuestion = {this.props.addNewQuestion}
-                categories = {this.props.categories}
-                suggestions = {this.props.tags}
-                addNewTags = {this.props.addNewTags}
-              />
+              {
+                this.state.currentUserID &&
+                <QuestionTopbar 
+                  addNewQuestion = {this.props.addNewQuestion}
+                  categories = {this.props.categories}
+                  suggestions = {this.props.tags}
+                  addNewTags = {this.props.addNewTags}
+                  currentUser = {this.state.currentUser}
+                />
+              }
               <div className="posts-section">
                 {this.showQuestion(this.props.questions)}
                 <LoadMore />

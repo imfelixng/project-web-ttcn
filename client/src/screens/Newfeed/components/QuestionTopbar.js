@@ -79,8 +79,8 @@ export default class QuestionTopbar extends Component {
             images: this.state.images,
             topComment: {},
             categoryID: this.state.categoryID,
-            tagIDs: this.state.tags.map((tag) => tag.id),
-            userID: ''
+            tagIDs: this.state.tags.length > 0 ? this.state.tags.map((tag) => tag.id): [],
+            userID: this.props.currentUser.userID
         }
         this.props.addNewQuestion(questionItem);
 
@@ -160,7 +160,7 @@ export default class QuestionTopbar extends Component {
       <React.Fragment>
             <div className="post-topbar">
                 <div className="user-picy">
-                    <img src="/images/resources/user-pic.png" />
+                    <img src = {this.props.currentUser ? this.props.currentUser.avatar : '/images/user/img_avatar_default.png'} />
                 </div>
                 <div className="post-st">
                     <div className = "post-content">
