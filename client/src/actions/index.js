@@ -107,7 +107,6 @@ export const createUser = (result) => {
 export const checkUserRequest = (user) => {
     return async (dispatch) => {
         let result = await APIs.callAPI("signin", "POST", user);
-        console.log(result);
             if(result != null) {
                 dispatch(checkUser(result));
             }
