@@ -2,7 +2,13 @@ from .schema import Question
 from foundation.core.api.helper import make_resource_response
 from flask import request
 import os
-from .helper import save_image
+import base64
+
+
+def save_image(base, filepath):
+    imgdata = base64.b64decode(base)
+    with open(filepath, 'wb') as f:
+        f.write(imgdata)
 
 
 def __setup__(module):
@@ -27,9 +33,8 @@ def __setup__(module):
             image_raw = data["images"][i]
             imgString = image_raw["dataURL"][22:]
             filename = image_raw["upload"]["filename"]
-            path = os.getcwd()
-            path = path[:path.find("project-web-ttcn")] + \
-                "project-web-ttcn/public/images/questions/" + filename
+            # path = os.getcwd()
+            path = "/root/project-web-ttcn/public/images/questions/" + filename
             save_image(imgString, path)
             data["images"][i]["dataURL"] = "/images/questions/" + filename
 
