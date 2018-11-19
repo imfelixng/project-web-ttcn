@@ -8,6 +8,8 @@ def __setup__(module):
     module.resource("categories", Category)
     module.resource("tags", Tag)
 
-    @module.endpoint("/arraytags", methods=["POST"])
-    def add_more():
-        pass
+    @module.endpoint("/tags", methods=["POST"])
+    def tag():
+        data = request.json
+        resp = module.data.insert_one("tag", data)
+        return make_resource_response("resource", resp)

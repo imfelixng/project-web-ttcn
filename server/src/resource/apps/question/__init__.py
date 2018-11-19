@@ -1,14 +1,32 @@
 from .schema import Question
 from foundation.core.api.helper import make_resource_response
 from flask import request
-import os
-import base64
+# import os
+from .helper import save_image
 
 
-def save_image(base, filepath):
-    imgdata = base64.b64decode(base)
-    with open(filepath, 'wb') as f:
-        f.write(imgdata)
+def is_exist(array, index):
+    for i in array:
+        if index == i["tagID"]:
+            return True
+            break
+    return False
+
+
+def save_new_tags(module, raw_tags):
+    current_tags = list(module.data.find("tag"))
+    for r_tag in raw_tags:
+        if not is_exist(current_tags, r_tag):
+            data = {
+                "id": r_tag,
+                "text": r_tag
+            }
+            rs = module.data.insert_one("tag", data)
+
+
+def findall(module):
+    data = module.data.find("tag")
+    return list(data)
 
 
 def __setup__(module):
@@ -29,6 +47,8 @@ def __setup__(module):
     @module.endpoint("/questions", methods=["POST"])
     def create():
         data = request.json
+
+        # check image and store in folder
         for i in range(0, len(data["images"]), 1):
             image_raw = data["images"][i]
             imgString = image_raw["dataURL"][22:]
@@ -38,5 +58,13 @@ def __setup__(module):
             save_image(imgString, path)
             data["images"][i]["dataURL"] = "/images/questions/" + filename
 
+        # check and add new tag
+        tagIDs = data["tagIDs"]
+        save_new_tags(module, tagIDs)
+
         rs = module.data.insert_one("question", data)
         return make_resource_response("resource", rs)
+
+    @module.endpoint("/listtag", methods=["GET"])
+    def listtag():
+        return str(findall(module))

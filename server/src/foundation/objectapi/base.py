@@ -63,7 +63,7 @@ class ObjectApiServer(Flask):
 
             resource_list = '/' + name
             resource_item = "/%s/<ID>" % name
-            ignore_resource = ["questions", "users"]
+            ignore_resource = ["questions", "users", "tags", "categories"]
             self.add_url_rule(resource_list, "get_list_%s" %
                               name, baseApi.get, methods=['GET'])
             self.add_url_rule(resource_item, "get_item_%s" %

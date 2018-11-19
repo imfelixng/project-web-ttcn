@@ -8,5 +8,5 @@ class Category(BaseModel):
 
 
 class Tag(BaseModel):
-    tagID = StringType(required=True)
-    name = StringType(required=True)
+    id = StringType(required=True)
+    text = StringType(required=True)
