@@ -7,34 +7,42 @@ const initialState = {
     currentUserID: localStorage.getItem('userID') ? localStorage.getItem('userID') : '',
     isLogout: false,
     isSuccess: false,
-    errMsg: ''
+    errMsgSignIn: '',
+    errMsgSignUp: ''
 }
 
 let user = (state = initialState, action) => {
     switch (action.type) {
         case types.CREATE_USER:
         {
-            let {userID} = action.result.data;
-            localStorage.setItem("userID", userID);
+            let {userID, isSuccess,description} = action.result.data;
+            if(isSuccess && userID) {
+                localStorage.setItem("userID", userID);
+            }
             return {
                 ...state,
-                statusCreated: true,
-                currentUserID: userID,
+                statusCreated: isSuccess,
+                currentUserID: userID ? userID : '',
                 isLogout: false,
-                isSuccess: true
+                isSuccess: isSuccess,
+                errMsgSignUp: description ? description : ''
             }
         }
             
         case types.SIGN_IN: 
         {
-            let {userID} = action.result.data;
-            localStorage.setItem("userID", userID);
+            let {userID, isSuccess, description} = action.result.data;
+            if(isSuccess && userID) {
+                localStorage.setItem("userID", userID);
+            }
+
             return {
                 ...state,
-                statusSignIn: true,
-                currentUserID: userID,
+                statusSignIn: isSuccess,
+                currentUserID: userID ? userID : '',
                 isLogout: false,
-                isSuccess: true
+                isSuccess: isSuccess,
+                errMsgSignIn: description ? description : ''
             }
         }
             

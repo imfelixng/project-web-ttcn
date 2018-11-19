@@ -13,7 +13,8 @@ export default class LoginScreen extends Component {
         repeat_password_signup: '',
         check_password_signup: true,
         isSuccess: false,
-        error: ''
+        errMsgSignIn: '',
+        errMsgSignUp: ''
     }
 
     showSignIn = (isSignIn) => {
@@ -75,7 +76,6 @@ export default class LoginScreen extends Component {
 
         this.props.onSignIn(user).then(res => {
             if(this.props.statusSignIn) {
-                console.log("Đã Login");
                 this.setState({
                     email: '',
                     password: '',
@@ -112,7 +112,9 @@ export default class LoginScreen extends Component {
 
     static getDerivedStateFromProps(props) {
         return {
-            isSuccess: props.isSuccess
+            isSuccess: props.isSuccess,
+            errMsgSignIn: props.errMsgSignIn,
+            errMsgSignUp: props.errMsgSignUp
         }
     }
 
@@ -143,7 +145,11 @@ export default class LoginScreen extends Component {
                         <li data-tab="tab-1" className= {this.state.isSignIn ? "current" : ""} onClick = {() => this.showSignIn(true)}><a >Sign in</a></li>				
                         <li data-tab="tab-2" className= {!this.state.isSignIn ? "current" : ""} onClick = {() => this.showSignIn(false)}><a  >Sign up</a></li>				
                     </ul>			
-                    <div className={this.state.isSignIn ? "sign_in_sec current" : "sign_in_sec"} id="tab-1">
+                    <div className={this.state.isSignIn ? "sign_in_sec current" : "sign_in_sec"} id="tab-1">      
+                        {
+                            this.state.errMsgSignIn &&
+                            <span className = "sign_error">{this.state.errMsgSignIn}</span>
+                        }
                         <h3>Sign in</h3>
                         <form method="post" onSubmit = {this.onSignIn}>
                         <div className="row">
@@ -173,6 +179,10 @@ export default class LoginScreen extends Component {
                     </div>{/*sign_in_sec end*/}
                     <div className={!this.state.isSignIn ? "sign_in_sec current" : "sign_in_sec"} id="tab-2">
                         <div className="dff-tab current" id="tab-3">
+                        {
+                            this.state.errMsgSignUp &&
+                            <span className = "sign_error">{this.state.errMsgSignUp}</span>
+                        }
                         <h3>Sign up</h3>
                         <form method = "post" onSubmit = {this.onSignUp}>
                             <div className="row">

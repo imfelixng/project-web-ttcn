@@ -12,9 +12,11 @@ let callAPI = async (endpoint, method = 'GET', data) => {
         });
     } catch(e) {
         console.log(e);
+    } finally {
+        return dataAPI;
     }
     
-    return dataAPI;
+
 }
 
 export {callAPI}

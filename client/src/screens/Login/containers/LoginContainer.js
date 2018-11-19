@@ -7,7 +7,9 @@ const mapStateToProps = (state) => {
     return {
         statusCreated: state.userReducer.statusCreated,
         statusSignIn:  state.userReducer.statusSignIn,
-        isSuccess: state.userReducer.isSuccess
+        isSuccess: state.userReducer.isSuccess,
+        errMsgSignUp: state.userReducer.errMsgSignUp,
+        errMsgSignIn: state.userReducer.errMsgSignIn
     }
 }
 
