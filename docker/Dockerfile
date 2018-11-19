@@ -11,7 +11,7 @@ ADD . /server
 RUN pip install --trusted-host pypi.python.org -r requirements.txt
 
 # execute the Flask app
-ENV PYTHONPATH /app/server/src
+ENV PYTHONPATH /app/server/server/src
 ENV FLASK_ENV development
 
 CMD ["python", "/app/server/bin/x-run.py"]
