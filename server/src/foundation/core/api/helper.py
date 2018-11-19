@@ -25,10 +25,11 @@ def make_resource_response(resource, data):
         return response
 
 
-def make_error(status, description):
+def make_error(status, description, isSuccess=False):
     error_object = {
         'status': status,
-        'description': description
+        'description': description,
+        'isSuccess': isSuccess
     }
     response = json.dumps(error_object)
     return Response(response=response, status=status, content_type='application/json')

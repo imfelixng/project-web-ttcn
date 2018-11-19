@@ -32,7 +32,8 @@ def __setup__(module):
         data_response = {
             "status": 200,
             "description": "ok",
-            "userID": session["userID"]
+            "userID": session["userID"],
+            "isSuccess": True
         }
         return Response(response=json.dumps(data_response), status=200, content_type='application/json')
 
