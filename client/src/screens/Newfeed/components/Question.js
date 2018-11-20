@@ -23,7 +23,7 @@ export default class Question extends Component {
 
     showTags(tagIDs) {
         return tagIDs.map((tagID, index) => {
-            return <li key = {index}><a href="#" >{tagID}</a></li>;
+            return <li key = {index}><a href="#" >{tagID.id}</a></li>;
         });
     }
 
