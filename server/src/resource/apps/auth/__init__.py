@@ -15,6 +15,14 @@ def __setup__(module):
             return make_error(200, description="email is exist")
         model = User(data)
         model.save()
+        data_response = {
+            "status": 200,
+            "description": "ok",
+            "userID": data["userID"],
+            "isSuccess": True
+        }
+        return Response(response=json.dumps(data_response), status=200, content_type='application/json')
+
         return make_resource_response("resource", model.to_primitive())
 
     @module.endpoint("/signin", methods=["POST"])
