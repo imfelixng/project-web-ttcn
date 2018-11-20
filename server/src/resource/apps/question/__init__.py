@@ -16,12 +16,8 @@ def is_exist(array, index):
 def save_new_tags(module, raw_tags):
     current_tags = list(module.data.find("tag"))
     for r_tag in raw_tags:
-        if not is_exist(current_tags, r_tag):
-            data = {
-                "id": r_tag,
-                "text": r_tag
-            }
-            rs = module.data.insert_one("tag", data)
+        if not is_exist(current_tags, r_tag['id']):
+            rs = module.data.insert_one("tag", r_tag)
 
 
 def findall(module):
@@ -59,8 +55,8 @@ def __setup__(module):
             data["images"][i]["dataURL"] = "/images/questions/" + filename
 
         # check and add new tag
-        tagIDs = data["tagIDs"]
-        save_new_tags(module, tagIDs)
+        tags = data["tags"]
+        save_new_tags(module, tags)
 
         rs = module.data.insert_one("question", data)
         return make_resource_response("resource", rs)
