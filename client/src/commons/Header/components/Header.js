@@ -31,10 +31,12 @@ export default class Header extends Component {
     }
 
     componentDidMount() {
-        this.props.getUser(this.props.currentUserID)
+        console.log(this.props);
+        //this.props.getUser(this.props.currentUserID)
     }
 
     showFullName = (fullname) => {
+        console.log(fullname);
         let lastSpace  = fullname.lastIndexOf(' ');
         return fullname.slice(lastSpace);
     }

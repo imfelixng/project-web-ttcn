@@ -6,7 +6,9 @@ export default class Question extends Component {
 
     state = {
         isOpenFunctional: false,
-        currentUserID: ''
+        currentUserID: '',
+        userOther: [],
+        categoryQuestion: []
     }
 
     onOpenFunctional = () => {
@@ -21,30 +23,59 @@ export default class Question extends Component {
           }
     }
 
-    showTags(tagIDs) {
-        if(tagIDs.length > 0) {
-            return tagIDs.map((tagID, index) => {
-                return <li key = {index}><a href="#" >{tagID}</a></li>;
+    showTags(tags) {
+        if(tags.length > 0) {
+            return tags.map((tag, index) => {
+                return <li key = {index}><NavLink to={"/tags/" + tag.id} >{tag.text}</NavLink></li>;
             });
         }
     }
 
     static getDerivedStateFromProps(props, state) {
         return {
-            currentUserID: props.currentUserID
+            currentUserID: props.currentUserID,
+            userOther: props.userOther,
+            categoryQuestion: props.categoryQuestion
         }
+    }
+
+    componentDidMount() {
+        this.props.getUserOther(this.props.question.userID);
+        this.props.getCategoryQuestion(this.props.question.categoryID);
+    }
+
+    getUserInfo = (userID, Users) => {
+        let userInfo = null;
+        if(Users.length > 0) {
+            let index = Users.findIndex(User => User.userID === userID);
+            userInfo = Users[index];
+        }
+        return userInfo;
+
+    }
+
+    getCategoryInfo = (categoryID, categories) => {
+        let categoryInfo = null;
+        if(categories.length > 0) {
+            let index = categories.findIndex(category => category.categoryID === categoryID);
+            categoryInfo = categories[index];
+        }
+        return categoryInfo;
+
     }
 
   render() {
     let {question} = this.props;
+    let userInfo = this.getUserInfo(question.userID, this.state.userOther);
+    let categoryInfo = this.getCategoryInfo(question.categoryID, this.state.categoryQuestion);
     return (
       <React.Fragment>
         <div className="post-bar">
             <div className="post_topbar">
                                         <div className="usy-dt">
-                                        <img src="images/resources/us-pic.png"  />
+                                        <img className = "user-picy" src= {userInfo ? userInfo.avatar : "/images/users/img_avatar_default.png"}  />
                                         <div className="usy-name">
-                                            <h3>John Doe</h3>
+                                            <h3>{userInfo ? userInfo.fullname : "yourname"}</h3>
                                             <span><img src="images/clock.png"  />3 min ago</span>
                                         </div>
                                         </div>
@@ -56,8 +87,14 @@ export default class Question extends Component {
                                             {
                                                 this.state.isOpenFunctional &&
                                                 <ul className="ed-options active">
-                                                    <li><a href="#" >Edit Post</a></li>
-                                                    <li><a href="#" >Delete</a></li>
+                                                    {
+                                                        this.state.currentUserID === question.userID &&
+                                                        <React.Fragment>
+                                                            <li><a href="#" >Edit Post</a></li>
+                                                            <li><a href="#" >Delete</a></li>
+                                                        </React.Fragment>
+
+                                                    }
                                                     <li><a href="#" >UnMarked</a></li>
                                                     <li><a href="#" >Report</a></li>
                                                 </ul>
@@ -68,7 +105,11 @@ export default class Question extends Component {
                                         <ul className="descp">
                                         <li>
                                             <ul className="job-dt">
-                                            <li><a href="#" >{question.categoryID}</a></li>
+                                                {
+                                                    categoryInfo &&
+                                                    <li><NavLink to= {"/categories/" + categoryInfo.categoryID} >{categoryInfo.name}</NavLink></li>
+                                                }
+
                                             </ul>
                                         </li>
                                         </ul>
@@ -86,7 +127,7 @@ export default class Question extends Component {
                                             dangerouslySetInnerHTML = {this.showContent(question.content)}>
                                         </div>
                                         <ul className="skill-tags">
-                                            {this.showTags(question.tagIDs)}
+                                            {this.showTags(question.tags)}
                                         </ul>
                                     </div>
             <div className="job-status-bar">

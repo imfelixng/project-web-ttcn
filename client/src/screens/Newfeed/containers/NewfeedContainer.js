@@ -9,7 +9,9 @@ const mapStateToProps = (state) => {
         categories: state.categoryReducer.categories,
         tags: state.tagReducer.tags,
         currentUserID: state.userReducer.currentUserID,
-        currentUser: state.userReducer.currentUser
+        currentUser: state.userReducer.currentUser,
+        userOther: state.userReducer.userOther,
+        categoryQuestion: state.categoryReducer.categoryQuestion
     }
 }
 
@@ -27,11 +29,14 @@ const mapDispatchToProps = (dispatch, props) => {
         getTags: () => {
             return dispatch(actions.getAllTagsRequest());
         },
-        addNewTags: (tags) => {
-            return dispatch(actions.addNewTagsRequest(tags));
-        },
         getUser: (userID) => {
-            dispatch(actions.getUserRequest(userID));
+            return dispatch(actions.getUserRequest(userID));
+        },
+        getUserOther: (userID) => {
+            return dispatch(actions.getUserOtherRequest(userID));
+        },
+        getCategoryQuestion: (categoryID) => {
+            return dispatch(actions.getCategoryQuestionRequest(categoryID));
         }
     }
 }

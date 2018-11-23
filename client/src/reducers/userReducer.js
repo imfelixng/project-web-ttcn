@@ -9,7 +9,8 @@ const initialState = {
     isSuccess: false,
     errMsgSignIn: '',
     errMsgSignUp: '',
-    currentUser: null
+    currentUser: null,
+    userOther: [],
 }
 
 let user = (state = initialState, action) => {
@@ -54,6 +55,15 @@ let user = (state = initialState, action) => {
                 currentUser: user
             }
         }
+
+        case types.GET_USER_OTHER: {
+            let {user} = action;
+            return {
+                ...state,
+                userOther: [...state.userOther, user]
+            }
+        }
+
         case types.LOG_OUT:
         {
             localStorage.removeItem("userID");

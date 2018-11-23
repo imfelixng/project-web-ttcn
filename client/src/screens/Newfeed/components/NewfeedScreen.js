@@ -26,6 +26,10 @@ export default class NewfeedScreen extends Component {
           question = {question}
           currentUserID  = {this.props.currentUserID}
           currentUser = {this.state.currentUser}
+          getUserOther = {this.props.getUserOther}
+          userOther = {this.props.userOther}
+          getCategoryQuestion = {this.props.getCategoryQuestion}
+          categoryQuestion = {this.props.categoryQuestion}
         />
       });
     }
@@ -50,7 +54,6 @@ export default class NewfeedScreen extends Component {
                   addNewQuestion = {this.props.addNewQuestion}
                   categories = {this.props.categories}
                   suggestions = {this.props.tags}
-                  addNewTags = {this.props.addNewTags}
                   currentUser = {this.state.currentUser}
                 />
               }

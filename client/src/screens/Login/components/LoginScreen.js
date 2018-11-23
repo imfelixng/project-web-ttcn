@@ -44,11 +44,12 @@ export default class LoginScreen extends Component {
             username: '',
             vote: 0,
             unvote: 0,
-            avatar: '/images/user/img_avatar_default.png'
+            avatar: '/images/users/img_avatar_default.png'
         }
 
         this.props.onCreateUser(user).then(res => {
             if(this.props.statusCreated) {
+                if(this._isMounted){
                     this.setState({
                         email_signup: '',
                         fullname: '',
@@ -56,6 +57,8 @@ export default class LoginScreen extends Component {
                         repeat_password_signup: '',
                         check_password_signup: true,
                     });
+                }    
+
             } else {
                 this.setState({
                     error: "Đã có lỗi xãy ra!"

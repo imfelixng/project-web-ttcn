@@ -52,6 +52,23 @@ export const getAllCategories = (categories) => {
     }
 };
 
+export const getCategoryQuestionRequest = (categoryID) => {
+    return async (dispatch) => {
+        let result = await APIs.callAPI("categories/" + categoryID, "GET");
+        console.log(result);
+            if(result != null) {
+                dispatch(getCategoryQuestion(result.data));
+            }
+    }
+}
+
+export const getCategoryQuestion = (category) => {
+    return {
+        type: types.GET_CATEGORY_QUESTION,
+        category
+    }
+}
+
 export const getAllTagsRequest = () => {
     return async (dispatch) => {
         let tags = await APIs.callAPI("tags", "GET", null);
@@ -138,6 +155,22 @@ export const getUserRequest = (userID) => {
 export const getUser = (user) => {
     return {
         type: types.GET_USER,
+        user
+    }
+}
+
+export const getUserOtherRequest = (userID) => {
+    return async (dispatch) => {
+        let result = await APIs.callAPI("users/" + userID, "GET");
+            if(result != null) {
+                dispatch(getUserOther(result.data));
+            }
+    }
+}
+
+export const getUserOther = (user) => {
+    return {
+        type: types.GET_USER_OTHER,
         user
     }
 }
