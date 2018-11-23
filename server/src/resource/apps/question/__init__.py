@@ -1,7 +1,6 @@
 from .schema import Question
 from foundation.core.api.helper import make_resource_response
 from flask import request
-# import os
 from .helper import save_image
 
 

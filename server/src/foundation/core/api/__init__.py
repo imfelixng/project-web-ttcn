@@ -17,6 +17,8 @@ class BaseAPI:
     def get(self, query=None):
         data = self.data.find(self.resource, query)
         data = list(data)
+        for i in data:
+            del i["_id"]
         return make_resource_response(self.resource, data)
 
     def get_item(self, ID):

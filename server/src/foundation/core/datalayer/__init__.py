@@ -34,7 +34,8 @@ class MongoInterface(object):
 
     def find(self, resource, query=None):
         source = self.db[resource]
-        query = {}
+        if query is None:
+            query = {}
         data = source.find(query)
         return data
 
@@ -65,18 +66,14 @@ class MongoInterface(object):
         else:
             return False
 
-    def find_embedded_id(self, source, dist, _id, localField, foreignField):
+    def aggregate(self, source, query, project):
         h = self.db[source].aggregate([
             {
-                "$lookup":
-                {
-                    "from": dist,
-                    "localField": localField,
-                    "foreignField": foreignField,
-                    "as": dist
-                }
+                "$match": query
             },
-            {"$match": {"_id": ObjectId(_id)}},
+            {
+                "$project": project
+            }
         ])
         return h
 
