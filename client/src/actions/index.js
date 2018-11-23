@@ -35,6 +35,23 @@ export const addNewQuestion = (questionItem) => {
     }
 };
 
+export const deleteQuestionRequest = (questionID) => {
+    return async (dispatch) => {
+        let result = await APIs.callAPI("questions/" + questionID, "DELETE");
+        console.log(result);
+        if(result != null) {
+            dispatch(addNewQuestion(questionID));
+        }
+    }
+};
+
+export const deleteQuestion = (questionID) => {
+    return {
+        type: types.DELETE_QUESTION,
+        questionID
+    }
+};
+
 export const getAllCategoryRequest = () => {
     return async (dispatch) => {
         let categories = await APIs.callAPI("categories", "GET", null);
@@ -55,7 +72,6 @@ export const getAllCategories = (categories) => {
 export const getCategoryQuestionRequest = (categoryID) => {
     return async (dispatch) => {
         let result = await APIs.callAPI("categories/" + categoryID, "GET");
-        console.log(result);
             if(result != null) {
                 dispatch(getCategoryQuestion(result.data));
             }

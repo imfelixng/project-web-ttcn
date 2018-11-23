@@ -44,30 +44,15 @@ export default class Question extends Component {
         this.props.getCategoryQuestion(this.props.question.categoryID);
     }
 
-    getUserInfo = (userID, Users) => {
-        let userInfo = null;
-        if(Users.length > 0) {
-            let index = Users.findIndex(User => User.userID === userID);
-            userInfo = Users[index];
-        }
-        return userInfo;
 
-    }
-
-    getCategoryInfo = (categoryID, categories) => {
-        let categoryInfo = null;
-        if(categories.length > 0) {
-            let index = categories.findIndex(category => category.categoryID === categoryID);
-            categoryInfo = categories[index];
-        }
-        return categoryInfo;
-
+    onDeleteQuestion = (questionID) => {
+        this.props.deleteQuestion(questionID);
     }
 
   render() {
     let {question} = this.props;
-    let userInfo = this.getUserInfo(question.userID, this.state.userOther);
-    let categoryInfo = this.getCategoryInfo(question.categoryID, this.state.categoryQuestion);
+    let userInfo = this.state.userOther[question.userID];
+    let categoryInfo = this.state.categoryQuestion[question.categoryID];
     return (
       <React.Fragment>
         <div className="post-bar">
@@ -91,7 +76,7 @@ export default class Question extends Component {
                                                         this.state.currentUserID === question.userID &&
                                                         <React.Fragment>
                                                             <li><a href="#" >Edit Post</a></li>
-                                                            <li><a href="#" >Delete</a></li>
+                                                            <li><a onClick = {() => this.onDeleteQuestion(question.questionID)} >Delete</a></li>
                                                         </React.Fragment>
 
                                                     }
