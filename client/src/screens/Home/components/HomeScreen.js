@@ -15,8 +15,8 @@ export default class HomeScreen extends Component {
           <HeaderContainer />
           <Switch>
               <Route path = "/" component = {NewfeedContainer} exact/>
-              <Route path = "/categories" component = {CategoryContainer}/>
-              <Route path = "/tags" component = {TagContainer}/>
+              <Route path = "/categories" component = {CategoryContainer} exact/>
+              <Route path = "/tags" component = {TagContainer} exact/>
               <Route path = "/questions/:idQuestion" component = {QuestionDetail}/>
               <Route path = "/sign-in" component = {LoginContainer}/>
               <Route component = {Error404Screen} />

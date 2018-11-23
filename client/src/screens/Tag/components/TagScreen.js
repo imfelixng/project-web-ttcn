@@ -12,7 +12,7 @@ export default class TagScreen extends Component {
     return (
       <React.Fragment>
         <Main >
-          <p className="mb-3">List tags</p>
+          <p className="mb-3">List tag</p>
           <div className="posts-section">
             <Tags tags = {this.props.tags}/>
           </div>{/*posts-section end*/}
