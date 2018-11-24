@@ -10,7 +10,7 @@ const initialState = {
     errMsgSignIn: '',
     errMsgSignUp: '',
     currentUser: null,
-    userOther: [],
+    userOther: {},
 }
 
 let user = (state = initialState, action) => {
@@ -58,9 +58,15 @@ let user = (state = initialState, action) => {
 
         case types.GET_USER_OTHER: {
             let {user} = action;
+            let newUsers = {
+                ...state.userOther
+            }
+
+            newUsers[user.userID] = user;
+
             return {
                 ...state,
-                userOther: [...state.userOther, user]
+                userOther: newUsers
             }
         }
 

@@ -3,7 +3,7 @@ import * as actions from '../actions/index'
 
 let initialState = {
     categories: [],
-    categoryQuestion: []
+    categoryQuestion: {}
 };
 
 const category = (state = initialState, action) => {
@@ -20,9 +20,14 @@ const category = (state = initialState, action) => {
         case types.GET_CATEGORY_QUESTION: {
 
             let {category} = action;
+
+            let newCategories = {
+                ...state.categoryQuestion
+            }
+            newCategories[category.categoryID] = category;
             return {
                 ...state,
-                categoryQuestion: [...state.categoryQuestion, category]
+                categoryQuestion: newCategories
             }
         }
 
