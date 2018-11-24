@@ -4,11 +4,6 @@ import draftToHtml from 'draftjs-to-html';
 import LoginModal from './LoginModal';
 export default class Question extends Component {
 
-    constructor(props) {
-        super(props);
-        this.loginModal = React.createRef();
-    }
-
     state = {
         isOpenFunctional: false,
         currentUserID: '',
@@ -122,7 +117,6 @@ export default class Question extends Component {
     let {question} = this.props;
     let userInfo = this.state.userOther[question.userID];
     let categoryInfo = this.state.categoryQuestion[question.categoryID];
-    console.log(question);
     return (
       <React.Fragment>
         <div className="post-bar">
@@ -216,7 +210,7 @@ export default class Question extends Component {
                 </div>
             </div>
         </div>{/*post-bar end*/}
-        <LoginModal ref = {this.loginModal} history = {this.props.history} />
+        <LoginModal history = {this.props.history} />
       </React.Fragment>
     )
   }

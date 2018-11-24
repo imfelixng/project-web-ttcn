@@ -5,7 +5,6 @@ export const getAllQuestionRequest = () => {
     return async (dispatch) => {
         let questions = await APIs.callAPI("questions", "GET", null);
         if(questions != null) {
-            console.log(questions);
             dispatch(getAllQuestions(questions.data._items.reverse()));
         }
     }
@@ -34,6 +33,23 @@ export const addNewQuestion = (questionItem) => {
         questionItem
     }
 };
+
+export const getQuestionRequest = (questionID) => {
+    return async (dispatch) => {
+        console.log(questionID);
+        let result = await APIs.callAPI("questions/" + questionID, "GET");
+            if(result != null) {
+                dispatch(getQuestion(result.data));
+            }
+    }
+}
+
+export const getQuestion = (question) => {
+    return {
+        type: types.GET_QUESTION,
+        question
+    }
+}
 
 export const deleteQuestionRequest = (questionID) => {
     return async (dispatch) => {
