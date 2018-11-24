@@ -44,7 +44,7 @@ export default class Header extends Component {
   render() {
     return (
       <React.Fragment>
-        {this.state.isLogout && <Redirect to = "/sign-in"/>}
+        {this.state.isLogout && <Redirect to = "/"/>}
         <header>
             <div className="container">
                 <div className="header-data">

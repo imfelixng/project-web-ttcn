@@ -1,7 +1,13 @@
 import React, { Component } from 'react'
 import {NavLink} from 'react-router-dom';
 import draftToHtml from 'draftjs-to-html';
+import LoginModal from './LoginModal';
 export default class Question extends Component {
+
+    constructor(props) {
+        super(props);
+        this.loginModal = React.createRef();
+    }
 
     state = {
         isOpenFunctional: false,
@@ -106,6 +112,12 @@ export default class Question extends Component {
         }
     }
 
+    onShowLoginModal = () => {
+        if(this.state.currentUserID) {
+            this.props.history.push('/questions/' + this.props.question.questionID);
+        }
+    }
+
   render() {
     let {question} = this.props;
     let userInfo = this.state.userOther[question.userID];
@@ -131,14 +143,16 @@ export default class Question extends Component {
                     this.state.isOpenFunctional &&
                     <ul className="ed-options active">
                     {
-                        this.state.currentUserID === question.userID &&
+                        this.state.currentUserID === question.userID ?
                         <React.Fragment>
-                            <li><a data-toggle="modal" data-target="#exampleModal">Edit Post</a></li>
                             <li><a onClick = {() => this.onDeleteQuestion(question.questionID)} >Delete</a></li>
+                        </React.Fragment> :
+                        <React.Fragment>
+                            <li><a href="#" >Mark</a></li>
+                            <li><a href="#" >Notify</a></li>
+                            <li><a href="#" >Report</a></li>
                         </React.Fragment>
                     }
-                        <li><a href="#" >UnMarked</a></li>
-                        <li><a href="#" >Report</a></li>
                     </ul>
                 }
                 </div>
@@ -191,33 +205,18 @@ export default class Question extends Component {
                                         
                                     </div>
             <div className="question_top-comment">
-                <div className= "top-comment">
-                    Noi dung top comment
-                </div>
+                {
+                    question.topComment.commentID && 
+                    <div className= "top-comment">
+                        Noi dung top comment
+                    </div>
+                }
                 <div>
-                    <NavLink to = {"/questions/" + question.questionID} className= "btn btn-info btn-join">Join in this discuss</NavLink>
+                    <div className= "btn btn-info btn-join" data-toggle={!this.state.currentUserID ? "modal" : " "} data-target= {!this.state.currentUserID ? "#showLogin" : " "} onClick = {this.onShowLoginModal}>Join in this discuss</div>
                 </div>
             </div>
         </div>{/*post-bar end*/}
-            <div className="modal fade" id="exampleModal" tabIndex={-1} role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div className="modal-dialog" role="document">
-                    <div className="modal-content">
-                    <div className="modal-header">
-                        <h5 className="modal-title" id="exampleModalLabel">Modal title</h5>
-                        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div className="modal-body">
-                        ...
-                    </div>
-                    <div className="modal-footer">
-                        <button type="button" className="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="button" className="btn btn-primary">Save changes</button>
-                    </div>
-                    </div>
-                </div>
-            </div>
+        <LoginModal ref = {this.loginModal} history = {this.props.history} />
       </React.Fragment>
     )
   }
