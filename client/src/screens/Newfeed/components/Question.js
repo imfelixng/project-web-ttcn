@@ -142,8 +142,6 @@ export default class Question extends Component {
                             <li><a onClick = {() => this.onDeleteQuestion(question.questionID)} >Delete</a></li>
                         </React.Fragment> :
                         <React.Fragment>
-                            <li><a href="#" >Mark</a></li>
-                            <li><a href="#" >Notify</a></li>
                             <li><a href="#" >Report</a></li>
                         </React.Fragment>
                     }
@@ -166,8 +164,10 @@ export default class Question extends Component {
                                         {
                                             this.state.currentUserID && 
                                             <ul className="bk-links">
-                                                <li><a href="#" ><i className="la la-bookmark" /></a></li>
-                                                <li><a href="#" ><i className="la la-bell" /></a></li>
+                                                {  this.state.currentUserID !== question.userID &&
+                                                    <li><a href="#" ><i className= "la la-bookmark" /></a></li>
+                                                }
+                                                <li><a href="#" ><i className="la la-check" /></a></li>
                                             </ul>
                                         }
                                     </div>

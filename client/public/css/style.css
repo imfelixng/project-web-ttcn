@@ -1168,13 +1168,14 @@ main {
 	font-size: 24px;
 	width: 30px;
 	height: 30px;
-	background-color: #53d690;
+	background-color: #e44d3a;
 	text-align: center;
 	line-height: 30px;
 }
-.bk-links li i.la-bell {
-	background-color: #e44d3a;
+.bk-links li i.la-check {
+	background-color: #53d690;
 }
+
 .bid_now {
 	color: #fff;
 	background-color: #51a5fb;
