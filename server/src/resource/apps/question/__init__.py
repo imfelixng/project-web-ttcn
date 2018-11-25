@@ -6,7 +6,7 @@ from .helper import save_image
 
 def is_exist(array, index):
     for i in array:
-        if index == i["id"]:
+        if index == i["tagID"]:
             return True
             break
     return False
@@ -15,9 +15,9 @@ def is_exist(array, index):
 def save_new_tags(module, raw_tags):
     current_tags = list(module.data.find("tag"))
     for r_tag in raw_tags:
-        if not is_exist(current_tags, r_tag['id']):
-            e = r_tag
-            rs = module.data.insert_one("tag", e)
+        if not is_exist(current_tags, r_tag['tagID']):
+            rs = module.data.insert_one("tag", r_tag)
+            del[r_tag["_id"]]
 
 
 def findall(module):

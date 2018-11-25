@@ -1,8 +1,6 @@
 from .schema import Category, Tag
 from flask import request
 from foundation.core.api.helper import make_resource_response, make_error
-from foundation.core.exceptions import UnprocessableEntity
-from pprint import pprint
 
 
 def __setup__(module):
@@ -23,6 +21,7 @@ def __setup__(module):
         query = {
             "tags": {
                 "$eq": {
+                    "tagID": tag["tagID"],
                     "id": tag["id"],
                     "text": tag["text"]
                 }

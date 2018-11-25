@@ -10,3 +10,4 @@ class Category(BaseModel):
 class Tag(BaseModel):
     id = StringType(required=True)
     text = StringType(required=True)
+    tagID = StringType(required=True)
