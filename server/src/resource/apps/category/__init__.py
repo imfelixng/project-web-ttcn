@@ -29,14 +29,9 @@ def __setup__(module):
             }
         }
         project = {
-            "questionID": 1,
-            "content.blocks.text": 1,
             "_id": 0
         }
         resp = list(module.data.aggregate("question", query, project))
-        for i in resp:
-            i["text"] = i["content"]["blocks"][0]["text"]
-            del i["content"]
         return make_resource_response("resource", resp)
 
     @module.endpoint("/categories", methods=["POST"])
