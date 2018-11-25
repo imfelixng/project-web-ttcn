@@ -16,7 +16,8 @@ def save_new_tags(module, raw_tags):
     current_tags = list(module.data.find("tag"))
     for r_tag in raw_tags:
         if not is_exist(current_tags, r_tag['id']):
-            rs = module.data.insert_one("tag", r_tag)
+            e = r_tag
+            rs = module.data.insert_one("tag", e)
 
 
 def findall(module):
