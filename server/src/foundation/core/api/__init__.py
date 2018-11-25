@@ -61,6 +61,6 @@ class BaseAPI:
     def delete_item(self, ID):
         done = self.data.delete_one(self.resource, ID)
         if done:
-            return Response(status=204)
+            return Response(status=200)
         else:
             return UnprocessableEntity('RC_400', message='Delete fail')

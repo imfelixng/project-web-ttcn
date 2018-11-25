@@ -46,7 +46,7 @@ class ObjectApiServer(Flask):
         def wrapped_view(**kwargs):
             self.before_request()
             if g.user is None:
-                return make_error(status=400, description="You have to login")
+                return make_error(status=200, description="You have to login")
 
             return view(**kwargs)
 
