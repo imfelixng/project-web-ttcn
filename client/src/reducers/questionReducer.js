@@ -19,6 +19,12 @@ const question = (state = initialState, action) => {
                 ...state,
                 questions: [action.questionItem, ...questions]
             }
+        case types.DELETE_QUESTION:
+            let {questionID} = action;
+            return {
+                ...state,
+                questions: [...state.questions.filter(question => question.questionID !== questionID)]
+            }
         default:
             return state;
     }

@@ -64,14 +64,10 @@ export default class QuestionTopbar extends Component {
 
     onAddNewQuestion = () => {
 
-        console.log(this.contentState);
-
         if(this.state.categoryID === "none") {
             alert("Vui lòng chọn chuyên mục cho câu hỏi!");
             return false;
         }
-
-        this.props.addNewTags(this.state.tags);
 
         let questionItem = {
             questionID: "q_" + new Date().getTime(),
@@ -79,17 +75,11 @@ export default class QuestionTopbar extends Component {
             images: this.state.images,
             topComment: {},
             categoryID: this.state.categoryID,
-            tagIDs: this.state.tags.map((tag) => tag.id),
-            userID: ''
+            userID: this.props.currentUser.userID,
+            tags: this.state.tags
         }
         this.props.addNewQuestion(questionItem);
 
-        this.setState({
-            contentState: this.contentState,
-            images: [],
-            categoryID: 'none',
-            tags: [],
-        });
 
     }
     
@@ -119,7 +109,7 @@ export default class QuestionTopbar extends Component {
             alert("Tag quá ngắn, Vui lòng nhập tối thiểu 2 kí tự!");
             return false;
         }
-        
+        tag.id = "t_" + new Date().getTime();
         this.setState(state => ({ tags: [...state.tags, tag] }));
     }
 
@@ -160,11 +150,12 @@ export default class QuestionTopbar extends Component {
       <React.Fragment>
             <div className="post-topbar">
                 <div className="user-picy">
-                    <img src="/images/resources/user-pic.png" />
+                    <img src = {this.props.currentUser ? this.props.currentUser.avatar : '/images/users/img_avatar_default.png'} />
                 </div>
                 <div className="post-st">
                     <div className = "post-content">
                         <Editor
+                            placeholder = "Bạn có câu hỏi gì không ?"
                                     wrapperClassName="demo-wrapper"
                                     editorClassName="demo-editor"
                                     onContentStateChange={this.onContentStateChange}

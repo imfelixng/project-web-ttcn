@@ -2,7 +2,8 @@ import * as types from '../constants/index';
 import * as actions from '../actions/index'
 
 let initialState = {
-    categories: []
+    categories: [],
+    categoryQuestion: {}
 };
 
 const category = (state = initialState, action) => {
@@ -13,6 +14,20 @@ const category = (state = initialState, action) => {
             return {
                 ...state,
                 categories: [...action.categories]
+            }
+        }
+
+        case types.GET_CATEGORY_QUESTION: {
+
+            let {category} = action;
+
+            let newCategories = {
+                ...state.categoryQuestion
+            }
+            newCategories[category.categoryID] = category;
+            return {
+                ...state,
+                categoryQuestion: newCategories
             }
         }
 
