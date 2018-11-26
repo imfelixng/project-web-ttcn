@@ -155,38 +155,39 @@ export default class QuestionTopbar extends Component {
                 <div className="post-st">
                     <div className = "post-content">
                         <Editor
-                                    wrapperClassName="demo-wrapper"
-                                    editorClassName="demo-editor"
-                                    onContentStateChange={this.onContentStateChange}
+                            wrapperClassName="demo-wrapper"
+                            editorClassName="demo-editor"
+                            onContentStateChange={this.onContentStateChange}
                         />
                     </div>
-                    
-                    <div className = "post-img">
-                        <h4 className= "mt-4">Chọn ảnh của bạn:</h4>
-                        <DropzoneComponent config={config}
-                        eventHandlers={eventHandlers}
-                        djsConfig={djsConfig} />
-                    </div>
-                    <div className= "post-relation">
-                        <div className = "post-category">
-                            <span> Chuyên mục: </span>
-                            <select className = "post-category__select" onChange = {this.handleChange} value = {this.state.categoryID}>
-                                <option value = "none">Chọn Chuyên Mục</option>
-                                {this.showCategories(this.props.categories)}
-                            </select>
+                    <div className="row post">
+                        <div className = "col-md-6 post-img">
+                            <h4 className= "mt-4">Chọn ảnh:</h4>
+                            <DropzoneComponent config={config}
+                            eventHandlers={eventHandlers}
+                            djsConfig={djsConfig} />
                         </div>
-                        <div className = "post-tag">
-                                <span>Thẻ </span>
-                                <ReactTags tags={tags}
-                                    suggestions={suggestions}
-                                    handleDelete={this.handleDelete}
-                                    handleAddition={this.handleAddition}
-                                    handleDrag={this.handleDrag}
-                                    delimiters={delimiters} 
-                                    autocomplete = {1}
-                                    handleFilterSuggestions = {this.handleFilterSuggestions}
-                                    minQueryLength = {1}
-                                />
+                        <div className= " col-md-6 post-relation">
+                            <div className = "post-category">
+                                <span>Chuyên mục: </span>
+                                <select className = "post-category__select" onChange = {this.handleChange} value = {this.state.categoryID}>
+                                    <option value = "none">Chọn Chuyên Mục</option>
+                                    {this.showCategories(this.props.categories)}
+                                </select>
+                            </div>
+                            <div className = "post-tag">
+                                    <span>Thẻ: </span>
+                                    <ReactTags tags={tags}
+                                        suggestions={suggestions}
+                                        handleDelete={this.handleDelete}
+                                        handleAddition={this.handleAddition}
+                                        handleDrag={this.handleDrag}
+                                        delimiters={delimiters} 
+                                        autocomplete = {1}
+                                        handleFilterSuggestions = {this.handleFilterSuggestions}
+                                        minQueryLength = {1}
+                                    />
+                            </div>
                         </div>
                     </div>
                     <ul className="text-right">

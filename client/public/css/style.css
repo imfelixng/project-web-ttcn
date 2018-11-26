@@ -5476,3 +5476,68 @@ a {
 .user-info img  {
 	width: 30px;
 }
+.rdw-editor-main {
+	border: 1px solid rgba(0, 0, 0, 0.3);
+	height: 50px;
+	border-radius: 5px;
+}
+.col-md-6 {
+	padding: 0 0 0 0 !important;
+}
+.dz-clickable {
+	float: right;
+	height: 10px;
+	margin-top: -25px !important;
+	border-radius:  5px ;
+	color: white;
+	border: 1px solid white !important;
+	background: #b2b2b2 !important;
+}
+
+.dropzone {
+	padding: 0 0 0 0 !important;
+	min-height: 30px !important;
+	margin-top: -25px !important;
+}
+.dz-message {
+	margin: 0 !important;
+	margin-top: 5px !important;
+}
+.post-category {
+	margin-top: 20px;
+	border-radius: 5px;
+	margin-left: 10px;
+}
+.post-tag {
+	margin-top: 20px;
+	margin-left: 10px;
+}
+.post-category__select {
+	float: right;
+	margin-top: -5px;
+	padding: 5px;
+	border-radius: 5px;
+	color: white;
+	background: #b2b2b2;
+}
+
+.react-tags-wrapper {
+	float: right;
+	margin-top: -5px;
+	border: 1px solid rgba(0, 0, 0, 0.3);
+	border-radius: 5px;
+
+
+}
+.mt-4 {
+	margin-top: 1.4rem!important;
+}
+.text-right {
+	margin-top: 10px;
+}
+.dz-image {
+	margin-top: -20px;
+}
+.main-section {
+	margin-top: -35px;
+}
