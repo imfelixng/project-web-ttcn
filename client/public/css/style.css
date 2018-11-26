@@ -1168,13 +1168,14 @@ main {
 	font-size: 24px;
 	width: 30px;
 	height: 30px;
-	background-color: #53d690;
+	background-color: #e44d3a;
 	text-align: center;
 	line-height: 30px;
 }
-.bk-links li i.la-bell {
-	background-color: #e44d3a;
+.bk-links li i.la-check {
+	background-color: #53d690;
 }
+
 .bid_now {
 	color: #fff;
 	background-color: #51a5fb;
@@ -5521,4 +5522,43 @@ a {
 	width: 29%;
 	height: 29%;
 	margin: 10px 1%;
+}
+
+.like-com {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+a.com {
+    font-weight: bold;
+}
+
+.img_more {
+	width: 100%;
+	height: 100%;
+}
+
+.more {
+	position: relative;
+}
+
+.div_more {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #000000;
+	opacity: 0.9;
+	text-align: center;
+    display: flex;
+}
+
+.div_more:hover {
+    opacity: 0.8;
+}
+
+.div_more i {
+    color: #fff;
+    font-size: 48px;
+    margin: auto;
 }

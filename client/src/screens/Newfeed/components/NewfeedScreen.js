@@ -31,6 +31,7 @@ export default class NewfeedScreen extends Component {
           getCategoryQuestion = {this.props.getCategoryQuestion}
           categoryQuestion = {this.props.categoryQuestion}
           deleteQuestion = {this.props.deleteQuestion}
+          history = {this.props.history}
         />
       });
     }

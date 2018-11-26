@@ -12,9 +12,9 @@ const content = {"entityMap":{},"blocks":[{"key":"637gr","text":"Initialized fro
 const KeyCodes = {
     comma: 188,
     enter: 13,
-  };
+};
 
-  const delimiters = [KeyCodes.comma, KeyCodes.enter];
+const delimiters = [KeyCodes.comma, KeyCodes.enter];
 export default class QuestionTopbar extends Component {
 
     constructor(props) {
@@ -109,7 +109,12 @@ export default class QuestionTopbar extends Component {
             alert("Tag quá ngắn, Vui lòng nhập tối thiểu 2 kí tự!");
             return false;
         }
-        tag.id = "t_" + new Date().getTime();
+        
+        if(!tag.tagID) {
+            tag.id = "t_" + new Date().getTime();
+            tag.tagID = tag.id;
+        }
+
         this.setState(state => ({ tags: [...state.tags, tag] }));
     }
 

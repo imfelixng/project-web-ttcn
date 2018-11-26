@@ -4,7 +4,7 @@ import * as serviceWorker from './serviceWorker';
 import HomeScreen from './screens/Home/components/HomeScreen';
 import {BrowserRouter as Router} from "react-router-dom";
 import {Provider} from 'react-redux';
-import {createStore, applyMiddleware, compose} from 'redux';
+import {createStore, applyMiddleware, compose, } from 'redux';
 import rootReducer from './reducers/rootReducer';
 import thunk from 'redux-thunk';
 

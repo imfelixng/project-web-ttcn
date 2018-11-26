@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import {NavLink} from 'react-router-dom';
 import draftToHtml from 'draftjs-to-html';
+import LoginModal from './LoginModal';
 export default class Question extends Component {
 
     state = {
@@ -8,7 +9,6 @@ export default class Question extends Component {
         currentUserID: '',
         userOther: [],
         categoryQuestion: [],
-        isShowEdit: false
     }
 
     onOpenFunctional = () => {
@@ -49,11 +49,6 @@ export default class Question extends Component {
         this.props.deleteQuestion(questionID);
     }
 
-    onOpenEdit = () => {
-        this.setState({
-            isShowEdit: !this.state.isShowEdit
-        });
-    }
 
     showImages = (images) => {
         
@@ -89,12 +84,32 @@ export default class Question extends Component {
 
         if(images.length > 3) {
             return images.map((image, index) => {
-                return <img 
-                    src = {image.dataURL}
-                    key = {index}
-                    className = "question_image--30"
-                />
+                if(index < 2) {
+                    return <img 
+                        src = {image.dataURL}
+                        key = {index}
+                        className = "question_image--30"
+                    />
+                }
+                if( index === 2) {
+                    return <div key = {index} className = "question_image--30 more">
+                        <img 
+                            src = {image.dataURL}
+                            className = "img_more"
+                        />
+                        <div className = "div_more">
+                            <i className="la la-plus">{images.length - 2}</i>
+                        </div>
+                    </div>
+                }
+                
             });
+        }
+    }
+
+    onShowLoginModal = () => {
+        if(this.state.currentUserID) {
+            this.props.history.push('/questions/' + this.props.question.questionID);
         }
     }
 
@@ -102,7 +117,6 @@ export default class Question extends Component {
     let {question} = this.props;
     let userInfo = this.state.userOther[question.userID];
     let categoryInfo = this.state.categoryQuestion[question.categoryID];
-    console.log(question);
     return (
       <React.Fragment>
         <div className="post-bar">
@@ -123,14 +137,14 @@ export default class Question extends Component {
                     this.state.isOpenFunctional &&
                     <ul className="ed-options active">
                     {
-                        this.state.currentUserID === question.userID &&
+                        this.state.currentUserID === question.userID ?
                         <React.Fragment>
-                            <li><a data-toggle="modal" data-target="#exampleModal" onClick = {this.onOpenEdit}>Edit Post</a></li>
                             <li><a onClick = {() => this.onDeleteQuestion(question.questionID)} >Delete</a></li>
+                        </React.Fragment> :
+                        <React.Fragment>
+                            <li><a href="#" >Report</a></li>
                         </React.Fragment>
                     }
-                        <li><a href="#" >UnMarked</a></li>
-                        <li><a href="#" >Report</a></li>
                     </ul>
                 }
                 </div>
@@ -150,8 +164,10 @@ export default class Question extends Component {
                                         {
                                             this.state.currentUserID && 
                                             <ul className="bk-links">
-                                                <li><a href="#" ><i className="la la-bookmark" /></a></li>
-                                                <li><a href="#" ><i className="la la-bell" /></a></li>
+                                                {  this.state.currentUserID !== question.userID &&
+                                                    <li><a href="#" ><i className= "la la-bookmark" /></a></li>
+                                                }
+                                                <li><a href="#" ><i className="la la-check" /></a></li>
                                             </ul>
                                         }
                                     </div>
@@ -175,51 +191,26 @@ export default class Question extends Component {
             <div className="job-status-bar">
                                         <ul className="like-com">
                                         <li>
-                                            <a href="#"><i className="la la-thumbs-up" /></a>
+                                            <a  className="com"><i className = "la la-heart-o"></i> {question.vote - question.unvote}</a>
                                         </li> 
-                                        <li>
-                                            <img src="images/liked-img.png"  />
-                                            <span>10</span>
-                                        </li>
-                                        <li>
-                                            <a href="#"><i className="la la-thumbs-down" /></a>
-                                        </li> 
-                                        <li><a href="#"  className="com"><img src="images/com.png"  /> 15</a></li>
+                                        <li><a   className="com"><img src="images/com.png"  /> 15</a></li>
+                                        <li><a className="com"><i className="la la-eye" /> 50</a></li>
                                         </ul>
-                                        <a><i className="la la-eye" /> 50</a>
+                                        
                                     </div>
             <div className="question_top-comment">
-                <div className= "top-comment">
-                    Noi dung top comment
-                </div>
+                {
+                    question.topComment.commentID && 
+                    <div className= "top-comment">
+                        Noi dung top comment
+                    </div>
+                }
                 <div>
-                    <NavLink to = "/questions/123" className= "btn btn-info btn-join">Join in this discuss</NavLink>
+                    <div className= "btn btn-info btn-join" data-toggle={!this.state.currentUserID ? "modal" : " "} data-target= {!this.state.currentUserID ? "#showLogin" : " "} onClick = {this.onShowLoginModal}>Join in this discuss</div>
                 </div>
             </div>
         </div>{/*post-bar end*/}
-        {
-            this.state.isShowEdit &&
-            <div className="modal fade" id="exampleModal" tabIndex={-1} role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div className="modal-dialog" role="document">
-                    <div className="modal-content">
-                    <div className="modal-header">
-                        <h5 className="modal-title" id="exampleModalLabel">Modal title</h5>
-                        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div className="modal-body">
-                        ...
-                    </div>
-                    <div className="modal-footer">
-                        <button type="button" className="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="button" className="btn btn-primary">Save changes</button>
-                    </div>
-                    </div>
-                </div>
-            </div>
-
-        }
+        <LoginModal history = {this.props.history} />
       </React.Fragment>
     )
   }
