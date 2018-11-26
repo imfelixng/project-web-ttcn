@@ -5541,3 +5541,24 @@ a {
 .main-section {
 	margin-top: -35px;
 }
+.question_images {
+    display: flex;
+}
+
+.question_images .question_image--100{
+	width: 100%;
+	height: 100%;
+	margin: 10px auto;
+}
+
+.question_images .question_image--50{
+	width: 49%;
+	height: 49%;
+	margin: 10px 1%;
+}
+
+.question_images .question_image--30{
+	width: 29%;
+	height: 29%;
+	margin: 10px 1%;
+}

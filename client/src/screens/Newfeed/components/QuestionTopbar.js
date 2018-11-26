@@ -155,9 +155,10 @@ export default class QuestionTopbar extends Component {
                 <div className="post-st">
                     <div className = "post-content">
                         <Editor
-                            wrapperClassName="demo-wrapper"
-                            editorClassName="demo-editor"
-                            onContentStateChange={this.onContentStateChange}
+                            placeholder = "Bạn có câu hỏi gì không ?"
+                                    wrapperClassName="demo-wrapper"
+                                    editorClassName="demo-editor"
+                                    onContentStateChange={this.onContentStateChange}
                         />
                     </div>
                     <div className="row post">

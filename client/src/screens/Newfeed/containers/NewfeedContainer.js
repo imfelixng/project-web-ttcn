@@ -37,6 +37,9 @@ const mapDispatchToProps = (dispatch, props) => {
         },
         getCategoryQuestion: (categoryID) => {
             return dispatch(actions.getCategoryQuestionRequest(categoryID));
+        },
+        deleteQuestion: (questionID) => {
+            return dispatch(actions.deleteQuestionRequest(questionID));
         }
     }
 }
