@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 export default class SidebarRight extends Component {
   render() {
     return (
+
       <React.Fragment>
                                 <div className="right-sidebar">
                             <div className="suggestions full-width">
@@ -55,6 +56,7 @@ export default class SidebarRight extends Component {
                                 </div>{/*suggestions-list end*/}
                             </div>{/*suggestions end*/}
                         </div>{/*right-sidebar end*/}
+
       </React.Fragment>
     )
   }
