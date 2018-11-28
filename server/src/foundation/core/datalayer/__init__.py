@@ -92,3 +92,17 @@ class MongoInterface(object):
             {"$project": {"password": 0}}
         ])
         return h
+
+    def find_aggregate(self, source, lookup, query, project):
+        h = self.db[source].aggregate([
+            {
+                "$lookup": lookup
+            },
+            {
+                "$match": query
+            },
+            {
+                "$project": project
+            }
+        ])
+        return h

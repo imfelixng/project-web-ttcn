@@ -1,5 +1,5 @@
 from .schema import User
-from foundation.core.api.helper import make_error, make_resource_response
+from foundation.core.api.helper import make_error
 from flask import request, session, Response
 import json
 

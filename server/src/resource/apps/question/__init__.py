@@ -30,14 +30,36 @@ def __setup__(module):
 
     @module.endpoint("/questions/<questionID>/comments", methods=["GET"])
     def getAllComments(questionID):
-        data = module.data.find_embedded(
-            "question", "comment", questionID, "questionID", "questionID")
+        query = {
+            "questionID": questionID
+        }
+        lookup = {
+            "from": "comment",
+            "localField": "questionID",
+            "foreignField": "questionID",
+            "as": "comment"
+        }
+        project = {
+            "password": 0
+        }
+        data = module.data.find_aggregate("question", lookup, query, project)
         return make_resource_response("resource", list(data))
 
     @module.endpoint("/users/<userID>/questions", methods=["GET"])
     def getAllQuestion(userID):
-        data = module.data.find_embedded(
-            "user", "question", userID, "userID", "userID")
+        query = {
+            "userID": userID
+        }
+        lookup = {
+            "from": "question",
+            "localField": "userID",
+            "foreignField": "userID",
+            "as": "question"
+        }
+        project = {
+            "password": 0
+        }
+        data = module.data.find_aggregate("user", lookup, query, project)
         return make_resource_response("resource", list(data))
 
     @module.endpoint("/questions", methods=["POST"])

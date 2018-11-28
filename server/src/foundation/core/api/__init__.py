@@ -61,6 +61,10 @@ class BaseAPI:
     def delete_item(self, ID):
         done = self.data.delete_one(self.resource, ID)
         if done:
-            return Response(status=200)
+            resp = {
+                "status": 200,
+                "description": "ok"
+            }
+            return make_resource_response("resource", resp)
         else:
-            return UnprocessableEntity('RC_400', message='Delete fail')
+            return UnprocessableEntity('RC_400', message="Delete fail, you don't have permission")
