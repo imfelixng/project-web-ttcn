@@ -86,6 +86,9 @@
 	.right-sidebar {
 		margin-top: 0px;
 	}
+	.col-md-4 {
+		display: none;
+	}
 }
 
 

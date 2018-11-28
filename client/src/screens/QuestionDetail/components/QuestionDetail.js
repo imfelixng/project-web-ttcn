@@ -142,7 +142,7 @@ export default class QuestionDetail extends Component {
                 <div className="container">
                     <div className="main-section-data">
                         <div className="row">
-                            <div className="col-lg-8 col-md-8 no-pd">
+                            <div className="col-lg-8 col-md-12 no-pd">
                                 <div className="main-ws-sec">
                                 <div className="posty">
 
