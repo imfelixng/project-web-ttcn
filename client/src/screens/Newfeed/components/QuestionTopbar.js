@@ -69,14 +69,20 @@ export default class QuestionTopbar extends Component {
             return false;
         }
 
+        let timesamp = new Date().getTime();
+
         let questionItem = {
-            questionID: "q_" + new Date().getTime(),
+            questionID: "q_" + timesamp + this.props.currentUser.userID,
             content: this.state.contentState,
             images: this.state.images,
             topComment: {},
             categoryID: this.state.categoryID,
             userID: this.props.currentUser.userID,
-            tags: this.state.tags
+            tags: this.state.tags,
+            votes: 0,
+            unvotes: 0,
+            views: 0,
+            comments: 0,
         }
         this.props.addNewQuestion(questionItem);
 
