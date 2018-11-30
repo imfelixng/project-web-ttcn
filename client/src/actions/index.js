@@ -5,7 +5,7 @@ export const getAllQuestionRequest = () => {
     return async (dispatch) => {
         let questions = await APIs.callAPI("questions", "GET", null);
         if(questions != null) {
-            dispatch(getAllQuestions(questions.data._items.reverse()));
+            dispatch(getAllQuestions(questions.data._items));
         }
     }
 
@@ -53,7 +53,7 @@ export const getQuestion = (question) => {
 
 export const deleteQuestionRequest = (questionID) => {
     return async (dispatch) => {
-        let result = await APIs.callAPI("questions/" + questionID, "DELETE");
+        let result = await APIs.callAPI("questions/" + questionID, "DELETE", null);
         console.log(result);
         if(result != null) {
             dispatch(deleteQuestion(questionID));
