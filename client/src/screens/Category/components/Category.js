@@ -5,7 +5,7 @@ export default class Category extends Component {
     return (
       <React.Fragment>
         <div className="post-bar flex">
-            <a>Toán học</a>
+            <a>{this.props.category.name}</a>
             <ul className="bk-links mr-2 my-3">
                 <li><a href="#"><i className="la la-bell" /></a></li>
             </ul>

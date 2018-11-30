@@ -5,7 +5,7 @@ export default class Tag extends Component {
     return (
       <React.Fragment>
         <div className="post-bar flex">
-            <a>Hàm số</a>
+            <a>{this.props.tag.text}</a>
         </div>{/*post-bar end*/}
       </React.Fragment>
     )

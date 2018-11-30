@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Images } from "./../../../themes";
 
 export default class SidebarLeft extends Component {
   render() {
@@ -14,7 +15,10 @@ export default class SidebarLeft extends Component {
                                         <img src="images/resources/s1.png"  />
                                         <div className="sgt-text">
                                         <h4>Jessica William</h4>
+                                        <i class="fa fa-heart"></i>
                                         <span>15</span>
+                                        <img src={Images.goldMedal} alt="goldMedal" className="img-award"></img>
+
                                         </div>
                                     </div>
                                     <div className="suggestion-usd">
@@ -63,7 +67,9 @@ export default class SidebarLeft extends Component {
                                 <img src="images/resources/s1.png"  />
                                 <div className="sgt-text">
                                 <h4>Jessica William</h4>
-                                <span>Graphic Designer</span>
+                                <i class="fa fa-heart"><span>15</span> </i>
+                                <i class="fa fa-comment fa-cmt-tag"><span>15</span> </i>
+                                <i class="fa fa-bookmark fa-tag"></i>
                                 </div>
                             </div>
                             <div className="suggestion-usd">
