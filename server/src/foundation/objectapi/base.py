@@ -34,8 +34,11 @@ class ObjectApiServer(Flask):
 
     def before_request(self):
         g.user = None
+        logger.warning('Session before request %r', session)
         if session.get("userID"):
             g.user = session.get("userID")
+            logger.warning('G.User %r', g.user)
+
         if config["AUTH_FIELD"] == "auth":
             session["AUTH_FIELD"] = True
         else:
@@ -46,7 +49,7 @@ class ObjectApiServer(Flask):
         def wrapped_view(**kwargs):
             self.before_request()
             if g.user is None:
-                return make_error(status=200, description="You have to login")
+                return make_error(status=401, description="You have to login")
 
             return view(**kwargs)
 

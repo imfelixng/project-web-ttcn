@@ -62,7 +62,7 @@ class BaseAPI:
         done = self.data.delete_one(self.resource, ID)
         if done:
             resp = {
-                "status": 200,
+                "status": 204,
                 "description": "ok"
             }
             return make_resource_response("resource", resp)

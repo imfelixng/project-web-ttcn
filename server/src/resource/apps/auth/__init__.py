@@ -3,6 +3,8 @@ from foundation.core.api.helper import make_error
 from flask import request, session, Response
 import json
 
+import logging as logger
+
 
 def __setup__(module):
     module.resource("users", User)
@@ -35,6 +37,7 @@ def __setup__(module):
 
         session["userID"] = module.data.db.user.find_one(
             {"email": dt.get("email")})["userID"]
+        logger.warning("Session %r", session)
         data_response = {
             "status": 200,
             "description": "ok",

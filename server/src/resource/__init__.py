@@ -12,4 +12,4 @@ MODULES = [
 ]
 
 app = ObjectApiServer(__name__, config, modules=MODULES, taskapp=None)
-CORS(app)
+CORS(app, supports_credentials=True)

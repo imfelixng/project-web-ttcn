@@ -3,7 +3,7 @@ from foundation.common.json import bson_dumps
 import json
 
 
-def make_resource_response(resource, data):
+def make_resource_response(resource, data, status=200):
     if type(data) is list:
         response = {
             '_meta': {
