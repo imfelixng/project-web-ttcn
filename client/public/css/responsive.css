@@ -85,8 +85,9 @@
 	.profile-bx-details {margin-bottom: -25px;}
 	.right-sidebar {
 		margin-top: 0px;
+		display: none;
 	}
-	.col-md-4 {
+	.main-left-sidebar {
 		display: none;
 	}
 }
