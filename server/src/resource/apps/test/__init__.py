@@ -8,6 +8,7 @@ def __setup__(module):
     module.resource("test", Test)
 
     @module.endpoint("/tester", methods=["POST"])
+    @module.login_required
     def test():
         try:
             data = request.json
@@ -18,5 +19,6 @@ def __setup__(module):
             return make_error(status=200, description=str(e))
 
     @module.endpoint("/path", methods=["GET"])
+    @module.login_required
     def get():
         return str(os.getcwd())

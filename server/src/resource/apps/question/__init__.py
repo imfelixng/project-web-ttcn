@@ -29,6 +29,7 @@ def __setup__(module):
     module.resource("questions", Question)
 
     @module.endpoint("/questions/<questionID>/comments", methods=["GET"])
+    @module.login_required
     def getAllComments(questionID):
         query = {
             "questionID": questionID
@@ -63,6 +64,7 @@ def __setup__(module):
         return make_resource_response("resource", list(data))
 
     @module.endpoint("/questions", methods=["POST"])
+    @module.login_required
     def create():
         data = request.json
 
