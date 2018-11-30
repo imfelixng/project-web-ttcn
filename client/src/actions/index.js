@@ -56,7 +56,7 @@ export const deleteQuestionRequest = (questionID) => {
         let result = await APIs.callAPI("questions/" + questionID, "DELETE");
         console.log(result);
         if(result != null) {
-            dispatch(addNewQuestion(questionID));
+            dispatch(deleteQuestion(questionID));
         }
     }
 };
