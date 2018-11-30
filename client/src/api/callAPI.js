@@ -6,6 +6,8 @@ let callAPI = async (endpoint, method = 'GET', data) => {
     let dataAPI = null;
     try {
         dataAPI = await axios({
+            withCredentials: true,
+            credentials: 'include',
             method,
             url: `${configs.Url}/${endpoint}`,
             data,
