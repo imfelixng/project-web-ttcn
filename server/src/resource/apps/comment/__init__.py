@@ -1,5 +1,30 @@
 from .schema import Comment
+from flask import request
+from foundation.common.image import save_image
+from foundation.core.api.helper import make_resource_response
+from foundation.core.exceptions import UnprocessableEntity
 
 
 def __setup__(module):
     module.resource("comments", Comment)
+
+    @module.endpoint("/comments", methods=["POST"])
+    def comments():
+        try:
+            data = request.json
+
+            # check image and store in folder
+            for i in range(0, len(data["images"]), 1):
+                image_raw = data["images"][i]
+                imgString = image_raw["dataURL"][22:]
+                filename = image_raw["upload"]["filename"]
+                # path = os.getcwd()
+                path = "/app/server/public/images/comments/" + filename
+                save_image(imgString, path)
+                data["images"][i]["dataURL"] = "/images/comments/" + filename
+
+            model = Comment(data)
+            model.save()
+            return make_resource_response("resource", model.to_primitive())
+        except Exception as e:
+            raise UnprocessableEntity("RC_400", e.to_primitive())

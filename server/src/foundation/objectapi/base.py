@@ -66,7 +66,7 @@ class ObjectApiServer(Flask):
 
             resource_list = '/' + name
             resource_item = "/%s/<ID>" % name
-            ignore_resource = ["questions", "users", "tags", "categories"]
+            ignore_resource = ["questions", "users", "comments"]
             self.add_url_rule(resource_list, "get_list_%s" %
                               name, baseApi.get, methods=['GET'])
             if name != "tags" or name != "categories":

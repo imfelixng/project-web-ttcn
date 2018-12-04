@@ -21,6 +21,19 @@ class BaseAPI:
             del i["_id"]
         return make_resource_response(self.resource, data)
 
+    def get_aggregate(self):
+        try:
+            project = {
+                "_id": 0,
+                "_updated": 0,
+                "_etag": 0,
+                "_created": 0
+            }
+            data = self.data.aggregate(self.resource, {}, project)
+            return make_resource_response("resource", list(data))
+        except Exception as e:
+            raise UnprocessableEntity('RC_400', message=e.to_primitive())
+
     def get_item(self, ID):
         try:
             dt = self.data.find_one(self.resource, ID)
@@ -41,7 +54,7 @@ class BaseAPI:
             model.save()
             return make_resource_response(self.resource, model.to_primitive())
         except Exception as e:
-            raise UnprocessableEntity('RC_400', message=e.to_primitive())
+            raise UnprocessableEntity('RC_400', message=str(e))
 
     def update_item(self, ID):
         try:
@@ -56,7 +69,7 @@ class BaseAPI:
                 {"_id": result})
             return make_resource_response(self.resource, resp)
         except Exception as e:
-            return UnprocessableEntity('RC_400', message="you don't have permission")
+            raise UnprocessableEntity('RC_400', message=str(e))
 
     def delete_item(self, ID):
         done = self.data.delete_one(self.resource, ID)
@@ -67,4 +80,5 @@ class BaseAPI:
             }
             return make_resource_response("resource", resp)
         else:
-            return UnprocessableEntity('RC_400', message="Delete fail, you don't have permission")
+            raise UnprocessableEntity(
+                'RC_400', message="Delete fail, you don't have permission")

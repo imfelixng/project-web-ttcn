@@ -1,13 +1,20 @@
 from foundation.core.schema.model import BaseModel
-from schematics.types import StringType, ListType, DictType
+from schematics.types import StringType, ListType, BaseType, IntType
+
+
+class JsonString(BaseType):
+    pass
 
 
 class Question(BaseModel):
     questionID = StringType(required=True)
-    title = StringType()
-    userID = StringType(required=True)
-    tagIDs = ListType(DictType(StringType))
+    content = JsonString(required=True)
+    images = ListType(JsonString)
+    topComment = JsonString()
     categoryID = StringType()
-    views = ListType(StringType)
-    likes = ListType(StringType)
-    topComment = DictType(StringType)
+    userID = StringType(required=True)
+    tags = ListType(JsonString)
+    votes = IntType()
+    unvotes = IntType()
+    views = IntType()
+    comments = IntType()

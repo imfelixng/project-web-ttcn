@@ -8,7 +8,8 @@ MODULES = [
     'resource.apps.question',
     'resource.apps.category',
     'resource.apps.comment',
-    'resource.apps.test'
+    'resource.apps.test',
+    'resource.apps.vote'
 ]
 
 app = ObjectApiServer(__name__, config, modules=MODULES, taskapp=None)

@@ -51,7 +51,8 @@ class BaseModel(Model, MongoInterface):
         data['_etag'] = uuid4().hex
         self['_etag'] = data['_etag']
 
-        self.update_one(self.RI(), _id, {'$set': data}, upsert=True)
+        # self.update_one(self.RI(), _id, {'$set': data}, upsert=True)
+        self.insert_one(self.RI(), data)
 
     def delete(self):
         return self.delete_one(self.RI(), self._id)

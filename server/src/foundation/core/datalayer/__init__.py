@@ -11,7 +11,9 @@ class MongoInterface(object):
     def __init__(self, MONGOHOS=None, MONGGODB=None):
         self.client = MongoClient(
             "mongodb://data:chritsmasgood12@ds143971.mlab.com:43971/nvphu1306")
+        # self.client = MongoClient('mongodb://localhost:27017/')
         self.mongodb = "nvphu1306"
+        # self.mongodb = "study_support"
 
     @property
     def db(self):
@@ -36,7 +38,7 @@ class MongoInterface(object):
         source = self.db[resource]
         if query is None:
             query = {}
-        data = source.find(query)
+        data = source.find(query).sort("_created", -1)
         return data
 
     def insert_one(self, resource, data):
@@ -50,6 +52,12 @@ class MongoInterface(object):
         source, query = self.datasource(resource, {'_id': _id})
         data = source.update_one(query, update, **kwargs)
         logging.warn("update by another user %s" % data)
+        return data
+
+    def update(self, resource, ID, update, **kwargs):
+        source = self.db[resource]
+        query = {resource + "ID": ID}
+        data = source.find_one_and_update(query, update, **kwargs)
         return data
 
     def delete_one(self, resource, ID):
@@ -66,8 +74,8 @@ class MongoInterface(object):
         else:
             return False
 
-    def aggregate(self, source, query, project):
-        h = self.db[source].aggregate([
+    def aggregate(self, resource, query, project):
+        h = self.db[resource].aggregate([
             {
                 "$match": query
             },
@@ -77,8 +85,8 @@ class MongoInterface(object):
         ])
         return h
 
-    def find_embedded(self, source, dist, _id, localField, foreignField):
-        h = self.db[source].aggregate([
+    def find_embedded(self, resource, dist, _id, localField, foreignField):
+        h = self.db[resource].aggregate([
             {
                 "$lookup":
                 {
@@ -93,8 +101,8 @@ class MongoInterface(object):
         ])
         return h
 
-    def find_aggregate(self, source, lookup, query, project):
-        h = self.db[source].aggregate([
+    def find_aggregate(self, resource, lookup, query, project):
+        h = self.db[resource].aggregate([
             {
                 "$lookup": lookup
             },

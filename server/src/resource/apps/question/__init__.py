@@ -1,7 +1,8 @@
 from .schema import Question
 from foundation.core.api.helper import make_resource_response
+from foundation.core.exceptions import UnprocessableEntity
 from flask import request
-from .helper import save_image
+from foundation.common.image import save_image
 
 
 def is_exist(array, index):
@@ -20,71 +21,74 @@ def save_new_tags(module, raw_tags):
             del[r_tag["_id"]]
 
 
-def findall(module):
-    data = module.data.find("tag")
-    return list(data)
-
-
 def __setup__(module):
     module.resource("questions", Question)
 
     @module.endpoint("/questions/<questionID>/comments", methods=["GET"])
     @module.login_required
     def getAllComments(questionID):
-        query = {
-            "questionID": questionID
-        }
-        lookup = {
-            "from": "comment",
-            "localField": "questionID",
-            "foreignField": "questionID",
-            "as": "comment"
-        }
-        project = {
-            "password": 0
-        }
-        data = module.data.find_aggregate("question", lookup, query, project)
-        return make_resource_response("resource", list(data))
+        try:
+            query = {
+                "questionID": questionID
+            }
+            lookup = {
+                "from": "comment",
+                "localField": "questionID",
+                "foreignField": "questionID",
+                "as": "comment"
+            }
+            project = {
+                "password": 0
+            }
+            data = module.data.find_aggregate(
+                "question", lookup, query, project)
+            return make_resource_response("resource", list(data))
+        except Exception as e:
+            raise UnprocessableEntity("RC_400", str(e))
 
     @module.endpoint("/users/<userID>/questions", methods=["GET"])
     def getAllQuestion(userID):
-        query = {
-            "userID": userID
-        }
-        lookup = {
-            "from": "question",
-            "localField": "userID",
-            "foreignField": "userID",
-            "as": "question"
-        }
-        project = {
-            "password": 0
-        }
-        data = module.data.find_aggregate("user", lookup, query, project)
-        return make_resource_response("resource", list(data))
+        try:
+            query = {
+                "userID": userID
+            }
+            lookup = {
+                "from": "question",
+                "localField": "userID",
+                "foreignField": "userID",
+                "as": "question"
+            }
+            project = {
+                "password": 0
+            }
+            data = module.data.find_aggregate("user", lookup, query, project)
+            return make_resource_response("resource", list(data))
+        except Exception as e:
+            raise UnprocessableEntity("RC_400", str(e))
 
     @module.endpoint("/questions", methods=["POST"])
     @module.login_required
     def create():
-        data = request.json
+        try:
+            data = request.json
 
-        # check image and store in folder
-        for i in range(0, len(data["images"]), 1):
-            image_raw = data["images"][i]
-            imgString = image_raw["dataURL"][22:]
-            filename = image_raw["upload"]["filename"]
-            # path = os.getcwd()
-            path = "/app/server/public/images/questions/" + filename
-            save_image(imgString, path)
-            data["images"][i]["dataURL"] = "/images/questions/" + filename
+            # check image and store in folder
+            for i in range(0, len(data["images"]), 1):
+                image_raw = data["images"][i]
+                imgString = image_raw["dataURL"][22:]
+                filename = image_raw["upload"]["filename"]
+                # path = os.getcwd()
+                path = "/app/server/public/images/questions/" + filename
+                save_image(imgString, path)
+                data["images"][i]["dataURL"] = "/images/questions/" + filename
 
-        # check and add new tag
-        tags = data["tags"]
-        save_new_tags(module, tags)
-
-        rs = module.data.insert_one("question", data)
-        return make_resource_response("resource", rs)
-
-    @module.endpoint("/listtag", methods=["GET"])
-    def listtag():
-        return str(findall(module))
+            # check and add new tag
+            tags = data["tags"]
+            save_new_tags(module, tags)
+            model = Question(data)
+            model.save()
+            # rs = module.data.insert_one("question", data)
+            # return make_resource_response("resource", rs)
+            return make_resource_response("question", model.to_primitive())
+        except Exception as e:
+            raise UnprocessableEntity("RC_400", message=str(e))
