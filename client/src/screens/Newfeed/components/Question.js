@@ -173,12 +173,12 @@ export default class Question extends Component {
                                             className = "question_images"
                                         >
                                             {
-                                                this.showImages(question.images)
+                                                question.images && this.showImages(question.images)
                                             }
                                             
                                         </div>
                                         <ul className="skill-tags">
-                                            {this.showTags(question.tags)}
+                                            {question.tags && this.showTags(question.tags)}
                                         </ul>
                                     </div>
             <div className="job-status-bar">

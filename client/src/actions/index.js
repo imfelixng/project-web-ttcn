@@ -19,9 +19,12 @@ export const getAllQuestions = (questions) => {
 };
 
 export const addNewQuestionRequest = (questionItem) => {
+
     return async (dispatch) => {
-        let questions = await APIs.callAPI("questions", "POST", questionItem);
-        if(questions != null) {
+        console.log(questionItem);
+        let result = await APIs.callAPI("questions", "POST", questionItem);
+        console.log(result);
+        if(result != null) {
             dispatch(addNewQuestion(questionItem));
         }
     }
