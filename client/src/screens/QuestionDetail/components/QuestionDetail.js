@@ -244,7 +244,7 @@ export default class QuestionDetail extends Component {
                                                     getCategories = {this.props.getCategories}
                                                     getTags = {this.props.getTags}
                                                     question = {question}
-                                                
+                                                    updateQuestion = {this.props.updateQuestion}
                                                 />
                                             }
                                     <div className="comment-section">
