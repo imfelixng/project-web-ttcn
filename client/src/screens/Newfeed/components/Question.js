@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import {NavLink} from 'react-router-dom';
 import draftToHtml from 'draftjs-to-html';
-import LoginModal from './LoginModal';
 export default class Question extends Component {
 
     state = {
@@ -107,12 +106,6 @@ export default class Question extends Component {
         }
     }
 
-    onShowLoginModal = () => {
-        if(this.state.currentUserID) {
-            this.props.history.push('/questions/' + this.props.question.questionID);
-        }
-    }
-
   render() {
     let {question} = this.props;
     let userInfo = this.state.userOther[question.userID];
@@ -206,11 +199,11 @@ export default class Question extends Component {
                     </div>
                 }
                 <div>
-                    <div className= "btn btn-info btn-join" data-toggle={!this.state.currentUserID ? "modal" : " "} data-target= {!this.state.currentUserID ? "#showLogin" : " "} onClick = {this.onShowLoginModal}>Join in this discuss</div>
+                    <NavLink className= "btn btn-info btn-join" to={"/questions/" + question.questionID}>Join in this discuss</NavLink>
                 </div>
             </div>
         </div>{/*post-bar end*/}
-        <LoginModal history = {this.props.history} />
+        
       </React.Fragment>
     )
   }
