@@ -18,3 +18,4 @@ class Question(BaseModel):
     unvotes = IntType()
     views = IntType()
     comments = IntType()
+    id = IntType()
