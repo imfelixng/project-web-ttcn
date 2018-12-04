@@ -96,6 +96,25 @@ export default class EditModal extends Component {
     });
   }
 
+  onUpdate = () => {
+    let questionItem = {
+        questionID: this.props.question.questionID,
+        content: this.state.contentState,
+        images: this.props.question.images,
+        topComment: this.props.question.topComment,
+        categoryID: this.state.categoryID,
+        userID: this.props.question.userID,
+        tags: this.state.tags,
+        votes: this.props.question.votes,
+        unvotes: this.props.question.unvotes,
+        views: this.props.question.views,
+        comments: this.props.question.comments,
+    }
+
+    this.props.updateQuestion(questionItem);
+
+  }
+
   render() {
     const { tags, suggestions, contentState } = this.state;
     return (
@@ -145,7 +164,7 @@ export default class EditModal extends Component {
                 </div>{/*post-st end*/}
               </div>
               <div className="modal-footer">
-                <button type="button" className="btn btn-primary">Save changes</button>
+                <button type="button" className="btn btn-primary" data-dismiss= "modal" onClick = {this.onUpdate}>Save changes</button>
               </div>
             </div>
           </div>

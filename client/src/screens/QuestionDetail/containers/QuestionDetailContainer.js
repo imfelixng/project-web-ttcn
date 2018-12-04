@@ -24,6 +24,9 @@ const mapDispatchToProps = (dispatch, props) => {
         getCategoryQuestion: (categoryID) => {
             return dispatch(actions.getCategoryQuestionRequest(categoryID));
         },
+        updateQuestion: (question) => {
+            return dispatch(actions.updateQuestionRequest(question));
+        },
         deleteQuestion: (questionID) => {
             return dispatch(actions.deleteQuestionRequest(questionID));
         },
@@ -33,6 +36,7 @@ const mapDispatchToProps = (dispatch, props) => {
         getTags: () => {
             return dispatch(actions.getAllTagsRequest());
         },
+
     }
 }
 

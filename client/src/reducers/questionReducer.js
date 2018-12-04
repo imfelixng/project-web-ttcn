@@ -35,6 +35,16 @@ const question = (state = initialState, action) => {
             }
         }
 
+        case types.UPDATE_QUESTION:
+        {
+            let {question} = action;
+
+            return {
+                ...state,
+                questionItem: {...question}
+            }
+        }
+
         case types.DELETE_QUESTION:
         {
             let {questionID} = action;

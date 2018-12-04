@@ -36,7 +36,7 @@ export const addNewQuestion = (questionItem) => {
 
 export const getQuestionRequest = (questionID) => {
     return async (dispatch) => {
-        console.log(questionID);
+        
         let result = await APIs.callAPI("questions/" + questionID, "GET");
             if(result != null) {
                 dispatch(getQuestion(result.data));
@@ -47,6 +47,24 @@ export const getQuestionRequest = (questionID) => {
 export const getQuestion = (question) => {
     return {
         type: types.GET_QUESTION,
+        question
+    }
+}
+
+export const updateQuestionRequest = (question) => {
+    return async (dispatch) => {
+        console.log(question);
+        let result = await APIs.callAPI("questions/" + question.questionID, "PATCH", question);
+        console.log(result);    
+        if(result != null) {
+                dispatch(updateQuestion(result.data));
+            }
+    }
+}
+
+export const updateQuestion = (question) => {
+    return {
+        type: types.UPDATE_QUESTION,
         question
     }
 }
