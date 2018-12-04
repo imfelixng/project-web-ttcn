@@ -3,6 +3,8 @@ from foundation.core.api.helper import make_resource_response
 from foundation.core.exceptions import UnprocessableEntity
 from flask import request
 from foundation.common.image import save_image
+import logging
+from datetime import datetime
 
 
 def is_exist(array, index):
@@ -84,11 +86,13 @@ def __setup__(module):
 
             # check and add new tag
             tags = data["tags"]
+            data["_created"] = datetime.now()
             save_new_tags(module, tags)
-            model = Question(data)
-            model.save()
-            # rs = module.data.insert_one("question", data)
-            # return make_resource_response("resource", rs)
-            return make_resource_response("question", model.to_primitive())
+            # model = Question(data)
+            # logging.warn("questions %r", data)
+            # model.save()
+            rs = module.data.insert_one("question", data)
+            return make_resource_response("resource", rs)
+            # return make_resource_response("question", model.to_primitive())
         except Exception as e:
             raise UnprocessableEntity("RC_400", message=str(e))

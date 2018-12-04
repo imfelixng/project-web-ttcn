@@ -9,11 +9,11 @@ class JsonString(BaseType):
 class Question(BaseModel):
     questionID = StringType(required=True)
     content = JsonString(required=True)
-    images = ListType(JsonString)
+    images = ListType(JsonString())
     topComment = JsonString()
     categoryID = StringType()
     userID = StringType(required=True)
-    tags = ListType(JsonString)
+    tags = ListType(JsonString())
     votes = IntType()
     unvotes = IntType()
     views = IntType()

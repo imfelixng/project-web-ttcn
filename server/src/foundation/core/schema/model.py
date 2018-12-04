@@ -6,6 +6,7 @@ from schematics.types import StringType, DateTimeType
 from foundation.core.datalayer import MongoInterface
 from foundation.core.schema.types import MongoID
 from .helpers import CamelCase2Snake
+import logging
 
 
 class BaseModel(Model, MongoInterface):
@@ -42,7 +43,7 @@ class BaseModel(Model, MongoInterface):
         self['_id'] = _id
         self['_updated'] = datetime.datetime.now()
 
-        self.validate()
+        # self.validate()
 
         data = self.to_native()
         if data.get('_etag', None):
@@ -50,9 +51,9 @@ class BaseModel(Model, MongoInterface):
 
         data['_etag'] = uuid4().hex
         self['_etag'] = data['_etag']
-
         # self.update_one(self.RI(), _id, {'$set': data}, upsert=True)
         self.insert_one(self.RI(), data)
+        logging.warn("data in save %r", data)
 
     def delete(self):
         return self.delete_one(self.RI(), self._id)
