@@ -74,11 +74,11 @@ export const updateQuestion = (question) => {
 
 export const voteQuestionRequest = (vote) => {
     return async (dispatch) => {
-        dispatch(voteQuestion(vote));
+        //dispatch(voteQuestion(vote));
         let result = await APIs.callAPI("questions/" + vote.questionID +"/votes", "POST", vote);   
-        // if(result != null) {
-        //         dispatch(voteQuestion(result.data));
-        // }
+        if(result != null) {
+                dispatch(voteQuestion(result.data));
+        }
     }
 }
 
@@ -91,11 +91,11 @@ export const voteQuestion = (vote) => {
 
 export const unVoteQuestionRequest = (unvote) => {
     return async (dispatch) => {
-        dispatch(unVoteQuestion(unvote));
+        //dispatch(unVoteQuestion(unvote));
         let result = await APIs.callAPI("questions/" + unvote.questionID +"/unvotes", "POST", unvote);   
-        // if(result != null) {
-        //         dispatch(unVoteQuestion(result.data));
-        // }
+        if(result != null) {
+                dispatch(unVoteQuestion(result.data));
+        }
     }
 }
 

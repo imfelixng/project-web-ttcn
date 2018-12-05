@@ -9,8 +9,14 @@ export default class QuestionDetail extends Component {
         super(props);
         props.getQuestion(props.match.params.idQuestion).then(res => {
             if(this.props.question) {
+                if(!sessionStorage.getItem(this.props.question.questionID)) {
+                    this.props.updateQuestion({questionID: this.props.question.questionID,views: this.props.question.views + 1})
+                    sessionStorage.setItem(this.props.question.questionID, 'true');
+                }
+
                 this.props.getUserOther(this.props.question.userID);
                 this.props.getCategoryQuestion(this.props.question.categoryID);
+                
             }
         }).catch(err => {   
             console.log(err);
@@ -264,11 +270,11 @@ export default class QuestionDetail extends Component {
                                                                             <ul className="like-com">
                                                                             <li>
                                                                                 <a  className="com" onClick = {this.onVoteQuestion}><i className = "la la-thumbs-up"></i></a>
-                                                                                <a  className="com">{question && (question.votes - question.unvotes)}</a>
+                                                                                <a  className="com">{question ? (question.votes - question.unvotes) : 0}</a>
                                                                                 <a  className="com" onClick = {this.onUnVoteQuestion}><i className = "la la-thumbs-down"></i></a>
                                                                             </li> 
-                                                                            <li><a   className="com"><img src="/images/com.png"  /> 15</a></li>
-                                                                            <li><a className="com"><i className="la la-eye" /> 50</a></li>
+                                                                            <li><a   className="com"><img src="/images/com.png"  /> {question ? question.comments : 0}</a></li>
+                                                                            <li><a className="com"><i className="la la-eye" /> {question ? question.views : 0}</a></li>
                                                                             </ul>
                                                                             
                                                                         </div>
