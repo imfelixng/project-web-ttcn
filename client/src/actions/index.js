@@ -72,6 +72,40 @@ export const updateQuestion = (question) => {
     }
 }
 
+export const voteQuestionRequest = (vote) => {
+    return async (dispatch) => {
+        dispatch(voteQuestion(vote));
+        let result = await APIs.callAPI("questions/" + vote.questionID +"/votes", "POST", vote);   
+        // if(result != null) {
+        //         dispatch(voteQuestion(result.data));
+        // }
+    }
+}
+
+export const voteQuestion = (vote) => {
+    return {
+        type: types.VOTE_QUESTION,
+        vote
+    }
+}
+
+export const unVoteQuestionRequest = (unvote) => {
+    return async (dispatch) => {
+        dispatch(unVoteQuestion(unvote));
+        let result = await APIs.callAPI("questions/" + unvote.questionID +"/unvotes", "POST", unvote);   
+        // if(result != null) {
+        //         dispatch(unVoteQuestion(result.data));
+        // }
+    }
+}
+
+export const unVoteQuestion = (unvote) => {
+    return {
+        type: types.UNVOTE_QUESTION,
+        unvote
+    }
+}
+
 export const deleteQuestionRequest = (questionID) => {
     return async (dispatch) => {
         let result = await APIs.callAPI("questions/" + questionID, "DELETE", null);
@@ -158,6 +192,7 @@ export const addNewTag = (tag) => {
 
 export const createUserRequest = (user) => {
     return async (dispatch) => {
+        console.log(user);
         let result = await APIs.callAPI("signup", "POST", user);
         console.log(result);
             if(result != null) {

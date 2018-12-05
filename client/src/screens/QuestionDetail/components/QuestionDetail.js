@@ -55,6 +55,7 @@ export default class QuestionDetail extends Component {
     }
 
     componentDidMount() {
+        this.props.getQuestion(this.props.match.params.idQuestion)
         if(this.props.question) {
             this.props.getUserOther(this.props.question.userID);
             this.props.getCategoryQuestion(this.props.question.categoryID);
@@ -64,7 +65,44 @@ export default class QuestionDetail extends Component {
 
 
     onDeleteQuestion = (questionID) => {
-        this.props.deleteQuestion(questionID);
+        this.props.deleteQuestion(questionID).then(res => {
+            this.props.history.push('/');
+        })
+        .catch(err => console.log(err));
+
+    }
+
+    onVoteQuestion = () => {
+
+        if(!this.state.currentUserID) {
+            alert("Vui lòng login để có thể tương tác!");
+            return;
+        }
+
+        let vote = {
+            userID: this.props.currentUserID,
+            questionID: this.props.question.questionID,
+            voteID: 'v_' + new Date().getTime() + this.state.currentUserID + this.props.question.questionID
+        }
+
+        this.props.voteQuestion(vote);
+
+    }
+
+    onUnVoteQuestion = () => {
+
+        if(!this.state.currentUserID) {
+            alert("Vui lòng login để có thể tương tác!");
+            return;
+        }
+
+        let unvote = {
+            userID: this.props.currentUserID,
+            questionID: this.props.question.questionID,
+            unvoteID: 'uv_' + new Date().getTime() + this.state.currentUserID + this.props.question.questionID
+        }
+
+        this.props.unVoteQuestion(unvote);
     }
 
 
@@ -225,7 +263,9 @@ export default class QuestionDetail extends Component {
                                                 <div className="job-status-bar">
                                                                             <ul className="like-com">
                                                                             <li>
-                                                                                <a  className="com"><i className = "la la-heart-o"></i> {question && (question.vote - question.unvote)}</a>
+                                                                                <a  className="com" onClick = {this.onVoteQuestion}><i className = "la la-thumbs-up"></i></a>
+                                                                                <a  className="com">{question && (question.votes - question.unvotes)}</a>
+                                                                                <a  className="com" onClick = {this.onUnVoteQuestion}><i className = "la la-thumbs-down"></i></a>
                                                                             </li> 
                                                                             <li><a   className="com"><img src="/images/com.png"  /> 15</a></li>
                                                                             <li><a className="com"><i className="la la-eye" /> 50</a></li>
@@ -296,17 +336,23 @@ export default class QuestionDetail extends Component {
                                             </li>
                                         </ul>
                                         </div>{/*comment-sec end*/}
-                                        <div className="post-comment">
-                                        <div className="cm_img">
-                                            <img src="/images/resources/bg-img4.png" />
-                                        </div>
-                                        <div className="comment_box">
-                                            <form>
-                                            <input type="text" placeholder="Post a comment" />
-                                            <button type="submit">Send</button>
-                                            </form>
-                                        </div>
-                                        </div>{/*post-comment end*/}
+                                        {
+                                            this.state.currentUserID ?  
+                                            <div className="post-comment">
+                                                <div className="cm_img">
+                                                    <img src="/images/resources/bg-img4.png" />
+                                                </div>
+                                                <div className="comment_box">
+                                                    <form>
+                                                    <input type="text" placeholder="Post a comment" />
+                                                    <button type="submit">Send</button>
+                                                    </form>
+                                                </div>
+                                            </div> :
+                                            <div className="post-comment">
+                                                <span>Vui lòng <NavLink to = "/sign-in"><b>Login</b></NavLink> để tham gia cuộc thảo luận này!</span>
+                                            </div>
+                                        }
                                     </div>{/*comment-section end*/}
                                     </div>{/*posty end*/}
 

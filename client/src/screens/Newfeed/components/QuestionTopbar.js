@@ -37,7 +37,8 @@ export default class QuestionTopbar extends Component {
             images: [],
             categoryID: 'none',
             tags: [],
-            suggestions: []
+            suggestions: [],
+            currentUserID: null
         }
 
     }
@@ -85,7 +86,6 @@ export default class QuestionTopbar extends Component {
             comments: 0,
         }
         this.props.addNewQuestion(questionItem);
-
 
     }
     
@@ -150,6 +150,7 @@ export default class QuestionTopbar extends Component {
     }
 
   render() {
+
     const config = this.componentConfig;
     const djsConfig = this.djsConfig;
     const eventHandlers = {

@@ -36,6 +36,12 @@ const mapDispatchToProps = (dispatch, props) => {
         getTags: () => {
             return dispatch(actions.getAllTagsRequest());
         },
+        voteQuestion: (vote) => {
+            return dispatch(actions.voteQuestionRequest(vote));
+        },
+        unVoteQuestion: (unvote) => {
+            return dispatch(actions.unVoteQuestionRequest(unvote));
+        }
 
     }
 }
