@@ -53,6 +53,29 @@ const question = (state = initialState, action) => {
                 questions: [...state.questions.filter(question => question.questionID !== questionID)]
             }
         }
+
+        case types.VOTE_QUESTION: 
+        {
+            return {
+                ...state,
+                questionItem: {
+                    ...state.questionItem,
+                    votes: state.questionItem.votes + 1
+                }
+            }
+        }
+
+        case types.UNVOTE_QUESTION: 
+        {
+            return {
+                ...state,
+                questionItem: {
+                    ...state.questionItem,
+                    votes: state.questionItem.votes - 1
+                }
+            }
+        }
+
         default:
             return state;
     }

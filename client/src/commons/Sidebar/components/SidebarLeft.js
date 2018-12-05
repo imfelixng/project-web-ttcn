@@ -15,7 +15,7 @@ export default class SidebarLeft extends Component {
                                         <img src="images/resources/s1.png"  />
                                         <div className="sgt-text">
                                         <h4>Jessica William</h4>
-                                        <i class="fa fa-heart"></i>
+                                        <i className="fa fa-heart"></i>
                                         <span>15</span>
                                         <img src={Images.goldMedal} alt="goldMedal" className="img-award"></img>
 

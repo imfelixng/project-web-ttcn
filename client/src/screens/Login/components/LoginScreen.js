@@ -42,8 +42,8 @@ export default class LoginScreen extends Component {
             password: this.state.password_signup,
             fullname: this.state.fullname,
             username: '',
-            vote: 0,
-            unvote: 0,
+            votes: 0,
+            unvotes: 0,
             avatar: '/images/users/img_avatar_default.png'
         }
 
