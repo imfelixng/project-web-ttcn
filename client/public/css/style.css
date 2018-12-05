@@ -5477,8 +5477,8 @@ a {
 	right: 25px;
 	position: absolute;
 }
-.fa {
-	color: gray;
+.fa-heart {
+	color: #e44d3a;
 }
 .fa-bookmark {
 	right:20px;
@@ -5626,3 +5626,53 @@ a.com {
     font-size: 48px;
     margin: auto;
 }
+.question-amount {
+	width: max-content;
+	border-radius: 16px;
+	background: #4099ff;
+	color: white;
+}
+.icon-ques {
+	background: transparent !important;
+}
+.amount {
+	margin-right: 8px;
+	color: white;
+}
+.flex {
+	height: 45px;
+	margin-bottom: 10px;
+}
+.my-3 {
+	margin-top: 8px !important;
+}
+.name-list {
+	margin-left: 20px;
+	margin-top: 8px !important;
+	color: #686868;
+}
+
+.amount-tag {
+	margin-left: 5px;
+	width: max-content;
+	float: right;
+	background: transparent;
+	border: none;
+	border-left: 1px solid #b2b2b2;
+	color: #b2b2b2;
+}
+
+.top-tag {
+	display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+.link-tag {
+	border-radius: 10px;
+	padding: 5px;
+	margin: 0 10px 10px 0;
+	background: #e5e5e5;
+}
+ .name-tag {
+	 color: #b2b2b2;
+ }
