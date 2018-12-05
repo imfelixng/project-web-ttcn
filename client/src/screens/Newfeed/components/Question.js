@@ -184,10 +184,10 @@ export default class Question extends Component {
             <div className="job-status-bar">
                                         <ul className="like-com">
                                         <li>
-                                            <a  className="com"><i className = "la la-heart-o"></i> {question.votes - question.unvotes}</a>
+                                            <a  className="com"><i className = "la la-heart-o"></i> {question ? (question.votes - question.unvotes) : 0}</a>
                                         </li> 
-                                        <li><a   className="com"><img src="images/com.png"  /> 15</a></li>
-                                        <li><a className="com"><i className="la la-eye" /> 50</a></li>
+                                        <li><a   className="com"><img src="images/com.png"  /> {question ? (question.comments) : 0}</a></li>
+                                        <li><a className="com"><i className="la la-eye" /> {question ? (question.views) : 0}</a></li>
                                         </ul>
                                         
                                     </div>
