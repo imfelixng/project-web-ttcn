@@ -23,13 +23,20 @@ class BaseAPI:
 
     def get_aggregate(self):
         try:
-            project = {
-                "_id": 0,
-                "_updated": 0,
-                "_etag": 0,
-                "_created": 0
-            }
-            data = self.data.aggregate(self.resource, {}, project)
+            pipeline = [
+                {
+                    "$match": {}
+                },
+                {
+                    "$project": {
+                        "_id": 0,
+                        "_updated": 0,
+                        "_etag": 0,
+                        "_created": 0
+                    }
+                }
+            ]
+            data = self.data.aggregate(self.resource, pipeline)
             return make_resource_response("resource", list(data))
         except Exception as e:
             raise UnprocessableEntity('RC_400', message=e.to_primitive())

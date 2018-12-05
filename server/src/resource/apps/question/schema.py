@@ -7,15 +7,17 @@ class JsonString(BaseType):
 
 
 class Question(BaseModel):
+    class Options:
+        serialize_when_none = True
+
     questionID = StringType(required=True)
     content = JsonString(required=True)
-    images = ListType(JsonString())
+    images = ListType(JsonString(),)
     topComment = JsonString()
     categoryID = StringType()
     userID = StringType(required=True)
     tags = ListType(JsonString())
-    votes = IntType()
-    unvotes = IntType()
-    views = IntType()
-    comments = IntType()
-    id = IntType()
+    votes = IntType(default=0)
+    unvotes = IntType(default=0)
+    views = IntType(default=0)
+    comments = IntType(default=0)

@@ -33,17 +33,18 @@ def __setup__(module):
             query = {
                 "questionID": questionID
             }
-            lookup = {
-                "from": "comment",
-                "localField": "questionID",
-                "foreignField": "questionID",
-                "as": "comment"
-            }
-            project = {
-                "password": 0
-            }
-            data = module.data.find_aggregate(
-                "question", lookup, query, project)
+            # lookup = {
+            #     "from": "comment",
+            #     "localField": "questionID",
+            #     "foreignField": "questionID",
+            #     "as": "comment"
+            # }
+            # project = {
+            #     "password": 0
+            # }
+            # data = module.data.find_aggregate(
+            #     "question", lookup, query, project)
+            data = module.data.find("comment", query)
             return make_resource_response("resource", list(data))
         except Exception as e:
             raise UnprocessableEntity("RC_400", str(e))
@@ -51,19 +52,32 @@ def __setup__(module):
     @module.endpoint("/users/<userID>/questions", methods=["GET"])
     def getAllQuestion(userID):
         try:
-            query = {
-                "userID": userID
-            }
-            lookup = {
-                "from": "question",
-                "localField": "userID",
-                "foreignField": "userID",
-                "as": "question"
-            }
-            project = {
-                "password": 0
-            }
-            data = module.data.find_aggregate("user", lookup, query, project)
+            pipeline = [
+                {
+                    "$match": {
+                        "userID": userID
+                    }
+                },
+                {
+                    "$project": {
+                        "password": 0
+                    }
+                },
+                {
+                    "$lookup": {
+                        "from": "question",
+                        "localField": "userID",
+                        "foreignField": "userID",
+                        "as": "questions"
+                    }
+                },
+                {
+                    "$sort": {
+                        "questions._updated": -1
+                    }
+                }
+            ]
+            data = module.data.aggregate("user", pipeline)
             return make_resource_response("resource", list(data))
         except Exception as e:
             raise UnprocessableEntity("RC_400", str(e))
@@ -79,7 +93,6 @@ def __setup__(module):
                 image_raw = data["images"][i]
                 imgString = image_raw["dataURL"][22:]
                 filename = image_raw["upload"]["filename"]
-                # path = os.getcwd()
                 path = "/app/server/public/images/questions/" + filename
                 save_image(imgString, path)
                 data["images"][i]["dataURL"] = "/images/questions/" + filename
@@ -88,11 +101,8 @@ def __setup__(module):
             tags = data["tags"]
             data["_created"] = datetime.now()
             save_new_tags(module, tags)
-            # model = Question(data)
-            # logging.warn("questions %r", data)
-            # model.save()
-            rs = module.data.insert_one("question", data)
-            return make_resource_response("resource", rs)
-            # return make_resource_response("question", model.to_primitive())
+            model = Question(data)
+            model.save()
+            return make_resource_response("question", model.to_primitive())
         except Exception as e:
             raise UnprocessableEntity("RC_400", message=str(e))

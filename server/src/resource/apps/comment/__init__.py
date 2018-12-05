@@ -25,6 +25,8 @@ def __setup__(module):
 
             model = Comment(data)
             model.save()
+            module.data.update("question", {"questionID": data["questionID"]}, {
+                               "$inc": {"comments": 1}})
             return make_resource_response("resource", model.to_primitive())
         except Exception as e:
             raise UnprocessableEntity("RC_400", e.to_primitive())

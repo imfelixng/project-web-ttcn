@@ -12,8 +12,8 @@ def __setup__(module):
     @module.endpoint("/signup", methods=["POST"])
     def register():
         try:
-            data = request.json or request.form.to_dict()
-
+            # data = request.json or request.form.to_dict()
+            data = request.json
             query = {"email": data.get("email")}
             database = module.data.db
             if database.user.find_one(query) is not None:
@@ -67,3 +67,28 @@ def __setup__(module):
             return make_resource_response("resource", data_response)
         except Exception as e:
             raise UnprocessableEntity('RC_400', message=str(e))
+
+    @module.endpoint("/users/topusers", methods=["GET"])
+    def topuser():
+        try:
+            pipeline = [
+                {
+                    "$project": {
+                        "topVote": {
+                            "$subtract": ["$votes", "$unvotes"]
+                        }
+                    }
+                },
+                {
+                    "$sort": {
+                        "topVote": -1
+                    }
+                },
+                {
+                    "$limit": 5
+                }
+            ]
+            data = module.data.aggregate("user", pipeline)
+            return make_resource_response("user", list(data))
+        except Exception as e:
+            raise UnprocessableEntity("RC_400", message=str(e))

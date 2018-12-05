@@ -3,6 +3,7 @@ from bson import ObjectId
 from foundation.common.log import getLogger
 from flask import session
 import logging
+from datetime import datetime
 logger = getLogger(__name__)
 
 
@@ -38,7 +39,7 @@ class MongoInterface(object):
         source = self.db[resource]
         if query is None:
             query = {}
-        data = source.find(query).sort("_created", -1)
+        data = source.find(query).sort("_updated", 1)
         return data
 
     def insert_one(self, resource, data):
@@ -54,9 +55,16 @@ class MongoInterface(object):
         logging.warn("update by another user %s" % data)
         return data
 
-    def update(self, resource, ID, update, **kwargs):
+    # def update(self, resource, ID, update, **kwargs):
+    #     update["$set"] = {"_updated": datetime.now()}
+    #     source = self.db[resource]
+    #     query = {resource + "ID": ID}
+    #     data = source.find_one_and_update(query, update, **kwargs)
+    #     return data
+
+    def update(self, resource, query, update, **kwargs):
+        update["$set"] = {"_updated": datetime.now()}
         source = self.db[resource]
-        query = {resource + "ID": ID}
         data = source.find_one_and_update(query, update, **kwargs)
         return data
 
@@ -74,15 +82,10 @@ class MongoInterface(object):
         else:
             return False
 
-    def aggregate(self, resource, query, project):
-        h = self.db[resource].aggregate([
-            {
-                "$match": query
-            },
-            {
-                "$project": project
-            }
-        ])
+    def aggregate(self, resource, pipeline):
+        h = self.db[resource].aggregate(
+            pipeline
+        )
         return h
 
     def find_embedded(self, resource, dist, _id, localField, foreignField):

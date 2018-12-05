@@ -130,3 +130,24 @@ Notification:
 	Edit a notification
 		url: /notifications/notificationID>
 		method: DELETE
+
+Vote:
+	Create votes questions:
+		url: /questions/<questionID>/votes
+		method: POST
+		content-type: json
+	Create votes comments:
+		url: /comments/<commentID>/votes
+		method: POST
+		content-type: json
+
+Unvotes:
+	Create unvotes questions:
+		url: /questions/<questionID>/unvotes
+		method: POST
+		content-type: json
+	Create unvotes comments:
+		url: /comments/<commentID>/unvotes
+		method: POST
+		content-type: json
+

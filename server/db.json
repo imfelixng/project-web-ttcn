@@ -1,138 +1,6 @@
 {
   "questions": [
     {
-      "questionID": "1542041228261",
-      "content": {
-        "blocks": [
-          {
-            "key": "empug",
-            "text": "Chào các bạn. cho mình hỏi vì sao 1 + 1 = 2",
-            "type": "unstyled",
-            "depth": 0,
-            "inlineStyleRanges": [],
-            "entityRanges": [],
-            "data": {}
-          }
-        ],
-        "entityMap": {}
-      },
-      "images": [],
-      "topComment": {},
-      "categoryID": "1",
-      "tags": [],
-      "userID": "",
-      "id": 1
-    },
-    {
-      "questionID": "1542043207199",
-      "content": {
-        "blocks": [
-          {
-            "key": "d19rp",
-            "text": "Hello các bạn",
-            "type": "unstyled",
-            "depth": 0,
-            "inlineStyleRanges": [],
-            "entityRanges": [],
-            "data": {}
-          }
-        ],
-        "entityMap": {}
-      },
-      "images": [],
-      "topComment": {},
-      "categoryID": "1",
-      "tags": [],
-      "userID": "",
-      "id": 2
-    },
-    {
-      "questionID": "1542043315032",
-      "content": {
-        "blocks": [
-          {
-            "key": "d19rp",
-            "text": "Hello các bạn ahihi đồ ngốc :v😁",
-            "type": "unstyled",
-            "depth": 0,
-            "inlineStyleRanges": [
-              {
-                "offset": 0,
-                "length": 18,
-                "style": "color-rgb(147,101,184)"
-              }
-            ],
-            "entityRanges": [],
-            "data": {}
-          }
-        ],
-        "entityMap": {}
-      },
-      "images": [],
-      "topComment": {},
-      "categoryID": "1",
-      "tags": [],
-      "userID": "",
-      "id": 3
-    },
-    {
-      "questionID": "1542043597183",
-      "content": {
-        "blocks": [
-          {
-            "key": "6lj9m",
-            "text": "Chào các chế :v 😂😂😀😍",
-            "type": "unstyled",
-            "depth": 0,
-            "inlineStyleRanges": [
-              {
-                "offset": 0,
-                "length": 20,
-                "style": "color-rgb(226,80,65)"
-              },
-              {
-                "offset": 0,
-                "length": 20,
-                "style": "BOLD"
-              }
-            ],
-            "entityRanges": [],
-            "data": {}
-          }
-        ],
-        "entityMap": {}
-      },
-      "images": [],
-      "topComment": {},
-      "categoryID": "2",
-      "tags": [],
-      "userID": "",
-      "id": 4
-    },
-    {
-      "questionID": "1542043904712",
-      "content": {
-        "blocks": [
-          {
-            "key": "fo0h2",
-            "text": "vvbbvbv",
-            "type": "unstyled",
-            "depth": 0,
-            "inlineStyleRanges": [],
-            "entityRanges": [],
-            "data": {}
-          }
-        ],
-        "entityMap": {}
-      },
-      "images": [],
-      "topComment": {},
-      "categoryID": "1",
-      "tags": [],
-      "userID": "",
-      "id": 5
-    },
-    {
       "questionID": "1542092671783",
       "content": {
         "blocks": [
@@ -219,7 +87,39 @@
       "id": 6
     }
   ],
-  "users": [],
+  "users": [
+    {
+      "userID": "u_123456789",
+      "email": "nguyenvanphu@gmail.com",
+      "password": "nguyenvanphu",
+      "fullname": "nguyenvanphu"
+    }
+  ],
+  "comments": [
+    {
+      "commentID": "c_123456789",
+      "userID": "u_123456789",
+      "questionID": "q_1542041228261",
+      "content": {
+          "blocks": [
+            {
+              "key": "esrr0",
+              "text": "this is a test comments",
+              "type": "unstyled",
+              "depth": 0,
+              "inlineStyleRanges": [],
+              "entityRanges": [],
+              "data": {}
+            }
+          ],
+          "entityMap": {}
+        },
+      "votes": 0,
+      "unvotes": 0,
+      "images":[],
+      "replies": []
+    }
+  ],
   "categories": [
     {
       "categoryID": "1",
@@ -238,5 +138,23 @@
       "name": "Toeic"
     }
   ],
-  "tags": []
+  "tags": [
+    {
+      "tagID": "t_123456678",
+      "id": 1,
+      "text": "toan"
+    }
+  ],
+  "votes": [
+    {
+      "voteID": "v_123456789"
+      // "questionID": "q_123456789"
+    }
+  ],
+  "unvotes": [
+    {
+      "unvoteID": "un_123456789"
+      // "questionID": "q_123456789"
+    }
+  ]
 }

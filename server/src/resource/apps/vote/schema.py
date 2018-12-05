@@ -6,9 +6,11 @@ class Vote(BaseModel):
     userID = StringType(required=True)
     questionID = StringType(required=True)
     voteID = StringType(required=True)
+    commentID = StringType()
 
 
 class Unvote(BaseModel):
     userID = StringType(required=True)
     questionID = StringType(required=True)
     unvoteID = StringType(required=True)
+    commentID = StringType()
