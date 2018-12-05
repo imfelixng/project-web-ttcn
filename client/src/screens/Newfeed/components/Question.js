@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import {NavLink} from 'react-router-dom';
 import draftToHtml from 'draftjs-to-html';
+import moment from 'moment';
+
 export default class Question extends Component {
 
     state = {
@@ -110,6 +112,7 @@ export default class Question extends Component {
     let {question} = this.props;
     let userInfo = this.state.userOther[question.userID];
     let categoryInfo = this.state.categoryQuestion[question.categoryID];
+    let timeAgo = question ? moment(question._created, "YYYY-MM-DD HH:mm:ss", 'vn').fromNow() : 'Ngay bây giờ';
     return (
       <React.Fragment>
         <div className="post-bar">
@@ -118,7 +121,7 @@ export default class Question extends Component {
                     <img className = "user-picy" src= {userInfo ? userInfo.avatar : "/images/users/img_avatar_default.png"}  />
                     <div className="usy-name">
                         <h3>{userInfo ? userInfo.fullname : "yourname"}</h3>
-                        <span><img src="images/clock.png"  />3 min ago</span>
+                        <span><img src="images/clock.png"  />{timeAgo}</span>
                      </div>
                 </div>
                 <div className="ed-opts">

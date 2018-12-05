@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import {NavLink} from 'react-router-dom';
 import draftToHtml from 'draftjs-to-html';
+import moment from 'moment';
+
+
 import EditModal from './EditModal';
 import SidebarRight from '../../../commons/Sidebar/components/SidebarRight';
 export default class QuestionDetail extends Component {
@@ -174,9 +177,12 @@ export default class QuestionDetail extends Component {
     let userInfo = null;
     let categoryInfo = null;
 
+    let timesamp = 0;
+
     if(question) {
         userInfo = this.state.userOther[question.userID];
         categoryInfo = this.state.categoryQuestion[question.categoryID];
+        timesamp = moment(question._created, "YYYY-MM-DD HH:mm:ss").format('X');
     }
 
     return (
@@ -197,7 +203,7 @@ export default class QuestionDetail extends Component {
                                                         <img className = "user-picy" src= {userInfo ? userInfo.avatar : "/images/users/img_avatar_default.png"}  />
                                                         <div className="usy-name">
                                                             <h3>{userInfo ? userInfo.fullname : "yourname"}</h3>
-                                                            <span><img src="/images/clock.png"  />3 min ago</span>
+                                                            <span><img src="/images/clock.png"  />{timesamp}</span>
                                                         </div>
                                                     </div>
                                                     <div className="ed-opts">
