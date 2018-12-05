@@ -39,7 +39,7 @@ class MongoInterface(object):
         source = self.db[resource]
         if query is None:
             query = {}
-        data = source.find(query).sort("_updated", 1)
+        data = source.find(query).sort("_updated", -1)
         return data
 
     def insert_one(self, resource, data):
