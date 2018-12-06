@@ -55,7 +55,7 @@ class BaseAPI:
     def create(self):
         try:
             data = request.json or request.form.to_dict()
-            if session.get("AUTH_FIELD"):
+            if session.get("AUTH_FIELD") and self.resource != "category":
                 data["userID"] = session.get("userID")
             model = self.Model(data)
             resp = model.save()
