@@ -10,9 +10,9 @@ logger = getLogger(__name__)
 class MongoInterface(object):
     def __init__(self, MONGOHOS=None, MONGGODB=None):
         # self.client = MongoClient('mongodb://localhost:27017/')
-        self.client = MongoClient(
-            "mongodb://data:chritsmasgood12@ds143971.mlab.com:43971/nvphu1306")
-        # self.client = MongoClient('mongodb://localhost:27017/')
+        # self.client = MongoClient(
+            # "mongodb://data:chritsmasgood12@ds143971.mlab.com:43971/nvphu1306")
+        self.client = MongoClient('mongodb://localhost:27017/')
         self.mongodb = "nvphu1306"
         # self.mongodb = "study_support"
 
@@ -63,7 +63,8 @@ class MongoInterface(object):
     #     return data
 
     def update(self, resource, query, update, **kwargs):
-        update["$set"] = {"_updated": datetime.datetime.now() + datetime.timedelta(hours=7)}
+        update["$set"] = {
+            "_updated": datetime.datetime.now() + datetime.timedelta(hours=7)}
         source = self.db[resource]
         data = source.find_one_and_update(query, update, **kwargs)
         return data

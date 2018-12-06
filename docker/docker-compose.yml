@@ -3,12 +3,12 @@ volumes:
   mongo_data:
 
 services:
-    # app_db:
-    #     image: mongo
-    #     volumes:
-    #         - mongo_data:/data/db
-    #     ports:
-    #         - "27017:27017"
+    app_db:
+        image: mongo
+        volumes:
+            - mongo_data:/data/db
+        ports:
+            - "27017:27017"
 
     # remmember replace the volume path
     app_srv:
