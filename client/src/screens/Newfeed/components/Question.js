@@ -47,7 +47,13 @@ export default class Question extends Component {
 
 
     onDeleteQuestion = (questionID) => {
-        this.props.deleteQuestion(questionID);
+        this.props.deleteQuestion(questionID).then(() => {
+            this.setState({
+                isOpenFunctional: false
+            });
+        })
+        .catch(err => console.log(err));
+
     }
 
 
@@ -109,10 +115,11 @@ export default class Question extends Component {
     }
 
   render() {
+    
     let {question} = this.props;
     let userInfo = this.state.userOther[question.userID];
     let categoryInfo = this.state.categoryQuestion[question.categoryID];
-    let timeAgo = question ? moment(question._created, "YYYY-MM-DD HH:mm:ss", 'vn').fromNow() : 'Ngay bây giờ';
+    let timeAgo = question ? moment(question._created, "YYYY-MM-DD HH:mm:ss", 'vn').fromNow() : 'Thời gian đăng';
     return (
       <React.Fragment>
         <div className="post-bar">

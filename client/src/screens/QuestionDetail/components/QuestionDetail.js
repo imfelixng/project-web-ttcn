@@ -31,6 +31,8 @@ export default class QuestionDetail extends Component {
         currentUserID: '',
         userOther: [],
         categoryQuestion: [],
+        isLoadingVote: false,
+        isLoadingUnVote: false
     }
 
     onOpenFunctional = () => {
@@ -83,9 +85,21 @@ export default class QuestionDetail extends Component {
 
     onVoteQuestion = () => {
 
+        if(this.state.isLoadingVote || this.state.isLoadingUnVote) {
+            return;
+        }
+
+        this.setState({
+            isLoadingVote: true
+        })
+
         if(!this.state.currentUserID) {
             alert("Vui lòng login để có thể tương tác!");
+            this.setState({
+                isLoadingVote: false
+            })
             return;
+
         }
 
         let vote = {
@@ -94,14 +108,30 @@ export default class QuestionDetail extends Component {
             voteID: 'v_' + new Date().getTime() + this.state.currentUserID + this.props.question.questionID
         }
 
-        this.props.voteQuestion(vote);
+        this.props.voteQuestion(vote).then(() => {
+            this.setState({
+                isLoadingVote: false
+            })
+        })
+        .catch(err => console.log(err));
 
     }
 
     onUnVoteQuestion = () => {
 
+        if(this.state.isLoadingVote || this.state.isLoadingUnVote) {
+            return;
+        }
+
+        this.setState({
+            isLoadingUnVote: true
+        })
+
         if(!this.state.currentUserID) {
             alert("Vui lòng login để có thể tương tác!");
+            this.setState({
+                isLoadingUnVote: false
+            })
             return;
         }
 
@@ -111,7 +141,12 @@ export default class QuestionDetail extends Component {
             unvoteID: 'uv_' + new Date().getTime() + this.state.currentUserID + this.props.question.questionID
         }
 
-        this.props.unVoteQuestion(unvote);
+        this.props.unVoteQuestion(unvote).then(() => {
+            this.setState({
+                isLoadingUnVote: false
+            })
+        })
+        .catch(err => console.log(err));
     }
 
 
@@ -177,12 +212,12 @@ export default class QuestionDetail extends Component {
     let userInfo = null;
     let categoryInfo = null;
 
-    let timesamp = 0;
+    let timeAgo = 'Thời gian đăng';
 
     if(question) {
         userInfo = this.state.userOther[question.userID];
         categoryInfo = this.state.categoryQuestion[question.categoryID];
-        timesamp = moment(question._created, "YYYY-MM-DD HH:mm:ss").format('X');
+        timeAgo = question ? moment(question._created, "YYYY-MM-DD HH:mm:ss", 'vn').fromNow() : 'Thời gian đăng';
     }
 
     return (
@@ -203,7 +238,7 @@ export default class QuestionDetail extends Component {
                                                         <img className = "user-picy" src= {userInfo ? userInfo.avatar : "/images/users/img_avatar_default.png"}  />
                                                         <div className="usy-name">
                                                             <h3>{userInfo ? userInfo.fullname : "yourname"}</h3>
-                                                            <span><img src="/images/clock.png"  />{timesamp}</span>
+                                                            <span><img src="/images/clock.png"  />{timeAgo}</span>
                                                         </div>
                                                     </div>
                                                     <div className="ed-opts">
@@ -217,7 +252,7 @@ export default class QuestionDetail extends Component {
                                                         {
                                                             this.state.currentUserID === question.userID ?
                                                             <React.Fragment>
-                                                                <li><a href="#" data-toggle="modal" data-target="#EditModal" data-backdrop="static" >Edit</a></li>
+                                                                <li><a href="#" data-toggle="modal" data-target="#EditModal" data-backdrop="static" onClick = {this.onOpenFunctional}>Edit</a></li>
                                                                 <li><a onClick = {() => this.onDeleteQuestion(question.questionID)} >Delete</a></li>
                                                             </React.Fragment> :
                                                             <React.Fragment>
@@ -275,9 +310,23 @@ export default class QuestionDetail extends Component {
                                                 <div className="job-status-bar">
                                                                             <ul className="like-com">
                                                                             <li>
-                                                                                <a  className="com" onClick = {this.onVoteQuestion}><i className = "la la-thumbs-up"></i></a>
+                                                                                <a  className="com" onClick = {this.onVoteQuestion}>
+                                                                                    {
+                                                                                        this.state.isLoadingVote ? 
+                                                                                            <img className = "loading-vote"src= "/images/ic_loading.gif"/>
+                                                                                        :
+                                                                                        <i className = "la la-thumbs-up"></i>
+                                                                                    }
+                                                                                </a>
                                                                                 <a  className="com">{question ? (question.votes - question.unvotes) : 0}</a>
-                                                                                <a  className="com" onClick = {this.onUnVoteQuestion}><i className = "la la-thumbs-down"></i></a>
+                                                                                <a  className="com" onClick = {this.onUnVoteQuestion}>
+                                                                                    {
+                                                                                        this.state.isLoadingUnVote ? 
+                                                                                        <img className = "loading-vote"src= "/images/ic_loading.gif"/>
+                                                                                        :
+                                                                                        <i className = "la la-thumbs-down"></i>                
+                                                                                    }
+                                                                                </a>
                                                                             </li> 
                                                                             <li><a   className="com"><img src="/images/com.png"  /> {question ? question.comments : 0}</a></li>
                                                                             <li><a className="com"><i className="la la-eye" /> {question ? question.views : 0}</a></li>
@@ -290,7 +339,7 @@ export default class QuestionDetail extends Component {
                                             {
                                                 question && 
                                                 <EditModal
-                                                
+                                                    onCloseFunctional = {this.onCloseFunctional}
                                                     tags = {this.props.tags}
                                                     categories = {this.props.categories}
                                                     getCategories = {this.props.getCategories}
