@@ -35,17 +35,3 @@ def __setup__(module):
             return make_resource_response("views", list(resp))
         except Exception as e:
             raise UnprocessableEntity("RC_400", message=str(e))
-
-    @module.endpoint("/slow", methods=["GET"])
-    def slow_test():
-        sum = 0
-        for i in range(100000000):
-            sum += i
-        return "Slow request %s" % sum
-
-    @module.endpoint("/fast", methods=["GET"])
-    def fast_test():
-        sum = 0
-        for i in range(10):
-            sum += i
-        return "Slow request %s" % sum

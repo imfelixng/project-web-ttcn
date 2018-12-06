@@ -1,1 +1,1 @@
-SECRET_KEY = "asdasd"
+SECRET_KEY = "KERaTjIjgZ5ZFHrRc9r1iFpStKU"
