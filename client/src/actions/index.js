@@ -72,6 +72,23 @@ export const updateQuestion = (question) => {
     }
 }
 
+export const updateViewQuestionRequest = (question) => {
+    return async (dispatch) => {
+        let result = await APIs.callAPI("questions/" + question.questionID +"/views", "PATCH", question);
+        console.log(result);    
+        if(result != null) {
+                dispatch(updateViewQuestion(result.data));
+            }
+    }
+}
+
+export const updateViewQuestion = (question) => {
+    return {
+        type: types.UPDATE_VIEW_QUESTION,
+        question
+    }
+}
+
 export const voteQuestionRequest = (vote) => {
     return async (dispatch) => {
         //dispatch(voteQuestion(vote));
@@ -233,10 +250,13 @@ export const logoutUser = () => {
 
 export const getUserRequest = (userID) => {
     return async (dispatch) => {
-        let result = await APIs.callAPI("users/" + userID, "GET");
+        if(userID) {
+            let result = await APIs.callAPI("users/" + userID, "GET");
             if(result != null) {
                 dispatch(getUser(result.data));
             }
+        }
+
     }
 }
 

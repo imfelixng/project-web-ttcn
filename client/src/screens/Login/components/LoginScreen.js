@@ -150,17 +150,17 @@ export default class LoginScreen extends Component {
                 <div className="col-lg-6">
                     <div className="cmp-info">
                     <div className="cm-logo">
-                        <img src="images/cm-logo.png"  />
+                        <img src="images/cm-logo.png" alt = "logo" />
                         <p>Workwise,  is a global freelancing platform and social networking where businesses and independent professionals connect and collaborate remotely</p>
                     </div>{/*cm-logo end*/}	
-                    <img src="images/cm-main-img.png"  />			
+                    <img src="images/cm-main-img.png" alt = "logo" />			
                     </div>{/*cmp-info end*/}
                 </div>
                 <div className="col-lg-6">
                     <div className="login-sec">
                     <ul className="sign-control">
-                        <li data-tab="tab-1" className= {this.state.isSignIn ? "current" : ""} onClick = {() => this.showSignIn(true)}><a >Sign in</a></li>				
-                        <li data-tab="tab-2" className= {!this.state.isSignIn ? "current" : ""} onClick = {() => this.showSignIn(false)}><a  >Sign up</a></li>				
+                        <li data-tab="tab-1" className= {this.state.isSignIn ? "current" : ""} onClick = {() => this.showSignIn(true)}><a>Sign in</a></li>				
+                        <li data-tab="tab-2" className= {!this.state.isSignIn ? "current" : ""} onClick = {() => this.showSignIn(false)}><a>Sign up</a></li>				
                     </ul>			
                     <div className={this.state.isSignIn ? "sign_in_sec current" : "sign_in_sec"} id="tab-1">      
                         {

@@ -31,7 +31,7 @@ export default class Header extends Component {
     }
 
     componentDidMount() {
-        this.props.getUser(this.props.currentUserID)
+        this.props.getUser(this.props.currentUserID);
     }
 
     showFullName = (fullname) => {

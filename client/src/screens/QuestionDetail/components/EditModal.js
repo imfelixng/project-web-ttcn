@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 
-import { convertFromRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 
 import { WithContext as ReactTags } from 'react-tag-input';
@@ -14,13 +13,15 @@ const delimiters = [KeyCodes.comma, KeyCodes.enter];
 export default class EditModal extends Component {
 
   constructor(props) {
-      super(props);
-
-      this.state = {
-          contentState: this.props.question.content,
+    
+    super(props);
+    this.content = {"entityMap":{},"blocks":[{"key":"637gr","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}]};
+    this.state = {
+          contentState: this.content,
           categoryID: 'none',
           tags: [],
-          suggestions: []
+          suggestions: [],
+          question: null
       }
 
   }
@@ -53,13 +54,18 @@ export default class EditModal extends Component {
   }
 
   handleAddition = (tag) => {
-      if(tag.text.length < 2) {
-          alert("Tag quá ngắn, Vui lòng nhập tối thiểu 2 kí tự!");
-          return false;
-      }
-      tag.id = "t_" + new Date().getTime();
-      this.setState(state => ({ tags: [...state.tags, tag] }));
-  }
+    if(tag.text.length < 2) {
+        alert("Tag quá ngắn, Vui lòng nhập tối thiểu 2 kí tự!");
+        return false;
+    }
+    
+    if(!tag.tagID) {
+        tag.id = "t_" + new Date().getTime();
+        tag.tagID = tag.id;
+    }
+    console.log(tag);
+    this.setState(state => ({ tags: [...state.tags, tag] }));
+}
 
   handleDrag = (tag, currPos, newPos) => {
       const tags = [...this.state.tags];
@@ -82,7 +88,8 @@ export default class EditModal extends Component {
 
   static getDerivedStateFromProps(props, state) {
       return {
-          suggestions: props.tags
+        suggestions: props.tags,
+        question: props.question
       };
   }
 
@@ -92,23 +99,24 @@ export default class EditModal extends Component {
     this.setState({
       contentState: this.props.question.content,
       tags: this.props.question.tags,
-      categoryID: this.props.question.categoryID
+      categoryID: this.props.question.categoryID,
+      question: this.props.question
     });
   }
 
   onUpdate = () => {
     let questionItem = {
-        questionID: this.props.question.questionID,
+        questionID: this.state.question.questionID,
         content: this.state.contentState,
-        images: this.props.question.images,
-        topComment: this.props.question.topComment,
+        images: this.state.question.images,
+        topComment: this.state.question.topComment,
         categoryID: this.state.categoryID,
-        userID: this.props.question.userID,
+        userID: this.state.question.userID,
         tags: this.state.tags,
-        votes: this.props.question.votes,
-        unvotes: this.props.question.unvotes,
-        views: this.props.question.views,
-        comments: this.props.question.comments,
+        votes: this.state.question.votes,
+        unvotes: this.state.question.unvotes,
+        views: this.state.question.views,
+        comments: this.state.question.comments,
     }
 
     this.props.updateQuestion(questionItem);
@@ -118,6 +126,7 @@ export default class EditModal extends Component {
 
   render() {
     const { tags, suggestions, contentState } = this.state;
+
     return (
       <React.Fragment>
         <div className="modal fade" id="EditModal" tabIndex={-1} role="dialog" aria-labelledby="EditModalLabel" aria-hidden="true">

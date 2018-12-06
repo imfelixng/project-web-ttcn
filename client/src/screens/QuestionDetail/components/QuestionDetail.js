@@ -3,7 +3,6 @@ import {NavLink} from 'react-router-dom';
 import draftToHtml from 'draftjs-to-html';
 import moment from 'moment';
 
-
 import EditModal from './EditModal';
 import SidebarRight from '../../../commons/Sidebar/components/SidebarRight';
 export default class QuestionDetail extends Component {
@@ -13,7 +12,7 @@ export default class QuestionDetail extends Component {
         props.getQuestion(props.match.params.idQuestion).then(res => {
             if(this.props.question) {
                 if(!sessionStorage.getItem(this.props.question.questionID)) {
-                    this.props.updateQuestion({questionID: this.props.question.questionID,views: this.props.question.views + 1})
+                    this.props.updateViewQuestion({questionID: this.props.question.questionID,views: this.props.question.views + 1})
                     sessionStorage.setItem(this.props.question.questionID, 'true');
                 }
 
@@ -66,12 +65,13 @@ export default class QuestionDetail extends Component {
     }
 
     componentDidMount() {
-        this.props.getQuestion(this.props.match.params.idQuestion)
-        if(this.props.question) {
-            this.props.getUserOther(this.props.question.userID);
-            this.props.getCategoryQuestion(this.props.question.categoryID);
-        }
-
+        this.props.getQuestion(this.props.match.params.idQuestion).then(() => {
+            if(this.props.question) {
+                this.props.getUserOther(this.props.question.userID);
+                this.props.getCategoryQuestion(this.props.question.categoryID);
+            }
+        })
+        .catch(err => console.log(err));
     }
 
 
@@ -158,6 +158,7 @@ export default class QuestionDetail extends Component {
                     src = {image.dataURL}
                     key = {index}
                     className = "question_image--100"
+                    alt = "logo"
                 />
             });
         }
@@ -168,6 +169,7 @@ export default class QuestionDetail extends Component {
                     src = {image.dataURL}
                     key = {index}
                     className = "question_image--50"
+                    alt = "logo"
                 />
             });
         }
@@ -178,17 +180,17 @@ export default class QuestionDetail extends Component {
                     src = {image.dataURL}
                     key = {index}
                     className = "question_image--30"
+                    alt = "logo"
                 />
             });
-        }
-
-        if(images.length > 3) {
+        } else {
             return images.map((image, index) => {
                 if(index < 2) {
                     return <img 
                         src = {image.dataURL}
                         key = {index}
                         className = "question_image--30"
+                        alt = "logo"
                     />
                 }
                 if( index === 2) {
@@ -196,6 +198,7 @@ export default class QuestionDetail extends Component {
                         <img 
                             src = {image.dataURL}
                             className = "img_more"
+                            alt = "logo"
                         />
                         <div className = "div_more">
                             <i className="la la-plus">{images.length - 2}</i>
@@ -205,6 +208,7 @@ export default class QuestionDetail extends Component {
                 
             });
         }
+
     }
 
   render() {
@@ -235,10 +239,10 @@ export default class QuestionDetail extends Component {
                                     <div className="post-bar">
                                                 <div className="post_topbar">
                                                     <div className="usy-dt">
-                                                        <img className = "user-picy" src= {userInfo ? userInfo.avatar : "/images/users/img_avatar_default.png"}  />
+                                                        <img className = "user-picy" src= {userInfo ? userInfo.avatar : "/images/users/img_avatar_default.png"} alt = "logo" />
                                                         <div className="usy-name">
                                                             <h3>{userInfo ? userInfo.fullname : "yourname"}</h3>
-                                                            <span><img src="/images/clock.png"  />{timeAgo}</span>
+                                                            <span><img src="/images/clock.png" alt = "logo" />{timeAgo}</span>
                                                         </div>
                                                     </div>
                                                     <div className="ed-opts">
@@ -313,7 +317,7 @@ export default class QuestionDetail extends Component {
                                                                                 <a  className="com" onClick = {this.onVoteQuestion}>
                                                                                     {
                                                                                         this.state.isLoadingVote ? 
-                                                                                            <img className = "loading-vote"src= "/images/ic_loading.gif"/>
+                                                                                            <img className = "loading-vote"src= "/images/ic_loading.gif" alt = "loading"/>
                                                                                         :
                                                                                         <i className = "la la-thumbs-up"></i>
                                                                                     }
@@ -322,7 +326,7 @@ export default class QuestionDetail extends Component {
                                                                                 <a  className="com" onClick = {this.onUnVoteQuestion}>
                                                                                     {
                                                                                         this.state.isLoadingUnVote ? 
-                                                                                        <img className = "loading-vote"src= "/images/ic_loading.gif"/>
+                                                                                        <img className = "loading-vote"src= "/images/ic_loading.gif" alt = "loading" />
                                                                                         :
                                                                                         <i className = "la la-thumbs-down"></i>                
                                                                                     }
@@ -357,11 +361,11 @@ export default class QuestionDetail extends Component {
                                             <li>
                                             <div className="comment-list">
                                                 <div className="bg-img">
-                                                <img src="/images/resources/bg-img1.png" />
+                                                <img src="/images/resources/bg-img1.png" alt = "logo"/>
                                                 </div>
                                                 <div className="comment">
                                                 <h3>John Doe</h3>
-                                                <span><img src="/images/clock.png" /> 3 min ago</span>
+                                                <span><img src="/images/clock.png" alt = "logo" /> 3 min ago</span>
                                                 <p>Lorem ipsum dolor sit amet, </p>
                                                 <a href="#"  className="active"><i className="fa fa-reply-all" />Reply</a>
                                                 </div>
@@ -370,11 +374,11 @@ export default class QuestionDetail extends Component {
                                                 <li>
                                                 <div className="comment-list">
                                                     <div className="bg-img">
-                                                    <img src="/images/resources/bg-img2.png" />
+                                                    <img src="/images/resources/bg-img2.png" alt = "logo" />
                                                     </div>
                                                     <div className="comment">
                                                     <h3>John Doe</h3>
-                                                    <span><img src="/images/clock.png" /> 3 min ago</span>
+                                                    <span><img src="/images/clock.png"alt = "logo" /> 3 min ago</span>
                                                     <p>Hi John </p>
                                                     <a href="#" ><i className="fa fa-reply-all" />Reply</a>
                                                     </div>
@@ -385,11 +389,11 @@ export default class QuestionDetail extends Component {
                                             <li>
                                             <div className="comment-list">
                                                 <div className="bg-img">
-                                                <img src="/images/resources/bg-img3.png" />
+                                                <img src="/images/resources/bg-img3.png" alt = "logo"/>
                                                 </div>
                                                 <div className="comment">
                                                 <h3>John Doe</h3>
-                                                <span><img src="/images/clock.png" /> 3 min ago</span>
+                                                <span><img src="/images/clock.png" alt = "logo" /> 3 min ago</span>
                                                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam luctus hendrerit metus, ut ullamcorper quam finibus at.</p>
                                                 <a href="#" ><i className="fa fa-reply-all" />Reply</a>
                                                 </div>
@@ -401,7 +405,7 @@ export default class QuestionDetail extends Component {
                                             this.state.currentUserID ?  
                                             <div className="post-comment">
                                                 <div className="cm_img">
-                                                    <img src="/images/resources/bg-img4.png" />
+                                                    <img src="/images/resources/bg-img4.png" alt = "logo" />
                                                 </div>
                                                 <div className="comment_box">
                                                     <form>
