@@ -115,6 +115,7 @@ export default class EditModal extends Component {
 
   }
 
+
   render() {
     const { tags, suggestions, contentState } = this.state;
     return (

@@ -9,6 +9,7 @@
     "html-to-draftjs": "^1.4.0",
     "immutable": "^4.0.0-rc.12",
     "loadjs": "^3.5.4",
+    "moment": "^2.22.2",
     "node-sass": "^4.10.0",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
