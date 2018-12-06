@@ -8,8 +8,8 @@ export default class Question extends Component {
     state = {
         isOpenFunctional: false,
         currentUserID: '',
-        userOther: [],
-        categoryQuestion: [],
+        userOther: {},
+        categoryQuestion: {},
     }
 
     onOpenFunctional = () => {

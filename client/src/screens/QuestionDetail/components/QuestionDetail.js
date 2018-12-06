@@ -29,7 +29,7 @@ export default class QuestionDetail extends Component {
         isOpenFunctional: false,
         currentUserID: '',
         userOther: [],
-        categoryQuestion: [],
+        categoryQuestion: {},
         isLoadingVote: false,
         isLoadingUnVote: false
     }
@@ -341,15 +341,17 @@ export default class QuestionDetail extends Component {
                                                     
                                             </div>{/*post-bar end*/}
                                             {
-                                                question && 
+                                                question && this.state.currentUserID === question.userID &&
                                                 <EditModal
                                                     onCloseFunctional = {this.onCloseFunctional}
                                                     tags = {this.props.tags}
                                                     categories = {this.props.categories}
                                                     getCategories = {this.props.getCategories}
                                                     getTags = {this.props.getTags}
-                                                    question = {question}
+                                                    questionID = {this.props.match.params.idQuestion}
+                                                    getQuestion = {this.props.getQuestion}
                                                     updateQuestion = {this.props.updateQuestion}
+                                                    question = {this.props.question}
                                                 />
                                             }
                                     <div className="comment-section">

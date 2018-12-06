@@ -15,16 +15,33 @@ export default class EditModal extends Component {
   constructor(props) {
     
     super(props);
+
     this.content = {"entityMap":{},"blocks":[{"key":"637gr","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}]};
+
+    props.getCategories();
+    props.getTags();
+    props.getQuestion(props.questionID).then(() => {
+        if(props.question) {
+            console.log("ahha");
+            this.setState({
+                contentState: props.question.content,
+                categoryID: props.question.categoryID,
+                tags: props.question.tags,
+            });
+        }
+    })
+    .catch(err => console.log(err));
+
     this.state = {
-          contentState: this.content,
-          categoryID: 'none',
-          tags: [],
-          suggestions: [],
-          question: null
-      }
+        contentState: this.props.question.content,
+        categoryID: 'none',
+        tags: [],
+        suggestions: [],
+    }
 
   }
+
+
 
   onContentStateChange = (contentState) => {
       this.setState({
@@ -89,34 +106,38 @@ export default class EditModal extends Component {
   static getDerivedStateFromProps(props, state) {
       return {
         suggestions: props.tags,
-        question: props.question
       };
   }
 
   componentDidMount() {
+      console.log("aaa");
     this.props.getCategories();
     this.props.getTags();
-    this.setState({
-      contentState: this.props.question.content,
-      tags: this.props.question.tags,
-      categoryID: this.props.question.categoryID,
-      question: this.props.question
-    });
+    this.props.getQuestion(this.props.questionID).then(() => {
+        if(this.props.question) {
+            this.setState({
+                contentState: this.props.question.content,
+                categoryID: this.props.question.categoryID,
+                tags: this.props.question.tags,
+            });
+        }
+    })
+    .catch(err => console.log(err));
   }
 
   onUpdate = () => {
     let questionItem = {
-        questionID: this.state.question.questionID,
+        questionID: this.props.question.questionID,
         content: this.state.contentState,
-        images: this.state.question.images,
-        topComment: this.state.question.topComment,
+        images: this.props.question.images,
+        topComment: this.props.question.topComment,
         categoryID: this.state.categoryID,
-        userID: this.state.question.userID,
+        userID: this.props.question.userID,
         tags: this.state.tags,
-        votes: this.state.question.votes,
-        unvotes: this.state.question.unvotes,
-        views: this.state.question.views,
-        comments: this.state.question.comments,
+        votes: this.props.question.votes,
+        unvotes: this.props.question.unvotes,
+        views: this.props.question.views,
+        comments: this.props.question.comments,
     }
 
     this.props.updateQuestion(questionItem);
@@ -125,7 +146,7 @@ export default class EditModal extends Component {
 
 
   render() {
-    const { tags, suggestions, contentState } = this.state;
+    const { suggestions, contentState, tags, categoryID } = this.state;
 
     return (
       <React.Fragment>
@@ -153,7 +174,7 @@ export default class EditModal extends Component {
                     <div className= "post-relation">
                         <div className = "post-category">
                             <span> Chuyên mục: </span>
-                            <select className = "post-category__select" onChange = {this.handleChange} value = {this.state.categoryID}>
+                            <select className = "post-category__select" onChange = {this.handleChange} value = {categoryID}>
                                 {this.showCategories(this.props.categories)}
                             </select>
                         </div>
