@@ -1,4 +1,4 @@
-from .schema import Vote, Unvote
+from .schema import VoteQuestion, UnvoteQuestion, VoteComment, UnvoteComment
 from flask import request, session
 from foundation.core.exceptions import UnprocessableEntity
 from foundation.core.api.helper import make_resource_response
@@ -7,18 +7,20 @@ from foundation.core.api.helper import make_resource_response
 def vote_or_unvote(module, model, data, update, query, collection):
     data["userID"] = session.get("userID")
     model = model(data)
-    model.save()
+    resp = model.save()
 
     userID = module.data.update(collection, query, update)["userID"]
     query = {"userID": userID}
     module.data.update("user", query, update)
 
-    return make_resource_response("resource", model.to_primitive())
+    return make_resource_response("resource", resp)
 
 
 def __setup__(module):
-    module.resource("votes", Vote)
-    module.resource("unvotes", Unvote)
+    module.resource("votesQ", VoteQuestion)
+    module.resource("unvotesQ", UnvoteQuestion)
+    module.resource("votesC", VoteComment)
+    module.resource("unvotesC", UnvoteComment)
 
     @module.endpoint("/questions/<questionID>/votes", methods=["POST"])
     @module.login_required
@@ -28,7 +30,7 @@ def __setup__(module):
             data["questionID"] = questionID
             update = {"$inc": {"votes": 1}}
             query = {"questionID": questionID}
-            return vote_or_unvote(module, Vote, data, update, query, "question")
+            return vote_or_unvote(module, VoteQuestion, data, update, query, "question")
         except Exception as e:
             raise UnprocessableEntity("RC_400", message=str(e))
 
@@ -40,7 +42,7 @@ def __setup__(module):
             data["questionID"] = questionID
             update = {"$inc": {"unvotes": 1}}
             query = {"questionID": questionID}
-            return vote_or_unvote(module, Unvote, data, update, query, "question")
+            return vote_or_unvote(module, UnvoteQuestion, data, update, query, "question")
         except Exception as e:
             raise UnprocessableEntity("RC_400", message=str(e))
 
@@ -52,7 +54,7 @@ def __setup__(module):
             data["commentID"] = commentID
             update = {"$inc": {"votes": 1}}
             query = {"commentID": commentID}
-            return vote_or_unvote(module, Vote, data, update, query, "comment")
+            return vote_or_unvote(module, VoteComment, data, update, query, "comment")
         except Exception as e:
             raise UnprocessableEntity("RC_400", message=str(e))
 
@@ -64,6 +66,6 @@ def __setup__(module):
             data["commentID"] = commentID
             update = {"$inc": {"unvotes": 1}}
             query = {"commentID": commentID}
-            return vote_or_unvote(module, Unvote, data, update, query, "comment")
+            return vote_or_unvote(module, UnvoteComment, data, update, query, "comment")
         except Exception as e:
             raise UnprocessableEntity("RC_400", message=str(e))

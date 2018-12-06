@@ -148,13 +148,15 @@
   "votes": [
     {
       "voteID": "v_123456789"
+      // // Vote for comment
       // "questionID": "q_123456789"
     }
   ],
   "unvotes": [
     {
-      "unvoteID": "un_123456789"
-      // "questionID": "q_123456789"
+      "unvoteID": "un_123456789",
+      // Unvote for comment
+      // "questionID" : "q_123456789" 
     }
   ]
 }

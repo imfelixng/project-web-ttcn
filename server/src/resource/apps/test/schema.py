@@ -18,6 +18,4 @@ class JsonString(BaseType):
 
 
 class Test(BaseModel):
-    phu = ListType(JsonString)
     userID = StringType(required=True)
-    test = JsonString(required=True)

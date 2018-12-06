@@ -24,9 +24,9 @@ def __setup__(module):
                 data["images"][i]["dataURL"] = "/images/comments/" + filename
 
             model = Comment(data)
-            model.save()
+            resp = model.save()
             module.data.update("question", {"questionID": data["questionID"]}, {
                                "$inc": {"comments": 1}})
-            return make_resource_response("resource", model.to_primitive())
+            return make_resource_response("resource", resp)
         except Exception as e:
             raise UnprocessableEntity("RC_400", e.to_primitive())

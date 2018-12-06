@@ -58,15 +58,15 @@ class BaseAPI:
             if session.get("AUTH_FIELD"):
                 data["userID"] = session.get("userID")
             model = self.Model(data)
-            model.save()
-            return make_resource_response(self.resource, model.to_primitive())
+            resp = model.save()
+            return make_resource_response(self.resource, resp)
         except Exception as e:
             raise UnprocessableEntity('RC_400', message=str(e))
 
     def update_item(self, ID):
         try:
             data = request.json or request.form.to_dict()
-            data['_updated'] = datetime.datetime.now()
+            data['_updated'] = datetime.datetime.now() + datetime.timedelta(hours=7)
             query = self.return_query(ID)
             if session.get("AUTH_FIELD") and self.resource != "user":
                 query["userID"] = session.get("userID")

@@ -14,8 +14,8 @@ def __setup__(module):
         try:
             data = request.json
             model = Test(data)
-            model.save()
-            return make_resource_response("resource", model.to_primitive())
+            resp = model.save()
+            return make_resource_response("resource", resp)
         except Exception as e:
             raise UnprocessableEntity("RC_400", message=e.to_primitive())
 
