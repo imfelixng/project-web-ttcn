@@ -4,15 +4,18 @@ from foundation.common.log import getLogger
 from flask import session
 import logging
 import datetime
+
+
 logger = getLogger(__name__)
 
 
 class MongoInterface(object):
-    def __init__(self, MONGOHOS=None, MONGGODB=None):
+    def __init__(self, HOST=None, PORT=None, DB=None, USER=None, PASSWORD=None):
         # self.client = MongoClient('mongodb://localhost:27017/')
         # self.client = MongoClient(
             # "mongodb://data:chritsmasgood12@ds143971.mlab.com:43971/nvphu1306")
-        self.client = MongoClient('mongodb://localhost:27017/')
+
+        self.client = MongoClient('mongodb://%s:%s/' % (HOST, PORT))
         self.mongodb = "nvphu1306"
         # self.mongodb = "study_support"
 

@@ -1,19 +1,18 @@
 version: "2"
 volumes:
-  mongo_data:
+  project_web_ttcn_mongo_data:
 
 services:
     app_db:
         image: mongo
         volumes:
-            - mongo_data:/data/db
+            - project_web_ttcn_mongo_data:/data/db
         ports:
             - "27017:27017"
 
-    # remmember replace the volume path
     app_srv:
-        build: .
-        volumes:
-            - /root/project-web-ttcn:/app/server
+        image: project-web-ttcn
         ports:
-            - 8080:5000
+            - 9080:5000
+        links:
+            - app_db:mongodb
