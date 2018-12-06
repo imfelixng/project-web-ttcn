@@ -145,18 +145,31 @@
       "text": "toan"
     }
   ],
-  "votes": [
+  "votesQuestion": [
     {
       "voteID": "v_123456789"
-      // // Vote for comment
-      // "questionID": "q_123456789"
     }
   ],
-  "unvotes": [
+  "unvotesQuestion": [
     {
       "unvoteID": "un_123456789",
-      // Unvote for comment
-      // "questionID" : "q_123456789" 
+    }
+  ],
+  "votesComment": [
+    {
+      "voteID": "v_123456789",
+      "questionID": "q_1544075138223u_1544072463871"
+    }
+  ],
+  "unvotesComment": [
+    {
+      "unvoteID": "v_123456789",
+      "questionID": "q_1544075138223u_1544072463871"
+    }
+  ],
+  "views": [
+    {
+      "viewID": "vi_123456789"
     }
   ]
 }

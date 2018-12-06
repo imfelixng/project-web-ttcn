@@ -12,8 +12,10 @@ import logging
 class BaseModel(Model, MongoInterface):
     _id = MongoID(serialize_when_none=False)
     _etag = StringType()
-    _updated = DateTimeType(formats="%Y-%m-%d %H:%M:%S", default=(datetime.datetime.now() + datetime.timedelta(hours=7)))
-    _created = DateTimeType(formats="%Y-%m-%d %H:%M:%S", default=(datetime.datetime.now() + datetime.timedelta(hours=7)))
+    _updated = DateTimeType(
+        default=(datetime.datetime.now() + datetime.timedelta(hours=7)))
+    _created = DateTimeType(
+        default=(datetime.datetime.now() + datetime.timedelta(hours=7)))
 
     class Options:
         serialize_when_none = False
