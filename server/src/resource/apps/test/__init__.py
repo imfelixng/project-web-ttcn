@@ -17,7 +17,7 @@ def __setup__(module):
             resp = model.save()
             return make_resource_response("resource", resp)
         except Exception as e:
-            raise UnprocessableEntity("RC_400", message=e.to_primitive())
+            raise UnprocessableEntity("RC_400", message=str(e))
 
     @module.endpoint("/path", methods=["GET"])
     @module.login_required
