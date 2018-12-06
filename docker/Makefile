@@ -1,4 +1,3 @@
-DOCKER_REGISTRY:=registry.gitlab.com/s-boilerplate/python-srv
 TAG_BACKEND:=project-web-ttcn
 
 BACKUP_ARCHIVE=backup/mongo_$(shell date +%Y%m%d-%s).tar.bz2
@@ -10,3 +9,9 @@ run:
 
 build:
 	cd appsrv && docker build -t $(TAG_BACKEND) .
+
+backup-db:
+	docker-compose -f db.yml run --rm -T backup-db > $(BACKUP_ARCHIVE)
+
+restore-db:
+	cat $(LATEST_BACKUP) | docker-compose -f db.yml run --rm -T restore-db

@@ -1,5 +1,6 @@
 #!/bin/sh
 
+/app/x-clone
 
 cd /app/$PRODUCT_NAME/server
 make run
