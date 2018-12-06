@@ -16,6 +16,7 @@ def __setup__(module):
             data = request.json
             query = {"email": data.get("email")}
             database = module.data.db
+            # module.data.find_one(user, query)
             if database.user.find_one(query) is not None:
                 return make_error(200, description="email is exist")
 

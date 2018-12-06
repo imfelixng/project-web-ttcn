@@ -16,7 +16,7 @@ class ObjectApiServer(Flask):
         self.modules = kwargs.pop('modules', None)
 
         datalayer = kwargs.pop('datalayer', MongoInterface)
-        self.data = datalayer(config["MONGO_HOST"], config["MONGO_PORT"], config["MONGGO_DB"], config["MONGGO_USER"], config["MONGGO_PASSWORD"])
+        self.data = datalayer(config["MONGO_HOST"], config["MONGO_PORT"], config["MONGO_DB"], config["MONGO_USER"], config["MONGO_PASSWORD"])
 
         self.__resource__ = {}
         self.__routes__ = []

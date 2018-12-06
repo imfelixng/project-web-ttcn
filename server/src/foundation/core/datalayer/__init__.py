@@ -10,14 +10,23 @@ logger = getLogger(__name__)
 
 
 class MongoInterface(object):
+    current = None
+
     def __init__(self, HOST=None, PORT=None, DB=None, USER=None, PASSWORD=None):
         # self.client = MongoClient('mongodb://localhost:27017/')
         # self.client = MongoClient(
             # "mongodb://data:chritsmasgood12@ds143971.mlab.com:43971/nvphu1306")
 
-        self.client = MongoClient('mongodb://%s:%s/' % (HOST, PORT))
+        logger.warning("Init MongoInterface")
+
+        if MongoInterface.current is None:
+            conn_str = 'mongodb://%s:%s/%s' % (HOST, PORT, DB)
+            self.client = MongoClient(conn_str)
+            MongoInterface.current = self.client
+        else:
+            MongoInterface.client = self.current
+
         self.mongodb = "nvphu1306"
-        # self.mongodb = "study_support"
 
     @property
     def db(self):

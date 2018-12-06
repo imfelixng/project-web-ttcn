@@ -1,11 +1,11 @@
 MODULES = [
 ]
 
-MONGO_HOST  = "mongodb"
-MONGO_PORT  = "27017"
-MONGGO_DB   = "nvphu1306"
-MONGGO_USER = "nvphu1306"
-MONGGO_PASSWORD = "nvphu1306"
+MONGO_HOST = "mongodb"
+MONGO_PORT = "27017"
+MONGO_DB   = "nvphu1306"
+MONGO_USER = "nvphu1306"
+MONGO_PASSWORD = "nvphu1306"
 
 SWAGGER_INFO = {
     'title': 'My Supercool API',
