@@ -29,4 +29,4 @@ def __setup__(module):
                                "$inc": {"comments": 1}})
             return make_resource_response("resource", resp)
         except Exception as e:
-            raise UnprocessableEntity("RC_400", e.to_primitive())
+            raise UnprocessableEntity("RC_400", str(e))

@@ -39,7 +39,7 @@ class BaseAPI:
             data = self.data.aggregate(self.resource, pipeline)
             return make_resource_response("resource", list(data))
         except Exception as e:
-            raise UnprocessableEntity('RC_400', message=e.to_primitive())
+            raise UnprocessableEntity('RC_400', message=str(e))
 
     def get_item(self, ID):
         try:
@@ -50,7 +50,7 @@ class BaseAPI:
                 return NotFoundException(
                     'RG_404', message='Resource not found', data=dt)
         except Exception as e:
-            raise UnprocessableEntity('RC_400', message=e.to_primitive())
+            raise UnprocessableEntity('RC_400', message=str(e))
 
     def create(self):
         try:
@@ -66,7 +66,8 @@ class BaseAPI:
     def update_item(self, ID):
         try:
             data = request.json or request.form.to_dict()
-            data['_updated'] = datetime.datetime.now() + datetime.timedelta(hours=7)
+            data['_updated'] = datetime.datetime.now() + \
+                datetime.timedelta(hours=7)
             query = self.return_query(ID)
             if session.get("AUTH_FIELD") and self.resource != "user":
                 query["userID"] = session.get("userID")
