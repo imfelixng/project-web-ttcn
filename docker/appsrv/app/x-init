@@ -1,0 +1,13 @@
+#!/bin/sh
+
+echo 'Fetching latest source code ...'
+cd /app/$PRODUCT_NAME
+git fetch origin
+git checkout $CODE_BRANCH
+git reset --hard origin/$CODE_BRANCH
+git merge
+
+
+pip install -r /app/$PRODUCT_NAME/server/requirements.txt
+
+echo 'Install finish'
