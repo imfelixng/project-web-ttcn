@@ -25,7 +25,7 @@ export const addNewQuestionRequest = (questionItem) => {
         let result = await APIs.callAPI("questions", "POST", questionItem);
         console.log(result);
         if(result != null) {
-            dispatch(addNewQuestion(questionItem));
+            dispatch(addNewQuestion(result.data));
         }
     }
 };
