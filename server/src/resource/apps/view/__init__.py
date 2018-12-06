@@ -11,7 +11,7 @@ def __setup__(module):
             query = {"questionID": questionID}
             resp = module.data.db.question.find_one_and_update(query, {
                 "$inc": {"views": 1}})
-            resp = module.data.find_one("question", query)
+            resp = module.data.find_one("question", questionID)
             return make_resource_response("views", resp)
         except Exception as e:
             raise UnprocessableEntity("RC_400", message=str(e))
