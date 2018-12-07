@@ -5,7 +5,10 @@ LATEST_BACKUP=$(shell ls backup/mongo_*.tar.bz2 | tail -n 1)
 
 
 run:
-	docker-compose up app_srv
+	docker-compose up -d app_srv
+
+log:
+	docker-compose logs -f app_srv
 
 build:
 	cd appsrv && docker build -t $(TAG_BACKEND) .
