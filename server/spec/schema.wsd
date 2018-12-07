@@ -151,3 +151,9 @@ Unvotes:
 		method: POST
 		content-type: json
 
+Views:
+	Create views questions:
+		url: .questions/<questionsID>/views
+		method: PATCH
+		content-type: json
+		
