@@ -91,7 +91,7 @@ def __setup__(module):
                 image_raw = data["images"][i]
                 imgString = image_raw["dataURL"][22:]
                 filename = image_raw["upload"]["filename"]
-                path = "/public/images/questions/" + filename
+                path = "/app/project-web-ttcn/public/images/questions/" + filename
                 save_image(imgString, path)
                 data["images"][i]["dataURL"] = "/images/questions/" + filename
 
