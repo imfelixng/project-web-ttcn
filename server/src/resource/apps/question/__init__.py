@@ -86,16 +86,8 @@ def __setup__(module):
         try:
             data = request.json
 
+            # save image
             data = save_image_base64(module, data)
-            # # check image and store in folder
-            # for i in range(0, len(data["images"]), 1):
-            #     image_raw = data["images"][i]
-            #     imgString = image_raw["dataURL"][22:]
-            #     filename = image_raw["upload"]["filename"]
-
-            #     filename = save_image(module, imgString, filename)
-            #     data["images"][i]["dataURL"] = "/media/" + filename
-
             # check and add new tag
             tags = data["tags"]
             save_new_tags(module, tags)

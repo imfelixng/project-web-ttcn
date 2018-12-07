@@ -13,7 +13,6 @@ def __setup__(module):
     def comments():
         try:
             data = request.json
-
             # check image and store in folder
             data = save_image_base64(module, data)
 

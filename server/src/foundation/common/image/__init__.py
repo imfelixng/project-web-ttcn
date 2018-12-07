@@ -24,11 +24,11 @@ def save_image_base64(module, data):
         imgString = image_raw["dataURL"][22:]
         filename = image_raw["upload"]["filename"]
 
-        data["images"][i]["dataURL"] = "/media/" + filename
         file = "%s_%s" % (
             filename,
             datetime.timestamp(datetime.now())
         )
+        data["images"][i]["dataURL"] = "/media/" + file
         path = os.path.join(module.config['PUBLIC_PATH'])
         if not os.path.exists(path):
             os.makedirs(path)
