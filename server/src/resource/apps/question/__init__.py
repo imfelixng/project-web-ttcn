@@ -94,9 +94,10 @@ def __setup__(module):
                 filename = image_raw["upload"]["filename"]
                 path = os.path.join(
                     module.config['PUBLIC_PATH'],
-                    "images", "questions", filename)
+                    "images", "questions")
                 if not os.path.exists(path):
-                    os.mkdir(path)
+                    os.makedirs(path)
+                path = os.path.join(path, filename)
                 save_image(imgString, path)
                 data["images"][i]["dataURL"] = "/images/questions/" + filename
 
@@ -109,3 +110,12 @@ def __setup__(module):
             return make_resource_response("question", resp)
         except Exception as e:
             raise UnprocessableEntity("RC_400", message=str(e))
+
+    @module.endpoint("/testPath", methods=["POST"])
+    def testPath():
+        path = os.path.join(
+            module.config['PUBLIC_PATH'],
+            "images", "questions")
+        if not os.path.exists(path):
+            os.makedirs(path)
+        return str(os.path.join(path, "nguyenvanphu"))

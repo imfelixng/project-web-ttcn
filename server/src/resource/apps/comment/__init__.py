@@ -22,9 +22,10 @@ def __setup__(module):
                 # path = os.getcwd()
                 path = os.path.join(
                     module.config['PUBLIC_PATH'],
-                    "images", "comments", filename)
+                    "images", "comments")
                 if not os.path.exists(path):
-                    os.mkdir(path)
+                    os.makedirs(path)
+                path = os.path.join(path, filename)
                 save_image(imgString, path)
                 data["images"][i]["dataURL"] = "/images/comments/" + filename
 
