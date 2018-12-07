@@ -96,7 +96,7 @@ def __setup__(module):
                     module.config['PUBLIC_PATH'],
                     "images", "questions", filename)
                 if not os.path.exists(path):
-                    os.makedirs(path)
+                    os.mkdir(path)
                 save_image(imgString, path)
                 data["images"][i]["dataURL"] = "/images/questions/" + filename
 
