@@ -86,7 +86,7 @@ def __setup__(module):
                     }
                 },
                 {
-                    "$limit": 5
+                    "$limit": 6
                 }
             ]
             data = module.data.aggregate("user", pipeline)

@@ -19,7 +19,7 @@ def __setup__(module):
                 imgString = image_raw["dataURL"][22:]
                 filename = image_raw["upload"]["filename"]
                 # path = os.getcwd()
-                path = "/app/server/public/images/comments/" + filename
+                path = "/app/project-web-ttcn/public/images/comments/" + filename
                 save_image(imgString, path)
                 data["images"][i]["dataURL"] = "/images/comments/" + filename
 
