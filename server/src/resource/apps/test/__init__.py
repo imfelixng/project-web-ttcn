@@ -20,7 +20,6 @@ def __setup__(module):
             raise UnprocessableEntity("RC_400", message=str(e))
 
     @module.endpoint("/path", methods=["GET"])
-    @module.login_required
     def get():
         return str(os.getcwd())
 

@@ -4,6 +4,7 @@ from foundation.core.api.helper import make_resource_response
 from foundation.core.exceptions import UnprocessableEntity
 from flask import request, session
 from foundation.common.image import save_image
+import logging
 
 
 def is_exist(array, index):
@@ -111,11 +112,13 @@ def __setup__(module):
         except Exception as e:
             raise UnprocessableEntity("RC_400", message=str(e))
 
-    @module.endpoint("/testPath", methods=["POST"])
-    def testPath():
-        path = os.path.join(
-            module.config['PUBLIC_PATH'],
-            "images", "questions")
-        if not os.path.exists(path):
-            os.makedirs(path)
-        return str(os.path.join(path, "nguyenvanphu"))
+    # @module.endpoint("/testPath", methods=["POST"])
+    # def testPath():
+    #     di = os.getcwd()
+    #     path = os.path.join(
+    #         di,
+    #         "images", "questions", "phunguyen")
+    #     logging.warning("path %s", path)
+    #     if not os.path.exists(path):
+    #         os.makedirs(path)
+    #     return str(os.path.join(path, "nguyenvanphu"))
