@@ -1,8 +1,10 @@
 from .schema import Test
-from flask import request
+from flask import request, send_from_directory
 import os
 from foundation.core.api.helper import make_resource_response, make_error
 from foundation.core.exceptions import UnprocessableEntity
+
+import logging as logger
 
 
 def __setup__(module):
@@ -29,3 +31,8 @@ def __setup__(module):
             a = 1 / 0
         except Exception as e:
             raise UnprocessableEntity("RC_400", message=str(e))
+
+    @module.endpoint("/media/<path>", methods=["GET"])
+    def get_file(path):
+        logger.warning("Path %r", path)
+        return send_from_directory(module.config['PUBLIC_PATH'], path)

@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 from .schema import Question
 from foundation.core.api.helper import make_resource_response
 from foundation.core.exceptions import UnprocessableEntity
@@ -83,7 +84,7 @@ def __setup__(module):
             raise UnprocessableEntity("RC_400", str(e))
 
     @module.endpoint("/questions", methods=["POST"])
-    @module.login_required
+    # @module.login_required
     def create():
         try:
             data = request.json
@@ -92,15 +93,19 @@ def __setup__(module):
             for i in range(0, len(data["images"]), 1):
                 image_raw = data["images"][i]
                 imgString = image_raw["dataURL"][22:]
-                filename = image_raw["upload"]["filename"]
-                path = os.path.join(
-                    module.config['PUBLIC_PATH'],
-                    "images", "questions")
+                filename = "%s_%s" % (
+                    image_raw["upload"]["filename"],
+                    datetime.timestamp(datetime.now())
+                )
+
+                # path = os.path.join(module.config['PUBLIC_PATH'],"images", "questions")
+                path = os.path.join(module.config['PUBLIC_PATH'])
                 if not os.path.exists(path):
                     os.makedirs(path)
                 path = os.path.join(path, filename)
+
                 save_image(imgString, path)
-                data["images"][i]["dataURL"] = "/images/questions/" + filename
+                data["images"][i]["dataURL"] = "/media/" + filename
 
             # check and add new tag
             tags = data["tags"]
