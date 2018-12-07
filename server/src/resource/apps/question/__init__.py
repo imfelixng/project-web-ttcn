@@ -1,11 +1,8 @@
-import os
-from datetime import datetime
 from .schema import Question
 from foundation.core.api.helper import make_resource_response
 from foundation.core.exceptions import UnprocessableEntity
 from flask import request, session
-from foundation.common.image import save_image
-import logging
+from foundation.common.image import save_image_base64
 
 
 def is_exist(array, index):
@@ -89,23 +86,15 @@ def __setup__(module):
         try:
             data = request.json
 
-            # check image and store in folder
-            for i in range(0, len(data["images"]), 1):
-                image_raw = data["images"][i]
-                imgString = image_raw["dataURL"][22:]
-                filename = "%s_%s" % (
-                    image_raw["upload"]["filename"],
-                    datetime.timestamp(datetime.now())
-                )
+            data = save_image_base64(module, data)
+            # # check image and store in folder
+            # for i in range(0, len(data["images"]), 1):
+            #     image_raw = data["images"][i]
+            #     imgString = image_raw["dataURL"][22:]
+            #     filename = image_raw["upload"]["filename"]
 
-                # path = os.path.join(module.config['PUBLIC_PATH'],"images", "questions")
-                path = os.path.join(module.config['PUBLIC_PATH'])
-                if not os.path.exists(path):
-                    os.makedirs(path)
-                path = os.path.join(path, filename)
-
-                save_image(imgString, path)
-                data["images"][i]["dataURL"] = "/media/" + filename
+            #     filename = save_image(module, imgString, filename)
+            #     data["images"][i]["dataURL"] = "/media/" + filename
 
             # check and add new tag
             tags = data["tags"]
@@ -116,14 +105,3 @@ def __setup__(module):
             return make_resource_response("question", resp)
         except Exception as e:
             raise UnprocessableEntity("RC_400", message=str(e))
-
-    # @module.endpoint("/testPath", methods=["POST"])
-    # def testPath():
-    #     di = os.getcwd()
-    #     path = os.path.join(
-    #         di,
-    #         "images", "questions", "phunguyen")
-    #     logging.warning("path %s", path)
-    #     if not os.path.exists(path):
-    #         os.makedirs(path)
-    #     return str(os.path.join(path, "nguyenvanphu"))
