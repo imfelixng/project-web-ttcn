@@ -3,6 +3,7 @@ from flask import request
 from foundation.common.image import save_image
 from foundation.core.api.helper import make_resource_response
 from foundation.core.exceptions import UnprocessableEntity
+import os
 
 
 def __setup__(module):
@@ -19,7 +20,11 @@ def __setup__(module):
                 imgString = image_raw["dataURL"][22:]
                 filename = image_raw["upload"]["filename"]
                 # path = os.getcwd()
-                path = "/app/project-web-ttcn/public/images/comments/" + filename
+                path = os.path.join(
+                    module.config['PUBLIC_PATH'],
+                    "images", "comments", filename)
+                if not os.path.exists(path):
+                    os.makedirs(path)
                 save_image(imgString, path)
                 data["images"][i]["dataURL"] = "/images/comments/" + filename
 

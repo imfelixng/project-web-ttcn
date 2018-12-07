@@ -1,6 +1,4 @@
 import os
-
-
 from .schema import Question
 from foundation.core.api.helper import make_resource_response
 from foundation.core.exceptions import UnprocessableEntity
@@ -97,6 +95,8 @@ def __setup__(module):
                 path = os.path.join(
                     module.config['PUBLIC_PATH'],
                     "images", "questions", filename)
+                if not os.path.exists(path):
+                    os.makedirs(path)
                 save_image(imgString, path)
                 data["images"][i]["dataURL"] = "/images/questions/" + filename
 
