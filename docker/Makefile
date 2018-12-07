@@ -7,6 +7,9 @@ LATEST_BACKUP=$(shell ls backup/mongo_*.tar.bz2 | tail -n 1)
 run:
 	docker-compose up -d app_srv
 
+restart:
+	docker-compose restart
+
 log:
 	docker-compose logs -f app_srv
 
