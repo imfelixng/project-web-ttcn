@@ -1,3 +1,6 @@
+import os
+
+
 from .schema import Question
 from foundation.core.api.helper import make_resource_response
 from foundation.core.exceptions import UnprocessableEntity
@@ -91,7 +94,9 @@ def __setup__(module):
                 image_raw = data["images"][i]
                 imgString = image_raw["dataURL"][22:]
                 filename = image_raw["upload"]["filename"]
-                path = "/app/project-web-ttcn/public/images/questions/" + filename
+                path = os.path.join(
+                    module.config['PUBLIC_PATH'],
+                    "images", "questions", filename)
                 save_image(imgString, path)
                 data["images"][i]["dataURL"] = "/images/questions/" + filename
 
