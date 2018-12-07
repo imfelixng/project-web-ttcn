@@ -29,9 +29,9 @@ ENV PYTHONPATH='/app/src'
 
 ADD app /app/
 
-RUN mkdir -p /app/log /app/$PRODUCT_NAME \
+RUN mkdir -p /app/public /app/log /app/$PRODUCT_NAME \
     && adduser -s /usr/bin/nologin -D -H www-data \
-    && chown -R www-data:www-data /app/log /app/$PRODUCT_NAME \
+    && chown -R www-data:www-data /app/public /app/log /app/$PRODUCT_NAME \
     && chmod +x /app/x-*
 
 RUN /app/x-clone

@@ -1,6 +1,7 @@
 version: "2"
 volumes:
   project_web_ttcn_mongo_data:
+  project_web_ttcn_public_data:
 
 services:
     app_db:
@@ -12,6 +13,8 @@ services:
 
     app_srv:
         image: project-web-ttcn
+        volumes:
+            - project_web_ttcn_public_data:/app/project-web-ttcn/public
         ports:
             - 9080:5000
         links:
