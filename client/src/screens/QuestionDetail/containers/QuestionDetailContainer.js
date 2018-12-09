@@ -10,6 +10,7 @@ const mapStateToProps = (state) => {
         question: state.questionReducer.questionItem,
         categories: state.categoryReducer.categories,
         tags: state.tagReducer.tags,
+        currentUser: state.userReducer.currentUser,
     }
 }
 
@@ -44,6 +45,9 @@ const mapDispatchToProps = (dispatch, props) => {
         },
         updateViewQuestion: (question) => {
             return dispatch(actions.updateViewQuestionRequest(question));
+        },
+        addNewCommentQuestion: (comment) => {
+            return dispatch(actions.addNewCommentQuestionRequest(comment));
         }
 
     }

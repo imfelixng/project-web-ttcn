@@ -2,7 +2,9 @@ import React, { Component } from 'react'
 import {NavLink} from 'react-router-dom';
 import draftToHtml from 'draftjs-to-html';
 import moment from 'moment';
+import Lightbox from 'react-images';
 
+import {Url} from '../../../constants/configs';
 export default class Question extends Component {
 
     state = {
@@ -10,6 +12,8 @@ export default class Question extends Component {
         currentUserID: '',
         userOther: {},
         categoryQuestion: {},
+        lightboxIsOpen: false,
+        currentImageIndex: 0,
     }
 
     onOpenFunctional = () => {
@@ -62,9 +66,11 @@ export default class Question extends Component {
         if(images.length === 1) {
             return images.map((image, index) => {
                 return <img 
-                    src = {image.dataURL}
+                    src = {Url + "/" + image.dataURL}
                     key = {index}
                     className = "question_image--100"
+                    alt = "logo"
+                    onClick = {() => this.openLightbox(index)}
                 />
             });
         }
@@ -72,9 +78,11 @@ export default class Question extends Component {
         if(images.length === 2) {
             return images.map((image, index) => {
                 return <img 
-                    src = {image.dataURL}
+                    src = {Url + "/" +  image.dataURL}
                     key = {index}
                     className = "question_image--50"
+                    alt = "logo"
+                    onClick = {() => this.openLightbox(index)}
                 />
             });
         }
@@ -82,9 +90,11 @@ export default class Question extends Component {
         if(images.length === 3) {
             return images.map((image, index) => {
                 return <img 
-                    src = {image.dataURL}
+                    src = {Url + "/" + image.dataURL}
                     key = {index}
                     className = "question_image--30"
+                    alt = "logo"
+                    onClick = {() => this.openLightbox(index)}
                 />
             });
         }
@@ -93,16 +103,20 @@ export default class Question extends Component {
             return images.map((image, index) => {
                 if(index < 2) {
                     return <img 
-                        src = {image.dataURL}
+                        src = {Url + "/" + image.dataURL}
                         key = {index}
                         className = "question_image--30"
+                        alt = "logo"
+                        onClick = {() => this.openLightbox(index)}
                     />
                 }
                 if( index === 2) {
                     return <div key = {index} className = "question_image--30 more">
                         <img 
-                            src = {image.dataURL}
+                            src = {Url + "/" + image.dataURL}
                             className = "img_more"
+                            alt = "logo"
+                            onClick = {() => this.openLightbox(index)}
                         />
                         <div className = "div_more">
                             <i className="la la-plus">{images.length - 2}</i>
@@ -112,6 +126,34 @@ export default class Question extends Component {
                 
             });
         }
+    }
+
+    openLightbox = (i) => {
+        console.log(i);
+        this.setState({
+            lightboxIsOpen: true,
+            currentImageIndex: i
+        })
+    }
+
+    closeLightbox = () => {
+        this.setState({
+            lightboxIsOpen: false
+        })
+    }
+
+    gotoPrevious = (allImages) => {
+        let index = (this.state.currentImageIndex - 1 ) % allImages;
+        this.setState({
+            currentImageIndex: index
+        })
+    }
+
+    gotoNext = (allImages) => {
+        let index = (this.state.currentImageIndex + 1 ) % allImages;
+        this.setState({
+            currentImageIndex: index
+        })
     }
 
   render() {
@@ -185,7 +227,24 @@ export default class Question extends Component {
                                             {
                                                 question.images && this.showImages(question.images)
                                             }
-                                            
+                                            {
+                                                                                    question && question.images.length > 0 &&
+                                                                                    <Lightbox 
+                                                                                        images = {
+                                                                                            question.images.map((image, index) => {
+                                                                                                return {
+                                                                                                    src: Url + "/" +image.dataURL
+                                                                                                }
+                                                                                            })
+                                                                                        }
+                                                                                        isOpen = {this.state.lightboxIsOpen}
+                                                                                        onClickPrev={() => this.gotoPrevious(question.images.length)}
+                                                                                        onClickNext={() => this.gotoNext(question.images.length)}
+                                                                                        onClose={this.closeLightbox}
+                                                                                        currentImage = {this.state.currentImageIndex}
+                                                                                        backdropClosesModal = {true}
+                                                                                    />
+                                                                                }
                                         </div>
                                         <ul className="skill-tags">
                                             {question.tags && this.showTags(question.tags)}

@@ -2,7 +2,9 @@ import * as types from '../constants/index';
 
 let initialState = {
     questions: [],
-    questionItem: null
+    questionItem: null,
+    isVote: false,
+    isUnVote: false
 };
 
 const question = (state = initialState, action) => {
