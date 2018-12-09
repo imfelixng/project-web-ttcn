@@ -3,6 +3,7 @@ import {NavLink} from 'react-router-dom';
 import draftToHtml from 'draftjs-to-html';
 import moment from 'moment';
 
+import {Url} from '../../../constants/configs';
 export default class Question extends Component {
 
     state = {
@@ -62,7 +63,7 @@ export default class Question extends Component {
         if(images.length === 1) {
             return images.map((image, index) => {
                 return <img 
-                    src = {image.dataURL}
+                    src = {Url + "/" + image.dataURL}
                     key = {index}
                     className = "question_image--100"
                 />
@@ -72,7 +73,7 @@ export default class Question extends Component {
         if(images.length === 2) {
             return images.map((image, index) => {
                 return <img 
-                    src = {image.dataURL}
+                    src = {Url + "/" +  image.dataURL}
                     key = {index}
                     className = "question_image--50"
                 />
@@ -82,7 +83,7 @@ export default class Question extends Component {
         if(images.length === 3) {
             return images.map((image, index) => {
                 return <img 
-                    src = {image.dataURL}
+                    src = {Url + "/" + image.dataURL}
                     key = {index}
                     className = "question_image--30"
                 />
@@ -93,7 +94,7 @@ export default class Question extends Component {
             return images.map((image, index) => {
                 if(index < 2) {
                     return <img 
-                        src = {image.dataURL}
+                        src = {Url + "/" + image.dataURL}
                         key = {index}
                         className = "question_image--30"
                     />
@@ -101,7 +102,7 @@ export default class Question extends Component {
                 if( index === 2) {
                     return <div key = {index} className = "question_image--30 more">
                         <img 
-                            src = {image.dataURL}
+                            src = {Url + "/" + image.dataURL}
                             className = "img_more"
                         />
                         <div className = "div_more">

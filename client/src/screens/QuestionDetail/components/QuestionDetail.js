@@ -3,6 +3,7 @@ import {NavLink} from 'react-router-dom';
 import draftToHtml from 'draftjs-to-html';
 import moment from 'moment';
 
+import {Url} from '../../../constants/configs';
 import EditModal from './EditModal';
 import SidebarRight from '../../../commons/Sidebar/components/SidebarRight';
 export default class QuestionDetail extends Component {
@@ -155,7 +156,7 @@ export default class QuestionDetail extends Component {
         if(images.length === 1) {
             return images.map((image, index) => {
                 return <img 
-                    src = {image.dataURL}
+                    src = {Url + "/" + image.dataURL}
                     key = {index}
                     className = "question_image--100"
                     alt = "logo"
@@ -166,7 +167,7 @@ export default class QuestionDetail extends Component {
         if(images.length === 2) {
             return images.map((image, index) => {
                 return <img 
-                    src = {image.dataURL}
+                    src = {Url + "/" + image.dataURL}
                     key = {index}
                     className = "question_image--50"
                     alt = "logo"
@@ -177,7 +178,7 @@ export default class QuestionDetail extends Component {
         if(images.length === 3) {
             return images.map((image, index) => {
                 return <img 
-                    src = {image.dataURL}
+                    src = {Url + "/" + image.dataURL}
                     key = {index}
                     className = "question_image--30"
                     alt = "logo"
@@ -187,7 +188,7 @@ export default class QuestionDetail extends Component {
             return images.map((image, index) => {
                 if(index < 2) {
                     return <img 
-                        src = {image.dataURL}
+                        src = {Url + "/" + image.dataURL}
                         key = {index}
                         className = "question_image--30"
                         alt = "logo"
@@ -196,7 +197,7 @@ export default class QuestionDetail extends Component {
                 if( index === 2) {
                     return <div key = {index} className = "question_image--30 more">
                         <img 
-                            src = {image.dataURL}
+                            src = {Url + "/" + image.dataURL}
                             className = "img_more"
                             alt = "logo"
                         />
@@ -215,9 +216,7 @@ export default class QuestionDetail extends Component {
     let {question} = this.props;
     let userInfo = null;
     let categoryInfo = null;
-
     let timeAgo = 'Thời gian đăng';
-
     if(question) {
         userInfo = this.state.userOther[question.userID];
         categoryInfo = this.state.categoryQuestion[question.categoryID];
