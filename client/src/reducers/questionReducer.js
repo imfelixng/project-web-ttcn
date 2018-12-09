@@ -1,5 +1,4 @@
 import * as types from '../constants/index';
-import * as actions from '../actions/index'
 
 let initialState = {
     questions: [],
@@ -72,6 +71,18 @@ const question = (state = initialState, action) => {
                 questionItem: {
                     ...state.questionItem,
                     votes: state.questionItem.votes - 1
+                }
+            }
+        }
+
+        case types.UPDATE_VIEW_QUESTION: 
+        {
+            console.log(action);
+            return {
+                ...state,
+                questionItem: {
+                    ...action.question
+                    
                 }
             }
         }

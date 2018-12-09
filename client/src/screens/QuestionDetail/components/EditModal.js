@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 
-import { convertFromRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 
 import { WithContext as ReactTags } from 'react-tag-input';
@@ -14,16 +13,35 @@ const delimiters = [KeyCodes.comma, KeyCodes.enter];
 export default class EditModal extends Component {
 
   constructor(props) {
-      super(props);
+    
+    super(props);
 
-      this.state = {
-          contentState: this.props.question.content,
-          categoryID: 'none',
-          tags: [],
-          suggestions: []
-      }
+    this.content = {"entityMap":{},"blocks":[{"key":"637gr","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}]};
+
+    props.getCategories();
+    props.getTags();
+    props.getQuestion(props.questionID).then(() => {
+        if(props.question) {
+            console.log("ahha");
+            this.setState({
+                contentState: props.question.content,
+                categoryID: props.question.categoryID,
+                tags: props.question.tags,
+            });
+        }
+    })
+    .catch(err => console.log(err));
+
+    this.state = {
+        contentState: this.props.question.content,
+        categoryID: 'none',
+        tags: [],
+        suggestions: [],
+    }
 
   }
+
+
 
   onContentStateChange = (contentState) => {
       this.setState({
@@ -53,13 +71,18 @@ export default class EditModal extends Component {
   }
 
   handleAddition = (tag) => {
-      if(tag.text.length < 2) {
-          alert("Tag quá ngắn, Vui lòng nhập tối thiểu 2 kí tự!");
-          return false;
-      }
-      tag.id = "t_" + new Date().getTime();
-      this.setState(state => ({ tags: [...state.tags, tag] }));
-  }
+    if(tag.text.length < 2) {
+        alert("Tag quá ngắn, Vui lòng nhập tối thiểu 2 kí tự!");
+        return false;
+    }
+    
+    if(!tag.tagID) {
+        tag.id = "t_" + new Date().getTime();
+        tag.tagID = tag.id;
+    }
+    console.log(tag);
+    this.setState(state => ({ tags: [...state.tags, tag] }));
+}
 
   handleDrag = (tag, currPos, newPos) => {
       const tags = [...this.state.tags];
@@ -82,18 +105,24 @@ export default class EditModal extends Component {
 
   static getDerivedStateFromProps(props, state) {
       return {
-          suggestions: props.tags
+        suggestions: props.tags,
       };
   }
 
   componentDidMount() {
+      console.log("aaa");
     this.props.getCategories();
     this.props.getTags();
-    this.setState({
-      contentState: this.props.question.content,
-      tags: this.props.question.tags,
-      categoryID: this.props.question.categoryID
-    });
+    this.props.getQuestion(this.props.questionID).then(() => {
+        if(this.props.question) {
+            this.setState({
+                contentState: this.props.question.content,
+                categoryID: this.props.question.categoryID,
+                tags: this.props.question.tags,
+            });
+        }
+    })
+    .catch(err => console.log(err));
   }
 
   onUpdate = () => {
@@ -117,7 +146,8 @@ export default class EditModal extends Component {
 
 
   render() {
-    const { tags, suggestions, contentState } = this.state;
+    const { suggestions, contentState, tags, categoryID } = this.state;
+
     return (
       <React.Fragment>
         <div className="modal fade" id="EditModal" tabIndex={-1} role="dialog" aria-labelledby="EditModalLabel" aria-hidden="true">
@@ -144,7 +174,7 @@ export default class EditModal extends Component {
                     <div className= "post-relation">
                         <div className = "post-category">
                             <span> Chuyên mục: </span>
-                            <select className = "post-category__select" onChange = {this.handleChange} value = {this.state.categoryID}>
+                            <select className = "post-category__select" onChange = {this.handleChange} value = {categoryID}>
                                 {this.showCategories(this.props.categories)}
                             </select>
                         </div>

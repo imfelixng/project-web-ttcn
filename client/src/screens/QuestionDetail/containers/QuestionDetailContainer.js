@@ -41,6 +41,9 @@ const mapDispatchToProps = (dispatch, props) => {
         },
         unVoteQuestion: (unvote) => {
             return dispatch(actions.unVoteQuestionRequest(unvote));
+        },
+        updateViewQuestion: (question) => {
+            return dispatch(actions.updateViewQuestionRequest(question));
         }
 
     }

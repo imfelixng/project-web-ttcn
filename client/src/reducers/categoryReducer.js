@@ -1,5 +1,4 @@
 import * as types from '../constants/index';
-import * as actions from '../actions/index'
 
 let initialState = {
     categories: [],

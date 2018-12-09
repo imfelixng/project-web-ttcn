@@ -25,7 +25,7 @@ export const addNewQuestionRequest = (questionItem) => {
         let result = await APIs.callAPI("questions", "POST", questionItem);
         console.log(result);
         if(result != null) {
-            dispatch(addNewQuestion(questionItem));
+            dispatch(addNewQuestion(result.data));
         }
     }
 };
@@ -68,6 +68,23 @@ export const updateQuestionRequest = (question) => {
 export const updateQuestion = (question) => {
     return {
         type: types.UPDATE_QUESTION,
+        question
+    }
+}
+
+export const updateViewQuestionRequest = (question) => {
+    return async (dispatch) => {
+        let result = await APIs.callAPI("questions/" + question.questionID +"/views", "PATCH", question);
+        console.log(result);    
+        if(result != null) {
+                dispatch(updateViewQuestion(result.data));
+            }
+    }
+}
+
+export const updateViewQuestion = (question) => {
+    return {
+        type: types.UPDATE_VIEW_QUESTION,
         question
     }
 }
@@ -233,10 +250,13 @@ export const logoutUser = () => {
 
 export const getUserRequest = (userID) => {
     return async (dispatch) => {
-        let result = await APIs.callAPI("users/" + userID, "GET");
+        if(userID) {
+            let result = await APIs.callAPI("users/" + userID, "GET");
             if(result != null) {
                 dispatch(getUser(result.data));
             }
+        }
+
     }
 }
 
