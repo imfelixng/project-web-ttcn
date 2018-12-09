@@ -6,6 +6,8 @@ import moment from 'moment';
 import {Url} from '../../../constants/configs';
 import EditModal from './EditModal';
 import SidebarRight from '../../../commons/Sidebar/components/SidebarRight';
+import CommentQuestion from './CommentQuestion';
+
 export default class QuestionDetail extends Component {
 
     constructor(props) {
@@ -32,7 +34,8 @@ export default class QuestionDetail extends Component {
         userOther: [],
         categoryQuestion: {},
         isLoadingVote: false,
-        isLoadingUnVote: false
+        isLoadingUnVote: false,
+        isReply: false,
     }
 
     onOpenFunctional = () => {
@@ -212,6 +215,12 @@ export default class QuestionDetail extends Component {
 
     }
 
+    onOpenReplyBox = () => {
+        this.setState({
+            isReply: true
+        })
+    }
+
   render() {
     let {question} = this.props;
     let userInfo = null;
@@ -233,8 +242,6 @@ export default class QuestionDetail extends Component {
                             <div className="col-lg-8 col-md-12 no-pd">
                                 <div className="main-ws-sec">
                                 <div className="posty">
-
-
                                     <div className="post-bar">
                                                 <div className="post_topbar">
                                                     <div className="usy-dt">
@@ -355,7 +362,7 @@ export default class QuestionDetail extends Component {
                                             }
                                     <div className="comment-section">
                                         <div className="plus-ic">
-                                        <i className="la la-plus" />
+                                            <i className="la la-plus" />
                                         </div>
                                         <div className="comment-sec">
                                         <ul>
@@ -368,7 +375,7 @@ export default class QuestionDetail extends Component {
                                                 <h3>John Doe</h3>
                                                 <span><img src="/images/clock.png" alt = "logo" /> 3 min ago</span>
                                                 <p>Lorem ipsum dolor sit amet, </p>
-                                                <a href="#"  className="active"><i className="fa fa-reply-all" />Reply</a>
+                                                <a onClick = {this.onOpenReplyBox}><i className="fa fa-reply-all" />Reply</a>
                                                 </div>
                                             </div>{/*comment-list end*/}
                                             <ul>
@@ -381,9 +388,19 @@ export default class QuestionDetail extends Component {
                                                     <h3>John Doe</h3>
                                                     <span><img src="/images/clock.png"alt = "logo" /> 3 min ago</span>
                                                     <p>Hi John </p>
-                                                    <a href="#" ><i className="fa fa-reply-all" />Reply</a>
+                                                    <a onClick = {this.onOpenReplyBox}><i className="fa fa-reply-all" />Reply</a>
                                                     </div>
                                                 </div>{/*comment-list end*/}
+                                                </li>
+                                                <li>
+                                                    {
+                                                        this.state.isReply &&
+                                                        <div className="post-comment">
+                                                            <CommentQuestion
+                                                                currentUser = {this.props.currentUser}
+                                                            />
+                                                        </div>
+                                                    }
                                                 </li>
                                             </ul>
                                             </li>
@@ -405,15 +422,11 @@ export default class QuestionDetail extends Component {
                                         {
                                             this.state.currentUserID ?  
                                             <div className="post-comment">
-                                                <div className="cm_img">
-                                                    <img src="/images/resources/bg-img4.png" alt = "logo" />
-                                                </div>
-                                                <div className="comment_box">
-                                                    <form>
-                                                    <input type="text" placeholder="Post a comment" />
-                                                    <button type="submit">Send</button>
-                                                    </form>
-                                                </div>
+                                                <CommentQuestion
+                                                    currentUser = {this.props.currentUser}
+                                                    onAddNewComment = {this.props.addNewCommentQuestion}
+                                                    questionID = { question ? question.questionID : ''}
+                                                />
                                             </div> :
                                             <div className="post-comment">
                                                 <span>Vui lòng <NavLink to = "/sign-in"><b>Login</b></NavLink> để tham gia cuộc thảo luận này!</span>

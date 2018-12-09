@@ -140,6 +140,26 @@ export const deleteQuestion = (questionID) => {
     }
 };
 
+export const addNewCommentQuestionRequest = (comment) => {
+    console.log(comment);
+    return async (dispatch) => {
+        let result = await APIs.callAPI("comments", "POST", comment);
+        console.log(result);
+        if(result != null) {
+            dispatch(addNewCommentQuestion(comment));
+        }
+    }
+};
+
+export const addNewCommentQuestion = (comment) => {
+    return {
+        type: types.ADD_NEW_COMMENT_QUESTION,
+        comment
+    }
+};
+
+
+
 export const getAllCategoryRequest = () => {
     return async (dispatch) => {
         let categories = await APIs.callAPI("categories", "GET", null);
