@@ -59,6 +59,11 @@ class MongoInterface(object):
         resp = source.insert_one(data).inserted_id
         return source.find_one({"_id": ObjectId(resp)})
 
+    def find_one_and_update(self, resource, query, update):
+        source = self.db[resource]
+        data = source.find_one_and_update(query, update)
+        return data
+
     def update_one(self, resource, _id, update, **kwargs):
         if not isinstance(_id, ObjectId):
             _id = ObjectId(_id)
@@ -67,24 +72,19 @@ class MongoInterface(object):
         logging.warn("update by another user %s" % data)
         return data
 
-    # def update(self, resource, ID, update, **kwargs):
-    #     update["$set"] = {"_updated": datetime.now()}
-    #     source = self.db[resource]
-    #     query = {resource + "ID": ID}
-    #     data = source.find_one_and_update(query, update, **kwargs)
-    #     return data
-
-    def update(self, resource, query, update, **kwargs):
-        if not update.get("$set"):
-            update["$set"] = {
+    def update(self, resource, query, updates, **kwargs):
+        logging.warn("update before %s" % updates)
+        if not updates.get("$set"):
+            updates["$set"] = {
                 "_updated": datetime.datetime.now() +
                 datetime.timedelta(hours=7)}
         else:
-            update["$set"] = update["$set"].update({
+            updates["$set"].update({
                 "_updated": datetime.datetime.now() +
                 datetime.timedelta(hours=7)})
+        logging.warn("update after%s" % updates)
         source = self.db[resource]
-        data = source.find_one_and_update(query, update, **kwargs)
+        data = source.find_one_and_update(query, updates, **kwargs)
         return data
 
     def delete_one(self, resource, ID):
@@ -95,7 +95,8 @@ class MongoInterface(object):
         resp = source.delete_one(query)
         return True
 
-    def check(self, resource, query=None):
+    def check_exist(self, resource, query=None):
+        logging.warn("resource %s" % resource)
         if self.db[resource].find_one(query) is not None:
             return True
         else:

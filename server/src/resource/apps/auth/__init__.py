@@ -15,9 +15,7 @@ def __setup__(module):
             # data = request.json or request.form.to_dict()
             data = request.json
             query = {"email": data.get("email")}
-            database = module.data.db
-            # module.data.find_one(user, query)
-            if database.user.find_one(query) is not None:
+            if module.data.check_exist(User.RI(), query):
                 return make_error(200, description="email is exist")
 
             model = User(data)
@@ -37,11 +35,12 @@ def __setup__(module):
     def login():
         try:
             dt = request.json or request.form.to_dict()
-            database = module.data.db
 
-            if database.user.find_one({"email": dt.get("email")}) is None:
+            if not module.data.check_exist(User.RI(),
+                                           {"email": dt.get("email")}):
                 return make_error(200, description="Email is wrong")
-            if database.user.find_one({"password": dt.get("password")}) is None:
+            if not module.data.check_exist(User.RI(),
+                                           {"password": dt.get("password")}):
                 return make_error(200, description="password is wrong")
 
             session["userID"] = module.data.db.user.find_one(
@@ -89,7 +88,7 @@ def __setup__(module):
                     "$limit": 6
                 }
             ]
-            data = module.data.aggregate("user", pipeline)
+            data = module.data.aggregate(User.RI(), pipeline)
             return make_resource_response("user", list(data))
         except Exception as e:
             raise UnprocessableEntity("RC_400", message=str(e))

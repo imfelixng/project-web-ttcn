@@ -22,6 +22,19 @@ def vote_or_unvote(module, model, data, query, collection):
     return make_resource_response("resource", resp)
 
 
+def isVote_or_isUnvote(module, Vote, Unvote, query):
+    data = {
+        "status": 200,
+        "isVote": False,
+        "isUnvote": False
+    }
+    if module.data.check_exist(Vote.RI(), query):
+        data["isVote"] = True
+    if module.data.check_exist(Unvote.RI(), query):
+        data["isUnvote"] = True
+    return make_resource_response("votes", data)
+
+
 def __setup__(module):
     module.resource("votesQ", VoteQuestion)
     module.resource("unvotesQ", UnvoteQuestion)
@@ -37,6 +50,34 @@ def __setup__(module):
             query = {"questionID": questionID}
             return vote_or_unvote(module, VoteQuestion,
                                   data, query, "question")
+        except Exception as e:
+            raise UnprocessableEntity("RC_400", message=str(e))
+
+    @module.endpoint("/questions/<questionID>/isvote_isunvote",
+                     methods=["GET"])
+    @module.login_required
+    def isvote_isunvote_question(questionID):
+        try:
+            query = {
+                "userID": session.get("userID"),
+                "questionID": questionID
+            }
+            return isVote_or_isUnvote(module, VoteQuestion,
+                                      UnvoteQuestion, query)
+        except Exception as e:
+            raise UnprocessableEntity("RC_400", message=str(e))
+
+    @module.endpoint("/comments/<commentID>/isvote_isunvote",
+                     methods=["GET"])
+    @module.login_required
+    def isvote_isunvote_comment(commentID):
+        try:
+            query = {
+                "userID": session.get("userID"),
+                "commentID": commentID
+            }
+            return isVote_or_isUnvote(module, VoteComment,
+                                      UnvoteComment, query)
         except Exception as e:
             raise UnprocessableEntity("RC_400", message=str(e))
 

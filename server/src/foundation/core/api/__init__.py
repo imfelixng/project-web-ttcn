@@ -1,4 +1,4 @@
-from flask import request, Response, session
+from flask import request, session
 from foundation.core.exceptions import UnprocessableEntity, NotFoundException
 from .helper import make_resource_response
 import datetime
@@ -49,6 +49,7 @@ class BaseAPI:
             else:
                 return NotFoundException(
                     'RG_404', message='Resource not found', data=dt)
+
         except Exception as e:
             raise UnprocessableEntity('RC_400', message=str(e))
 
@@ -57,6 +58,7 @@ class BaseAPI:
             data = request.json or request.form.to_dict()
             if session.get("AUTH_FIELD") and self.resource != "category":
                 data["userID"] = session.get("userID")
+
             model = self.Model(data)
             resp = model.save()
             return make_resource_response(self.resource, resp)
@@ -71,10 +73,11 @@ class BaseAPI:
             query = self.return_query(ID)
             if session.get("AUTH_FIELD") and self.resource != "user":
                 query["userID"] = session.get("userID")
-            result = self.data.db[self.resource].find_one_and_update(
-                query, {'$set': data})["_id"]
-            resp = self.data.db[self.resource].find_one(
-                {"_id": result})
+
+            self.data.find_one_and_update(self.resource,
+                                          query, {'$set': data})
+            resp = self.data.find_one(self.resource, ID)
+
             return make_resource_response(self.resource, resp)
         except Exception as e:
             raise UnprocessableEntity('RC_400', message=str(e))

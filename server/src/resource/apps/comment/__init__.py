@@ -1,5 +1,5 @@
 from .schema import Comment
-from flask import request
+from flask import request, session
 from foundation.common.image import save_image_base64
 from foundation.core.api.helper import make_resource_response
 from foundation.core.exceptions import UnprocessableEntity
@@ -14,7 +14,7 @@ def __setup__(module):
             data = request.json
             # check image and store in folder
             data = save_image_base64(module, data)
-
+            data["userID"] = session.get("userID")
             model = Comment(data)
             resp = model.save()
             module.data.update("question",
