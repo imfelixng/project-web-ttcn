@@ -81,7 +81,7 @@ def __setup__(module):
             raise UnprocessableEntity("RC_400", str(e))
 
     @module.endpoint("/questions", methods=["POST"])
-    # @module.login_required
+    @module.login_required
     def create():
         try:
             data = request.json
@@ -91,7 +91,7 @@ def __setup__(module):
             # check and add new tag
             tags = data["tags"]
             save_new_tags(module, tags)
-            data["userID"] = session.get("userID")
+            # data["userID"] = session.get("userID")
             model = Question(data)
             resp = model.save()
             return make_resource_response("question", resp)
