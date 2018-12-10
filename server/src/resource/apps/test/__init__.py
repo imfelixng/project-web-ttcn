@@ -25,10 +25,12 @@ def __setup__(module):
     def get():
         return str(os.getcwd())
 
-    @module.endpoint("/unprocess", methods=["GET"])
+    @module.endpoint("/RItest", methods=["GET"])
     def unprocess():
         try:
-            a = 1 / 0
+            data = {"userID": "phunguyen"}
+            model = Test(data)
+            return str(Test.RI() + "s")
         except Exception as e:
             raise UnprocessableEntity("RC_400", message=str(e))
 

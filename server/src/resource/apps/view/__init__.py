@@ -1,4 +1,3 @@
-from flask import request, session
 from foundation.core.exceptions import UnprocessableEntity
 from foundation.core.api.helper import make_resource_response
 

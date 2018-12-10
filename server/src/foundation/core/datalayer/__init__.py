@@ -75,8 +75,14 @@ class MongoInterface(object):
     #     return data
 
     def update(self, resource, query, update, **kwargs):
-        update["$set"] = {
-            "_updated": datetime.datetime.now() + datetime.timedelta(hours=7)}
+        if not update.get("$set"):
+            update["$set"] = {
+                "_updated": datetime.datetime.now() +
+                datetime.timedelta(hours=7)}
+        else:
+            update["$set"] = update["$set"].update({
+                "_updated": datetime.datetime.now() +
+                datetime.timedelta(hours=7)})
         source = self.db[resource]
         data = source.find_one_and_update(query, update, **kwargs)
         return data

@@ -3,7 +3,6 @@ from flask import request
 from foundation.common.image import save_image_base64
 from foundation.core.api.helper import make_resource_response
 from foundation.core.exceptions import UnprocessableEntity
-import os
 
 
 def __setup__(module):
@@ -18,8 +17,22 @@ def __setup__(module):
 
             model = Comment(data)
             resp = model.save()
-            module.data.update("question", {"questionID": data["questionID"]}, {
-                               "$inc": {"comments": 1}})
-            return make_resource_response("resource", resp)
+            module.data.update("question",
+                               {"questionID": data["questionID"]},
+                               {
+                                   "$inc": {"comments": 1}
+                               })
+            return make_resource_response("comment", resp)
+        except Exception as e:
+            raise UnprocessableEntity("RC_400", str(e))
+
+    @module.endpoint("/comments/<commentID>/replies", methods=["PATCH"])
+    def replies(commentID):
+        try:
+            data = request.json
+            module.data.update(
+                "comment", {"commentID": commentID}, {"$set": data})
+            resp = module.data.find_one("comment", commentID)
+            return make_resource_response("comment", resp)
         except Exception as e:
             raise UnprocessableEntity("RC_400", str(e))
