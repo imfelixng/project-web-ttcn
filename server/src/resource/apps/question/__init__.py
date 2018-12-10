@@ -100,5 +100,5 @@ def __setup__(module):
 
     @module.endpoint("/delete/<questionID>", methods=["DELETE"])
     def delete_question(questionID):
-        module.data.delete_one("question", {"questionID": questionID})
+        module.data.delete_one("question", questionID)
         return "ok"
