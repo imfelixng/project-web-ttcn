@@ -97,3 +97,8 @@ def __setup__(module):
             return make_resource_response("question", resp)
         except Exception as e:
             raise UnprocessableEntity("RC_400", message=str(e))
+
+    @module.endpoint("/delete/<questionID>", methods=["DELETE"])
+    def delete_question(questionID):
+        module.data.delete_one("question", {"questionID": questionID})
+        return "ok"

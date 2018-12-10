@@ -45,6 +45,7 @@ def __setup__(module):
 
             session["userID"] = module.data.db.user.find_one(
                 {"email": dt.get("email")})["userID"]
+            session.permanent = True
             logger.warning("Session %r", session)
             data_response = {
                 "status": 200,
