@@ -108,7 +108,7 @@ export const voteQuestion = (vote) => {
 
 export const unVoteQuestionRequest = (unvote) => {
     return async (dispatch) => {
-        //dispatch(unVoteQuestion(unvote));
+
         let result = await APIs.callAPI("questions/" + unvote.questionID +"/unvotes", "POST", unvote);   
         if(result != null) {
                 dispatch(unVoteQuestion(result.data));
@@ -122,6 +122,25 @@ export const unVoteQuestion = (unvote) => {
         unvote
     }
 }
+
+export const checkVoteQuestionRequest = (questionID) => {
+    return async (dispatch) => {
+        //dispatch(voteQuestion(vote));
+        let result = await APIs.callAPI("questions/" + questionID +"/isvote_isunvote", "GET", null);   
+        console.log(result);
+        if(result != null) {
+                dispatch(checkVoteQuestion(result.data));
+        }
+    }
+}
+
+export const checkVoteQuestion = (check) => {
+    return {
+        type: types.CHECK_VOTE_QUESTION,
+        check
+    }
+}
+
 
 export const deleteQuestionRequest = (questionID) => {
     return async (dispatch) => {
@@ -141,10 +160,8 @@ export const deleteQuestion = (questionID) => {
 };
 
 export const addNewCommentQuestionRequest = (comment) => {
-    console.log(comment);
     return async (dispatch) => {
         let result = await APIs.callAPI("comments", "POST", comment);
-        console.log(result);
         if(result != null) {
             dispatch(addNewCommentQuestion(comment));
         }

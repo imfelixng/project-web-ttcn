@@ -11,6 +11,8 @@ const mapStateToProps = (state) => {
         categories: state.categoryReducer.categories,
         tags: state.tagReducer.tags,
         currentUser: state.userReducer.currentUser,
+        isVote: state.questionReducer.isVote,
+        isUnVote: state.questionReducer.isUnVote
     }
 }
 
@@ -42,6 +44,9 @@ const mapDispatchToProps = (dispatch, props) => {
         },
         unVoteQuestion: (unvote) => {
             return dispatch(actions.unVoteQuestionRequest(unvote));
+        },
+        checkVoteQuestion: (questionID) => {
+            return dispatch(actions.checkVoteQuestionRequest(questionID))
         },
         updateViewQuestion: (question) => {
             return dispatch(actions.updateViewQuestionRequest(question));

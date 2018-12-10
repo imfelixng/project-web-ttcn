@@ -100,7 +100,7 @@ export default class CommentQuestion extends Component {
             votes: 0,
             unvotes: 0,
             images: this.state.images,
-            reply: [],
+            replies: [],
         }
         this.props.onAddNewComment(comment).then(() => {
             this.removeFile(this.state.images);

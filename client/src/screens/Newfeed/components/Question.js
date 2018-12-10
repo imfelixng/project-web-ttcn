@@ -156,6 +156,12 @@ export default class Question extends Component {
         })
     }
 
+    onClickThumbnail = (i) => {
+        this.setState({
+            currentImageIndex: i
+        })
+    }
+
   render() {
     
     let {question} = this.props;
@@ -243,6 +249,8 @@ export default class Question extends Component {
                                                                                         onClose={this.closeLightbox}
                                                                                         currentImage = {this.state.currentImageIndex}
                                                                                         backdropClosesModal = {true}
+                                                                                        showThumbnails = {true}
+                                                                                        onClickThumbnail = {this.onClickThumbnail}
                                                                                     />
                                                                                 }
                                         </div>
@@ -253,7 +261,7 @@ export default class Question extends Component {
             <div className="job-status-bar">
                                         <ul className="like-com">
                                         <li>
-                                            <a  className="com"><i className = "la la-heart-o"></i> {question ? (question.votes - question.unvotes) : 0}</a>
+                                            <a  className="com"><i className = {(question ? (question.votes - question.unvotes) : 0) > 0 ? "la la-heart-o active_vote_unvote" : "la la-heart-o"}></i> {question ? (question.votes - question.unvotes) : 0}</a>
                                         </li> 
                                         <li><a   className="com"><img src="images/com.png"  /> {question ? (question.comments) : 0}</a></li>
                                         <li><a className="com"><i className="la la-eye" /> {question ? (question.views) : 0}</a></li>

@@ -8,6 +8,7 @@ import {Url} from '../../../constants/configs';
 import EditModal from './EditModal';
 import SidebarRight from '../../../commons/Sidebar/components/SidebarRight';
 import CommentQuestion from './CommentQuestion';
+import CommentList from './CommentList';
 
 export default class QuestionDetail extends Component {
 
@@ -22,7 +23,7 @@ export default class QuestionDetail extends Component {
 
                 this.props.getUserOther(this.props.question.userID);
                 this.props.getCategoryQuestion(this.props.question.categoryID);
-                
+                this.props.checkVoteQuestion(this.props.question.questionID);
             }
         }).catch(err => {   
             console.log(err);
@@ -36,9 +37,10 @@ export default class QuestionDetail extends Component {
         categoryQuestion: {},
         isLoadingVote: false,
         isLoadingUnVote: false,
-        isReply: false,
         lightboxIsOpen: false,
         currentImageIndex: 0,
+        isVote: false,
+        isUnVote: false
     }
 
     onOpenFunctional = () => {
@@ -67,6 +69,8 @@ export default class QuestionDetail extends Component {
             currentUserID: prevProps.currentUserID,
             userOther: prevProps.userOther,
             categoryQuestion: prevProps.categoryQuestion,
+            isVote: prevProps.isVote,
+            isUnVote: prevProps.isUnVote,
         }
 
     }
@@ -76,6 +80,7 @@ export default class QuestionDetail extends Component {
             if(this.props.question) {
                 this.props.getUserOther(this.props.question.userID);
                 this.props.getCategoryQuestion(this.props.question.categoryID);
+                this.props.checkVoteQuestion(this.props.question.questionID);
             }
         })
         .catch(err => console.log(err));
@@ -92,7 +97,7 @@ export default class QuestionDetail extends Component {
 
     onVoteQuestion = () => {
 
-        if(this.state.isLoadingVote || this.state.isLoadingUnVote) {
+        if(this.state.isLoadingVote || this.state.isLoadingUnVote || this.state.isVote) {
             return;
         }
 
@@ -116,6 +121,7 @@ export default class QuestionDetail extends Component {
         }
 
         this.props.voteQuestion(vote).then(() => {
+            this.props.checkVoteQuestion(this.props.question.questionID);
             this.setState({
                 isLoadingVote: false
             })
@@ -126,7 +132,7 @@ export default class QuestionDetail extends Component {
 
     onUnVoteQuestion = () => {
 
-        if(this.state.isLoadingVote || this.state.isLoadingUnVote) {
+        if(this.state.isLoadingVote || this.state.isLoadingUnVote || this.state.isUnVote) {
             return;
         }
 
@@ -149,6 +155,7 @@ export default class QuestionDetail extends Component {
         }
 
         this.props.unVoteQuestion(unvote).then(() => {
+            this.props.checkVoteQuestion(this.props.question.questionID);
             this.setState({
                 isLoadingUnVote: false
             })
@@ -185,7 +192,6 @@ export default class QuestionDetail extends Component {
         }
 
         if(images.length === 3) {
-            console.log("Aaaa");
             return images.map((image, index) => {
                 return <img 
                     src = {Url + "/" + image.dataURL}
@@ -225,12 +231,6 @@ export default class QuestionDetail extends Component {
 
     }
 
-    onOpenReplyBox = () => {
-        this.setState({
-            isReply: true
-        })
-    }
-
     openLightbox = (i) => {
         console.log(i);
         this.setState({
@@ -259,6 +259,12 @@ export default class QuestionDetail extends Component {
         })
     }
 
+    onClickThumbnail = (i) => {
+        this.setState({
+            currentImageIndex: i
+        })
+    }
+
   render() {
     let {question} = this.props;
     let userInfo = null;
@@ -281,129 +287,130 @@ export default class QuestionDetail extends Component {
                                 <div className="main-ws-sec">
                                 <div className="posty">
                                     <div className="post-bar">
-                                                <div className="post_topbar">
-                                                    <div className="usy-dt">
-                                                        <img className = "user-picy" src= {userInfo ? userInfo.avatar : "/images/users/img_avatar_default.png"} alt = "logo" />
-                                                        <div className="usy-name">
-                                                            <h3>{userInfo ? userInfo.fullname : "yourname"}</h3>
-                                                            <span><img src="/images/clock.png" alt = "logo" />{timeAgo}</span>
-                                                        </div>
-                                                    </div>
-                                                    <div className="ed-opts">
-                                                    {
-                                                        this.state.currentUserID &&
-                                                        <a  className="ed-opts-open" onClick = {this.onOpenFunctional} ><i className="la la-ellipsis-v" /></a>
-                                                    }
-                                                    {
-                                                        this.state.isOpenFunctional &&
-                                                        <ul className="ed-options active">
-                                                        {
-                                                            this.state.currentUserID === question.userID ?
-                                                            <React.Fragment>
-                                                                <li><a href="#" data-toggle="modal" data-target="#EditModal" data-backdrop="static" onClick = {this.onOpenFunctional}>Edit</a></li>
-                                                                <li><a onClick = {() => this.onDeleteQuestion(question.questionID)} >Delete</a></li>
-                                                            </React.Fragment> :
-                                                            <React.Fragment>
-                                                                <li><a href="#" >Report</a></li>
-                                                            </React.Fragment>
-                                                        }
-                                                        </ul>
-                                                    }
-                                                    </div>
+                                        <div className="post_topbar">
+                                            <div className="usy-dt">
+                                                <img className = "user-picy" src= {userInfo ? userInfo.avatar : "/images/users/img_avatar_default.png"} alt = "logo" />
+                                                <div className="usy-name">
+                                                    <h3>{userInfo ? userInfo.fullname : "yourname"}</h3>
+                                                    <span><img src="/images/clock.png" alt = "logo" />{timeAgo}</span>
                                                 </div>
-                                                <div className="epi-sec">
-                                                                            <ul className="descp">
-                                                                            <li>
-                                                                                <ul className="job-dt">
-                                                                                    {
-                                                                                        categoryInfo &&
-                                                                                        <li><NavLink to= {"/categories/" + categoryInfo.categoryID} >{categoryInfo.name}</NavLink></li>
-                                                                                    }
+                                            </div>
+                                            <div className="ed-opts">
+                                                {
+                                                    this.state.currentUserID &&
+                                                    <a  className="ed-opts-open" onClick = {this.onOpenFunctional} ><i className="la la-ellipsis-v" /></a>
+                                                }
+                                                {
+                                                    this.state.isOpenFunctional &&
+                                                    <ul className="ed-options active">
+                                                        {
+                                                        this.state.currentUserID === question.userID ?
+                                                        <React.Fragment>
+                                                            <li><a href="#" data-toggle="modal" data-target="#EditModal" data-backdrop="static" onClick = {this.onOpenFunctional}>Edit</a></li>
+                                                            <li><a onClick = {() => this.onDeleteQuestion(question.questionID)} >Delete</a></li>
+                                                        </React.Fragment> :
+                                                        <React.Fragment>
+                                                            <li><a href="#" >Report</a></li>
+                                                        </React.Fragment>
+                                                        }
+                                                    </ul>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div className="epi-sec">
+                                            <ul className="descp">
+                                                <li>
+                                                    <ul className="job-dt">
+                                                        {
+                                                            categoryInfo &&
+                                                            <li><NavLink to= {"/categories/" + categoryInfo.categoryID} >{categoryInfo.name}</NavLink></li>
+                                                        }
 
-                                                                                </ul>
-                                                                            </li>
-                                                                            </ul>
-                                                                            {
-                                                                                this.state.currentUserID && 
-                                                                                <ul className="bk-links">
-                                                                                    {
-                                                                                        (question && (this.state.currentUserID !== question.userID))&&
-                                                                                        <li>
-                                                                                            <a href="#" ><i className="la la-bookmark" /></a>
-                                                                                        </li>
-                                                                                        
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                            {
+                                                this.state.currentUserID && 
+                                                <ul className="bk-links">
+                                                {
+                                                    (question && (this.state.currentUserID !== question.userID))&&
+                                                    <li>
+                                                        <a href="#" ><i className="la la-bookmark" /></a>
+                                                    </li>                                        
+                                                }
+                                                    <li><a href="#" ><i className= "la la-check" /></a></li>
+                                                </ul>
+                                                }
+                                        </div>
+                                        <div className="job_descp">
+                                            <div 
+                                                className = "question__content" 
+                                                dangerouslySetInnerHTML = { question && this.showContent( question.content)}>
+                                            </div>
+                                            <div
+                                                className = "question_images"
+                                            >
+                                                {
+                                                    question ?
+                                                    this.showImages(question.images) : null
+                                                }
+                                                {
+                                                    question && question.images.length > 0 &&
+                                                    <Lightbox 
+                                                        images = {
+                                                            question.images.map((image, index) => {
+                                                                return {
+                                                                    src: Url + "/" +image.dataURL
+                                                                }
+                                                            })
+                                                        }
+                                                        isOpen = {this.state.lightboxIsOpen}
+                                                        onClickPrev={() => this.gotoPrevious(question.images.length)}
+                                                        onClickNext={() => this.gotoNext(question.images.length)}
+                                                        onClose={this.closeLightbox}
+                                                        currentImage = {this.state.currentImageIndex}
+                                                        backdropClosesModal = {true}
+                                                        showThumbnails = {true}
+                                                        onClickThumbnail = {this.onClickThumbnail}
+                                                    />
+                                                }
+                                            </div>
+                                                <ul className="skill-tags">
+                                                    { question ? this.showTags(question.tags) : null}
+                                                </ul>
+                                            </div>
+                                        <div className="job-status-bar">
+                                            <ul className="like-com">
+                                            <li>
+                                                <a  className="com" onClick = {this.onVoteQuestion}>
+                                                    {
+                                                        this.state.isLoadingVote ? 
+                                                        <img className = "loading-vote"src= "/images/ic_loading.gif" alt = "loading"/>
+                                                            :
+                                                        <i className = {this.state.isVote ? "la la-thumbs-up active_vote_unvote" : "la la-thumbs-up"}></i>
                                                                                     }
-                                                                                    <li><a href="#" ><i className= "la la-check" /></a></li>
-                                                                                </ul>
-                                                                            }
-                                                                        </div>
-                                                <div className="job_descp">
-                                                                            <div 
-                                                                                className = "question__content" 
-                                                                                dangerouslySetInnerHTML = { question && this.showContent( question.content)}>
-                                                                            </div>
-                                                                            <div
-                                                                                className = "question_images"
-                                                                            >
-                                                                                {
-                                                                                    question ?
-                                                                                    this.showImages(question.images) : null
-                                                                                }
-                                                                                {
-                                                                                    question && question.images.length > 0 &&
-                                                                                    <Lightbox 
-                                                                                        images = {
-                                                                                            question.images.map((image, index) => {
-                                                                                                return {
-                                                                                                    src: Url + "/" +image.dataURL
-                                                                                                }
-                                                                                            })
-                                                                                        }
-                                                                                        isOpen = {this.state.lightboxIsOpen}
-                                                                                        onClickPrev={() => this.gotoPrevious(question.images.length)}
-                                                                                        onClickNext={() => this.gotoNext(question.images.length)}
-                                                                                        onClose={this.closeLightbox}
-                                                                                        currentImage = {this.state.currentImageIndex}
-                                                                                        backdropClosesModal = {true}
-                                                                                    />
-                                                                                }
-                                                                            </div>
-                                                                            <ul className="skill-tags">
-                                                                                { question ? this.showTags(question.tags) : null}
-                                                                            </ul>
-                                                                        </div>
-                                                <div className="job-status-bar">
-                                                                            <ul className="like-com">
-                                                                            <li>
-                                                                                <a  className="com" onClick = {this.onVoteQuestion}>
-                                                                                    {
-                                                                                        this.state.isLoadingVote ? 
-                                                                                            <img className = "loading-vote"src= "/images/ic_loading.gif" alt = "loading"/>
-                                                                                        :
-                                                                                        <i className = "la la-thumbs-up"></i>
-                                                                                    }
-                                                                                </a>
-                                                                                <a  className="com">{question ? (question.votes - question.unvotes) : 0}</a>
-                                                                                <a  className="com" onClick = {this.onUnVoteQuestion}>
+                                                </a>
+                                                <a  className="com">{question ? (question.votes - question.unvotes) : 0}</a>
+                                                <a  className="com" onClick = {this.onUnVoteQuestion}>
                                                                                     {
                                                                                         this.state.isLoadingUnVote ? 
-                                                                                        <img className = "loading-vote"src= "/images/ic_loading.gif" alt = "loading" />
+                                                        <img className = "loading-vote"src= "/images/ic_loading.gif" alt = "loading" />
                                                                                         :
-                                                                                        <i className = "la la-thumbs-down"></i>                
+                                                        <i className = {this.state.isUnVote ? "la la-thumbs-down active_vote_unvote" : "la la-thumbs-down"}></i>                
                                                                                     }
-                                                                                </a>
-                                                                            </li> 
-                                                                            <li><a   className="com"><img src="/images/com.png"  /> {question ? question.comments : 0}</a></li>
-                                                                            <li><a className="com"><i className="la la-eye" /> {question ? question.views : 0}</a></li>
-                                                                            </ul>
+                                                </a>
+                                            </li> 
+                                            <li><a   className="com"><img src="/images/com.png"  /> {question ? question.comments : 0}</a></li>
+                                            <li><a className="com"><i className="la la-eye" /> {question ? question.views : 0}</a></li>
+                                            </ul>
                                                                             
-                                                                        </div>
+                                                                </div>
 
                                                     
                                             </div>{/*post-bar end*/}
                                             {
                                                 question && this.state.currentUserID === question.userID &&
-                                                <EditModal
+                                        <EditModal
                                                     onCloseFunctional = {this.onCloseFunctional}
                                                     tags = {this.props.tags}
                                                     categories = {this.props.categories}
@@ -415,76 +422,18 @@ export default class QuestionDetail extends Component {
                                                     question = {this.props.question}
                                                 />
                                             }
-                                    <div className="comment-section">
-                                        <div className="plus-ic">
-                                            <i className="la la-plus" />
-                                        </div>
-                                        <div className="comment-sec">
-                                        <ul>
-                                            <li>
-                                            <div className="comment-list">
-                                                <div className="bg-img">
-                                                <img src="/images/resources/bg-img1.png" alt = "logo"/>
-                                                </div>
-                                                <div className="comment">
-                                                <h3>John Doe</h3>
-                                                <span><img src="/images/clock.png" alt = "logo" /> 3 min ago</span>
-                                                <p>Lorem ipsum dolor sit amet, </p>
-                                                <a onClick = {this.onOpenReplyBox}><i className="fa fa-reply-all" />Reply</a>
-                                                </div>
-                                            </div>{/*comment-list end*/}
-                                            <ul>
-                                                <li>
-                                                <div className="comment-list">
-                                                    <div className="bg-img">
-                                                    <img src="/images/resources/bg-img2.png" alt = "logo" />
-                                                    </div>
-                                                    <div className="comment">
-                                                    <h3>John Doe</h3>
-                                                    <span><img src="/images/clock.png"alt = "logo" /> 3 min ago</span>
-                                                    <p>Hi John </p>
-                                                    <a onClick = {this.onOpenReplyBox}><i className="fa fa-reply-all" />Reply</a>
-                                                    </div>
-                                                </div>{/*comment-list end*/}
-                                                </li>
-                                                <li>
-                                                    {
-                                                        this.state.isReply &&
-                                                        <div className="post-comment">
-                                                            <CommentQuestion
-                                                                currentUser = {this.props.currentUser}
-                                                            />
-                                                        </div>
-                                                    }
-                                                </li>
-                                            </ul>
-                                            </li>
-                                            <li>
-                                            <div className="comment-list">
-                                                <div className="bg-img">
-                                                <img src="/images/resources/bg-img3.png" alt = "logo"/>
-                                                </div>
-                                                <div className="comment">
-                                                <h3>John Doe</h3>
-                                                <span><img src="/images/clock.png" alt = "logo" /> 3 min ago</span>
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam luctus hendrerit metus, ut ullamcorper quam finibus at.</p>
-                                                <a href="#" ><i className="fa fa-reply-all" />Reply</a>
-                                                </div>
-                                            </div>{/*comment-list end*/}
-                                            </li>
-                                        </ul>
-                                        </div>{/*comment-sec end*/}
+                                        <CommentList />
                                         {
                                             this.state.currentUserID ?  
                                             <div className="post-comment">
-                                                <CommentQuestion
+                                        <CommentQuestion
                                                     currentUser = {this.props.currentUser}
                                                     onAddNewComment = {this.props.addNewCommentQuestion}
                                                     questionID = { question ? question.questionID : ''}
                                                 />
                                             </div> :
                                             <div className="post-comment">
-                                                <span>Vui lòng <NavLink to = "/sign-in"><b>Login</b></NavLink> để tham gia cuộc thảo luận này!</span>
+                                        <span>Vui lòng <NavLink to = "/sign-in"><b>Login</b></NavLink> để tham gia cuộc thảo luận này!</span>
                                             </div>
                                         }
                                     </div>{/*comment-section end*/}
@@ -495,11 +444,9 @@ export default class QuestionDetail extends Component {
                             <div className = "col-md-4">
                                 <SidebarRight />
                             </div>
-                        </div>
                     </div>
                 </div>
             </div>
-
         </main>
 
       </React.Fragment>

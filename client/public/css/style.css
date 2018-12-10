@@ -5692,3 +5692,7 @@ img.loading-vote {
     width: 20px;
     height: 20px;
 }
+
+.active_vote_unvote::before {
+	color: red;
+}
