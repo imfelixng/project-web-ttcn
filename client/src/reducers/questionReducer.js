@@ -77,6 +77,16 @@ const question = (state = initialState, action) => {
             }
         }
 
+        case types.CHECK_VOTE_QUESTION:
+        {
+            console.log(action);
+            return {
+                ...state,
+                isVote: action.check.isVote,
+                isUnVote: action.check.isUnvote
+            }
+        }
+
         case types.UPDATE_VIEW_QUESTION: 
         {
             console.log(action);
