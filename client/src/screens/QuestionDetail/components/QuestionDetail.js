@@ -259,6 +259,12 @@ export default class QuestionDetail extends Component {
         })
     }
 
+    onClickThumbnail = (i) => {
+        this.setState({
+            currentImageIndex: i
+        })
+    }
+
   render() {
     let {question} = this.props;
     let userInfo = null;
@@ -365,6 +371,8 @@ export default class QuestionDetail extends Component {
                                                                                         onClose={this.closeLightbox}
                                                                                         currentImage = {this.state.currentImageIndex}
                                                                                         backdropClosesModal = {true}
+                                                                                        showThumbnails = {true}
+                                                                                        onClickThumbnail = {this.onClickThumbnail}
                                                                                     />
                                                                                 }
                                                                             </div>
