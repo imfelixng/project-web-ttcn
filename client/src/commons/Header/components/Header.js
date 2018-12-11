@@ -87,7 +87,7 @@ export default class Header extends Component {
                     {
                         this.state.currentUserID ?
                         <div className="user-info" >
-                            <NavLink to = {"/users/"}>
+                            <NavLink to = {"/users/" + this.props.currentUser ? this.props.currentUser.userID : ""}>
                                 <img src= {this.props.currentUser ? this.props.currentUser.avatar : '/images/users/img_avatar_default.png'} />
                                 <span>{this.props.currentUser ? this.showFullName(this.props.currentUser.fullname) : 'name'}</span>
                             </NavLink>
