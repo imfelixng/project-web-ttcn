@@ -43,7 +43,7 @@ class BaseAPI:
 
     def get_item(self, ID):
         try:
-            dt = self.data.find_one(self.resource, ID)
+            dt = self.data.find_one(self.resource, ID=ID)
             if dt:
                 return make_resource_response(self.resource, data=dt)
             else:
@@ -76,14 +76,14 @@ class BaseAPI:
 
             self.data.find_one_and_update(self.resource,
                                           query, {'$set': data})
-            resp = self.data.find_one(self.resource, ID)
+            resp = self.data.find_one(self.resource, ID=ID)
 
             return make_resource_response(self.resource, resp)
         except Exception as e:
             raise UnprocessableEntity('RC_400', message=str(e))
 
     def delete_item(self, ID):
-        done = self.data.delete_one(self.resource, ID)
+        done = self.data.delete_one(self.resource, ID=ID)
         if done:
             resp = {
                 "status": 204,

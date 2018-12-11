@@ -40,10 +40,11 @@ class MongoInterface(object):
             query["userID"] = session.get("userID")
         return (source, query)
 
-    def find_one(self, resource, ID):
+    def find_one(self, resource, ID=None, query=None):
         # source, query = self.datasource(resource, ID=ID)
         source = self.db[resource]
-        query = {resource + "ID": ID}
+        if query is None:
+            query = {resource + "ID": ID}
         data = source.find_one(query)
         return data
 
@@ -87,9 +88,12 @@ class MongoInterface(object):
         data = source.find_one_and_update(query, updates, **kwargs)
         return data
 
-    def delete_one(self, resource, ID):
-        query = {resource + "ID": ID}
-        source, query = self.datasource(resource, query)
+    def delete_one(self, resource, ID=None, query=None):
+        if query is None:
+            query = {resource + "ID": ID}
+            source, query = self.datasource(resource, query)
+        else:
+            source = self.db[resource]
         if source.find_one(query) is None:
             return False
         resp = source.delete_one(query)

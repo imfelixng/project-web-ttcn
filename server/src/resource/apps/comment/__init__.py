@@ -31,10 +31,11 @@ def __setup__(module):
     @module.login_required
     def replies(commentID):
         try:
-            data = request.json
+            data_request = request.json
+            data = module.data.find_one("comment", ID=commentID)
+            data["replies"].append(data_request)
             module.data.update(
                 "comment", {"commentID": commentID}, {"$set": data})
-            resp = module.data.find_one("comment", commentID)
-            return make_resource_response("comment", resp)
+            return make_resource_response("comment", data)
         except Exception as e:
             raise UnprocessableEntity("RC_400", str(e))

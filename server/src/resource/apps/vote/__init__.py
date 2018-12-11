@@ -4,13 +4,24 @@ from foundation.core.exceptions import UnprocessableEntity
 from foundation.core.api.helper import make_resource_response
 
 
-def vote_or_unvote(module, model, data, query, collection):
+def vote_or_unvote(module, model, data, query, collection, unmodel):
     data["userID"] = session.get("userID")
+
+    unmodel_query = {
+        "userID": data["userID"],
+        "questionID": data["questionID"]
+    }
 
     if model.RI().find("vote") > 0:
         update = {"$inc": {"unvotes": 1}}
+        if module.data.check_exist(unmodel.RI(), unmodel_query):
+            update["$inc"].update({"votes": - 1})
+            module.data.delete_one(unmodel.RI(), query=unmodel_query)
     else:
         update = {"$inc": {"votes": 1}}
+        if module.data.check_exist(unmodel.RI(), unmodel_query):
+            update["$inc"].update({"unvotes": - 1})
+            module.data.delete_one(unmodel.RI(), query=unmodel_query)
 
     model = model(data)
     resp = model.save()
@@ -41,18 +52,6 @@ def __setup__(module):
     module.resource("votesC", VoteComment)
     module.resource("unvotesC", UnvoteComment)
 
-    @module.endpoint("/questions/<questionID>/votes", methods=["POST"])
-    @module.login_required
-    def question_vote(questionID):
-        try:
-            data = request.json
-            data["questionID"] = questionID
-            query = {"questionID": questionID}
-            return vote_or_unvote(module, VoteQuestion,
-                                  data, query, "question")
-        except Exception as e:
-            raise UnprocessableEntity("RC_400", message=str(e))
-
     @module.endpoint("/questions/<questionID>/isvote_isunvote",
                      methods=["GET"])
     @module.login_required
@@ -81,6 +80,18 @@ def __setup__(module):
         except Exception as e:
             raise UnprocessableEntity("RC_400", message=str(e))
 
+    @module.endpoint("/questions/<questionID>/votes", methods=["POST"])
+    @module.login_required
+    def question_vote(questionID):
+        try:
+            data = request.json
+            data["questionID"] = questionID
+            query = {"questionID": questionID}
+            return vote_or_unvote(module, VoteQuestion,
+                                  data, query, "question", UnvoteQuestion)
+        except Exception as e:
+            raise UnprocessableEntity("RC_400", message=str(e))
+
     @module.endpoint("/questions/<questionID>/unvotes", methods=["POST"])
     @module.login_required
     def question_unvote(questionID):
@@ -89,7 +100,7 @@ def __setup__(module):
             data["questionID"] = questionID
             query = {"questionID": questionID}
             return vote_or_unvote(module, UnvoteQuestion, data,
-                                  query, "question")
+                                  query, "question", VoteQuestion)
         except Exception as e:
             raise UnprocessableEntity("RC_400", message=str(e))
 
@@ -101,7 +112,7 @@ def __setup__(module):
             data["commentID"] = commentID
             query = {"commentID": commentID}
             return vote_or_unvote(module, VoteComment, data,
-                                  query, "comment")
+                                  query, "comment", UnvoteComment)
         except Exception as e:
             raise UnprocessableEntity("RC_400", message=str(e))
 
@@ -113,6 +124,6 @@ def __setup__(module):
             data["commentID"] = commentID
             query = {"commentID": commentID}
             return vote_or_unvote(module, UnvoteComment, data,
-                                  query, "comment")
+                                  query, "comment", VoteComment)
         except Exception as e:
             raise UnprocessableEntity("RC_400", message=str(e))

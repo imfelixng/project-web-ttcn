@@ -24,7 +24,7 @@ class BaseModel(Model, MongoInterface):
         MongoInterface.__init__(self)
         if data:
             if data.get('_id'):
-                resp = self.find_one(self.RI(), data.get('_id'))
+                resp = self.find_one(self.RI(), ID=data.get('_id'))
                 if resp:
                     resp.update(data)
                 else:
@@ -59,4 +59,4 @@ class BaseModel(Model, MongoInterface):
         return data
 
     def delete(self):
-        return self.delete_one(self.RI(), self._id)
+        return self.delete_one(self.RI(), ID=self._id)

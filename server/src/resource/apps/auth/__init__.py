@@ -43,8 +43,8 @@ def __setup__(module):
                                            {"password": dt.get("password")}):
                 return make_error(200, description="password is wrong")
 
-            session["userID"] = module.data.db.user.find_one(
-                {"email": dt.get("email")})["userID"]
+            session["userID"] = module.data.find_one("user",
+                                                     query={"email": dt.get("email")})["userID"]
             session.permanent = True
             logger.warning("Session %r", session)
             data_response = {
