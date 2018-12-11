@@ -12,7 +12,9 @@ const mapStateToProps = (state) => {
         tags: state.tagReducer.tags,
         currentUser: state.userReducer.currentUser,
         isVote: state.questionReducer.isVote,
-        isUnVote: state.questionReducer.isUnVote
+        isUnVote: state.questionReducer.isUnVote,
+        comments: state.commentReducer.comments,
+        replyCommentID: state.commentReducer.replyCommentID
     }
 }
 
@@ -51,8 +53,14 @@ const mapDispatchToProps = (dispatch, props) => {
         updateViewQuestion: (question) => {
             return dispatch(actions.updateViewQuestionRequest(question));
         },
+        getAllCommentsQuestion: (questionID) => {
+            return dispatch(actions.getAllCommentsQuestionRequest(questionID));
+        },
         addNewCommentQuestion: (comment) => {
             return dispatch(actions.addNewCommentQuestionRequest(comment));
+        },
+        checkReply: (commentID) => {
+            return dispatch(actions.checkReply(commentID));
         }
 
     }

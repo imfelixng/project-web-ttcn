@@ -1,18 +1,22 @@
 import React, { Component } from 'react'
-
+import {NavLink} from 'react-router-dom';
 import CommentQuestion from './CommentQuestion'
 
 export default class CommentItem extends Component {
 
 
     state = {
-        issReply: false
+        replyCommentID: ''
     }
 
     onOpenReplyBox = () => {
-        this.setState({
-            isReply: true
-        })
+        this.props.checkReply(this.props.comment.commentID);
+    }
+
+    static getDerivedStateFromProps (props, state) {
+        return {
+            replyCommentID: props.replyCommentID
+        }
     }
 
   render() {
@@ -26,9 +30,9 @@ export default class CommentItem extends Component {
                 <h3>John Doe</h3>
                 <span><img src="/images/clock.png" alt = "logo" /> 3 min ago</span>
                 <p>Lorem ipsum dolor sit amet, </p>
-                <a onClick = {this.onOpenReplyBox}><i className="fa fa-reply-all" onClick = {this.onOpenReplyBox}/>Reply</a>
+                <a onClick = {this.onOpenReplyBox}><i className="fa fa-reply-all"/>Reply</a>
             </div>
-                        </div>{/*comment-list end*/}
+        </div>{/*comment-list end*/}
             <ul>
                 <li>
                 <div className="comment-list">
@@ -45,12 +49,19 @@ export default class CommentItem extends Component {
                 </li>
                 <li>
                     {
-                        this.state.isReply &&
-                        <div className="post-comment">
-                            <CommentQuestion 
-                                currentUser = {this.props.currentUser}
-                            />
-                        </div>
+                        this.state.replyCommentID && this.state.replyCommentID === this.props.comment.commentID ?
+                            this.props.currentUserID ?  
+                            <div className="post-comment">
+                                <CommentQuestion
+                                    currentUser = {this.props.currentUser}
+                                    onAddNewComment = {this.props.addNewCommentQuestion}
+                                />
+                            </div> :
+                            <div className="post-comment">
+                                <span>Vui lòng <NavLink to = "/sign-in"><b>Login</b></NavLink> để tham gia cuộc thảo luận này!</span>
+                            </div> 
+                        :
+                        null
                     }
                 </li>
             </ul>      
