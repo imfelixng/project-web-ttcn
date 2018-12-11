@@ -2,7 +2,9 @@ import * as types from '../constants/index';
 
 let initialState = {
     comments: [],
-    replyCommentID: ''
+    replyCommentID: '',
+    isVoteComment: false,
+    isUnVoteComment: false
 };
 
 const comment = (state = initialState, action) => {
@@ -24,6 +26,24 @@ const comment = (state = initialState, action) => {
             return {
                 ...state,
                 replyCommentID: action.commentID
+            }
+        }
+        case types.VOTE_COMMENT: {
+            return {
+                ...state,
+            }
+        }
+        case types.UNVOTE_COMMENT: {
+            return {
+                ...state,
+            }
+        }
+        case types.CHECK_VOTE_COMMENT:
+        {
+            return {
+                ...state,
+                isVoteComment: action.check.isVote,
+                isUnVoteComment: action.check.isUnvote
             }
         }
         default:

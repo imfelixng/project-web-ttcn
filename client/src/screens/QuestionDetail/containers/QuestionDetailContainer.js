@@ -14,7 +14,9 @@ const mapStateToProps = (state) => {
         isVote: state.questionReducer.isVote,
         isUnVote: state.questionReducer.isUnVote,
         comments: state.commentReducer.comments,
-        replyCommentID: state.commentReducer.replyCommentID
+        replyCommentID: state.commentReducer.replyCommentID,
+        isVoteComment: state.questionReducer.isVoteComment,
+        isUnVoteComment: state.questionReducer.isUnVoteComment,
     }
 }
 
@@ -61,6 +63,15 @@ const mapDispatchToProps = (dispatch, props) => {
         },
         checkReply: (commentID) => {
             return dispatch(actions.checkReply(commentID));
+        },
+        voteComment: (vote_comment) => {
+            return dispatch(actions.voteCommentRequest(vote_comment));
+        },
+        unVoteComment: (unvote_comment) => {
+            return dispatch(actions.unVoteCommentRequest(unvote_comment));
+        },
+        checkVoteComment: (commentID) => {
+            return dispatch(actions.checkVoteCommentRequest(commentID))
         }
 
     }

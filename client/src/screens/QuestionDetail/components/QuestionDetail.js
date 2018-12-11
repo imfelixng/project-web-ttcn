@@ -437,7 +437,11 @@ export default class QuestionDetail extends Component {
                                             checkReply = {this.props.checkReply}
                                             userOther = {this.props.userOther}
                                             getUserOther = {this.props.getUserOther}
-
+                                            voteComment = {this.props.voteComment}
+                                            unVoteComment = {this.props.unVoteComment}
+                                            isVoteComment = {this.props.isVoteComment}
+                                            isUnVoteComment = {this.props.isUnVoteComment}
+                                            checkVoteComment = {this.props.checkVoteComment}
                                         />
                                         {
                                             this.state.currentUserID ?  
