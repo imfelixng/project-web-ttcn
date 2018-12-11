@@ -7,6 +7,8 @@ from foundation.core.datalayer import MongoInterface
 from foundation.core.schema.types import MongoID
 from .helpers import CamelCase2Snake
 import logging
+from foundation.common.log import getLogger
+logger = getLogger(__name__)
 
 
 class BaseModel(Model, MongoInterface):
@@ -16,6 +18,7 @@ class BaseModel(Model, MongoInterface):
         default=(datetime.datetime.now() + datetime.timedelta(hours=7)))
     _created = DateTimeType(
         default=(datetime.datetime.now() + datetime.timedelta(hours=7)))
+    __hooks__ = {}
 
     class Options:
         serialize_when_none = False
@@ -56,7 +59,28 @@ class BaseModel(Model, MongoInterface):
         # self.update_one(self.RI(), _id, {'$set': data}, upsert=True)
         self.insert_one(self.RI(), data)
         logging.warn("data in save %r", data)
+
+        self.run_hook('on_save')
+
         return data
+
+    def run_hook(self, event, *args, **kwargs):
+        for name, handle in self.__hooks__.items():
+            if (self.RI(), event) == name:
+                # logger.warning("Run hook %s", name)
+                for h in handle:
+                    # map(lambda x: x(self, *args, **kwargs), handle)
+                    h(self, *args, **kwargs)
+
+    @classmethod
+    def register_hook(cls, name, handle):
+        if cls.__hooks__.get((cls.RI(), name)):
+            cls.__hooks__[(cls.RI(), name)] += handle
+        else:
+            cls.__hooks__[(cls.RI(), name)] = [handle]
+        # logger.warning("register_hook %s", name)
+        # logger.warning("register_hook %s", handle)
+        # logger.warning("register_hook %s", cls)
 
     def delete(self):
         return self.delete_one(self.RI(), ID=self._id)

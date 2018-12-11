@@ -3,7 +3,7 @@ MODULES = [
 
 MONGO_HOST = "mongodb"
 MONGO_PORT = "27017"
-MONGO_DB   = "nvphu1306"
+MONGO_DB = "nvphu1306"
 MONGO_USER = "nvphu1306"
 MONGO_PASSWORD = "nvphu1306"
 
@@ -29,3 +29,6 @@ X_DOMAINS = ['http://localhost:5000',  # The domain where Swagger UI is running
 X_HEADERS = ['Content-Type', 'If-Match']  # Needed for the "Try it out" buttons
 
 AUTH_FIELD = "auth"
+
+MQTT_BROKER_URL = 'localhost'
+MQTT_BROKER_PORT = 1883
