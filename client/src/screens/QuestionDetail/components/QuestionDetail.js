@@ -101,7 +101,7 @@ export default class QuestionDetail extends Component {
 
     onVoteQuestion = () => {
 
-        if(this.state.isLoadingVote || this.state.isLoadingUnVote || this.state.isVote) {
+        if(this.state.isLoadingVote || this.state.isLoadingUnVote || (this.props.currentUserID && this.state.isVote)) {
             return;
         }
 
@@ -136,7 +136,7 @@ export default class QuestionDetail extends Component {
 
     onUnVoteQuestion = () => {
 
-        if(this.state.isLoadingVote || this.state.isLoadingUnVote || this.state.isUnVote) {
+        if(this.state.isLoadingVote || this.state.isLoadingUnVote || (this.props.currentUserID && this.state.isUnVote)) {
             return;
         }
 
@@ -392,17 +392,17 @@ export default class QuestionDetail extends Component {
                                                             this.state.isLoadingVote ? 
                                                             <img className = "loading-vote"src= "/images/ic_loading.gif" alt = "loading"/>
                                                                 :
-                                                            <i className = {this.state.isVote ? "la la-thumbs-up active_vote_unvote" : "la la-thumbs-up"}></i>
-                                                                                        }
+                                                            <i className = {this.props.currentUserID && this.state.isVote ? "la la-thumbs-up active_vote_unvote" : "la la-thumbs-up"}></i>
+                                                        }
                                                     </a>
                                                     <a  className="com">{question ? (question.votes - question.unvotes) : 0}</a>
                                                     <a  className="com" onClick = {this.onUnVoteQuestion}>
-                                                                                        {
+                                                        {
                                                                                             this.state.isLoadingUnVote ? 
                                                             <img className = "loading-vote"src= "/images/ic_loading.gif" alt = "loading" />
                                                                                             :
-                                                            <i className = {this.state.isUnVote ? "la la-thumbs-down active_vote_unvote" : "la la-thumbs-down"}></i>                
-                                                                                        }
+                                                            <i className = {this.props.currentUserID && this.state.isUnVote ? "la la-thumbs-down active_vote_unvote" : "la la-thumbs-down"}></i>                
+                                                        }
                                                     </a>
                                                 </li> 
                                                 <li><a   className="com"><img src="/images/com.png"  /> {question ? question.comments : 0}</a></li>

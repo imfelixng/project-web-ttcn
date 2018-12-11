@@ -20,6 +20,7 @@ export default class CommentList extends Component {
                     isVoteComment = {this.props.isVoteComment}
                     isUnVoteComment = {this.props.isUnVoteComment}
                     checkVoteComment = {this.props.checkVoteComment}
+                    questionID = {this.props.questionID}
                 />
             </li>
         })

@@ -152,7 +152,7 @@ export default class CommentItem extends Component {
     }
 
     onVoteComment = () => {
-        if(this.state.isLoadingVote || this.state.isLoadingUnVote || this.state.isVote) {
+        if(this.state.isLoadingVote || this.state.isLoadingUnVote || (this.props.currentUserID && this.state.isVote)) {
             return;
         }
 
@@ -170,7 +170,7 @@ export default class CommentItem extends Component {
         }
 
         let vote_comment = {
-            userID: this.props.currentUserID,
+            questionID: this.props.questionID,
             commentID: this.props.comment.commentID,
             voteID: 'vc_' + new Date().getTime() + this.props.currentUserID + this.props.comment.commentID
         }
@@ -189,7 +189,7 @@ export default class CommentItem extends Component {
     }
 
     onUnVoteComment = () => {
-        if(this.state.isLoadingVote || this.state.isLoadingUnVote || this.state.isUnVote) {
+        if(this.state.isLoadingVote || this.state.isLoadingUnVote || (this.props.currentUserID && this.state.isUnVote)) {
             return;
         }
 
@@ -207,7 +207,7 @@ export default class CommentItem extends Component {
         }
 
         let unvote_comment = {
-            userID: this.props.currentUserID,
+            questionID: this.props.questionID,
             commentID: this.props.comment.commentID,
             unvoteID: 'uvc_' + new Date().getTime() + this.props.currentUserID + this.props.comment.commentID
         }
@@ -284,7 +284,7 @@ export default class CommentItem extends Component {
                                     this.state.isLoadingVote ? 
                                     <img className = "loading-vote"src= "/images/ic_loading.gif" alt = "loading"/>
                                     :
-                                    <i className = {this.state.isVote ? "la la-thumbs-up active_vote_unvote" : "la la-thumbs-up"}></i>
+                                    <i className = {this.props.currentUserID && this.state.isVote ? "la la-thumbs-up active_vote_unvote" : "la la-thumbs-up"}></i>
                                 }
                             </a>
                             <a  className="com">{comment ? (comment.votes - comment.unvotes) : 0}</a>
@@ -293,7 +293,7 @@ export default class CommentItem extends Component {
                                     this.state.isLoadingUnVote ? 
                                     <img className = "loading-vote"src= "/images/ic_loading.gif" alt = "loading" />
                                     :
-                                    <i className = {this.state.isUnVote ? "la la-thumbs-down active_vote_unvote" : "la la-thumbs-down"}></i>                
+                                    <i className = {this.props.currentUserID && this.state.isUnVote ? "la la-thumbs-down active_vote_unvote" : "la la-thumbs-down"}></i>                
                                 }
                             </a>
                         </li> 

@@ -194,7 +194,7 @@ export const addNewCommentQuestion = (comment) => {
 
 export const voteCommentRequest = (vote_comment) => {
     return async (dispatch) => {
-        let result = await APIs.callAPI("comments/" + vote_comment.commentID +"/votes", "POST", vote_comment);   
+        let result = await APIs.callAPI("comments/" + vote_comment.commentID +"/votes", "POST", {questionID: vote_comment.questionID, voteID: vote_comment.voteID});   
         console.log(result);
         if(result != null) {
                 dispatch(voteComment(result.data));
@@ -211,7 +211,7 @@ export const voteComment = (vote_comment) => {
 
 export const unVoteCommentRequest = (unvote_comment) => {
     return async (dispatch) => {
-        let result = await APIs.callAPI("comments/" + unvote_comment.commentID +"/unvotes", "POST", unvote_comment);   
+        let result = await APIs.callAPI("comments/" + unvote_comment.commentID +"/unvotes", "POST", {questionID: unvote_comment.questionID, unvoteID: unvote_comment.unvoteID});   
         console.log(result);
         if(result != null) {
                 dispatch(unVoteComment(result.data));

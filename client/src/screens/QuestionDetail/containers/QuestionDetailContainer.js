@@ -15,8 +15,8 @@ const mapStateToProps = (state) => {
         isUnVote: state.questionReducer.isUnVote,
         comments: state.commentReducer.comments,
         replyCommentID: state.commentReducer.replyCommentID,
-        isVoteComment: state.questionReducer.isVoteComment,
-        isUnVoteComment: state.questionReducer.isUnVoteComment,
+        isVoteComment: state.commentReducer.isVoteComment,
+        isUnVoteComment: state.commentReducer.isUnVoteComment,
     }
 }
 
@@ -76,6 +76,4 @@ const mapDispatchToProps = (dispatch, props) => {
 
     }
 }
-
-
 export default connect(mapStateToProps, mapDispatchToProps)(QuestionDetail);
