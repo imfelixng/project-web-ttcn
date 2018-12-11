@@ -3,18 +3,18 @@ Schema
 
 User system:
 	Register user
-		url: /register
+		url: /signup
 		method: POST
 		content-type: json
 
 	Update user
-		url: /user/
+		url: /users
 		method: PATCH
 		content-type: json
 
 Auth:
 	Login
-		url: /login
+		url: /signin
 		method: POST
 		content-type: json
 
@@ -130,3 +130,43 @@ Notification:
 	Edit a notification
 		url: /notifications/notificationID>
 		method: DELETE
+
+Vote:
+	Create votes questions:
+		url: /questions/<questionID>/votes
+		method: POST
+		content-type: json
+	
+	Create votes comments:
+		url: /comments/<commentID>/votes
+		method: POST
+		content-type: json
+	
+	Check isVote or isUnvote for questions:
+		url: /questions/<questionID>/isvote_isunvote
+		method: GET
+		content-type: json
+
+	Check isVote or isUnvote for comment:
+		url: /comments/<commentID>/isvote_isunvote
+		method: GET
+		content-type: json
+
+Unvotes:
+	Create unvotes questions:
+		url: /questions/<questionID>/unvotes
+		method: POST
+		content-type: json
+	
+	Create unvotes comments:
+		url: /comments/<commentID>/unvotes
+		method: POST
+		content-type: json
+
+Views:
+	Create views questions:
+		url: .questions/<questionsID>/views
+		method: PATCH
+		content-type: json
+
+		

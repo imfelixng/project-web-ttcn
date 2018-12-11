@@ -6,11 +6,12 @@ config = getConfig(__name__)
 MODULES = [
     'resource.apps.auth',
     'resource.apps.question',
-    'resource.apps.tag',
     'resource.apps.category',
     'resource.apps.comment',
-    'resource.apps.test'
+    'resource.apps.test',
+    'resource.apps.vote',
+    'resource.apps.view'
 ]
 
 app = ObjectApiServer(__name__, config, modules=MODULES, taskapp=None)
-CORS(app)
+CORS(app, supports_credentials=True)

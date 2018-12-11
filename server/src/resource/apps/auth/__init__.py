@@ -1,45 +1,95 @@
 from .schema import User
 from foundation.core.api.helper import make_error, make_resource_response
-from flask import request, session, Response
-import json
+from foundation.core.exceptions import UnprocessableEntity
+from flask import request, session
+
+import logging as logger
 
 
 def __setup__(module):
     module.resource("users", User)
 
-    @module.endpoint("/register", methods=["POST"])
+    @module.endpoint("/signup", methods=["POST"])
     def register():
-        data = request.json or request.form.to_dict()
-        database = module.data.db
-        if database.user.find_one({"email": data.get("email")}) is not None:
-            return make_error(400, description="email is exist")
-        model = User(data)
-        model.save()
-        return make_resource_response("resource", model.to_primitive())
+        try:
+            # data = request.json or request.form.to_dict()
+            data = request.json
+            query = {"email": data.get("email")}
+            if module.data.check_exist(User.RI(), query):
+                return make_error(200, description="email is exist")
 
-    @module.endpoint("/login", methods=["POST"])
+            model = User(data)
+            model.save()
+            data_response = {
+                "status": 200,
+                "description": "ok",
+                "userID": data["userID"],
+                "isSuccess": True
+            }
+
+            return make_resource_response("resource", data_response)
+        except Exception as e:
+            raise UnprocessableEntity('RC_400', message=str(e))
+
+    @module.endpoint("/signin", methods=["POST"])
     def login():
-        dt = request.json or request.form.to_dict()
-        database = module.data.db
+        try:
+            dt = request.json or request.form.to_dict()
 
-        if database.user.find_one({"email": dt.get("email")}) is None:
-            return make_error(400, description="Email is wrong")
-        if database.user.find_one({"password": dt.get("password")}) is None:
-            return make_error(400, description="password is wrong")
+            if not module.data.check_exist(User.RI(),
+                                           {"email": dt.get("email")}):
+                return make_error(200, description="Email is wrong")
+            if not module.data.check_exist(User.RI(),
+                                           {"password": dt.get("password")}):
+                return make_error(200, description="password is wrong")
 
-        session["userID"] = module.data.db.user.find_one(
-            {"email": dt.get("email")})["userID"]
-        data_response = {
-            "status": 200,
-            "description": "ok"
-        }
-        return Response(response=json.dumps(data_response), status=200, content_type='application/json')
+            session["userID"] = module.data.db.user.find_one(
+                {"email": dt.get("email")})["userID"]
+            session.permanent = True
+            logger.warning("Session %r", session)
+            data_response = {
+                "status": 200,
+                "description": "ok",
+                "userID": session["userID"],
+                "isSuccess": True
+            }
+            return make_resource_response("resource", data_response)
+        except Exception as e:
+            raise UnprocessableEntity('RC_400', message=str(e))
 
     @module.endpoint("/logout", methods=["GET"])
     def logout():
-        session.clear()
-        data_response = {
-            "status": 200,
-            "description": "ok"
-        }
-        return Response(response=json.dumps(data_response), status=200, content_type='application/json')
+        try:
+            session.clear()
+            data_response = {
+                "status": 200,
+                "description": "ok"
+            }
+            return make_resource_response("resource", data_response)
+        except Exception as e:
+            raise UnprocessableEntity('RC_400', message=str(e))
+
+    @module.endpoint("/users/topusers", methods=["GET"])
+    def topuser():
+        try:
+            pipeline = [
+                {
+                    "$project": {
+                        "topVote": {
+                            "$subtract": ["$votes", "$unvotes"]
+                        }
+                    }
+                },
+                {
+                    "$sort": {
+                        "topVote": -1
+                    }
+                },
+                {
+                    "$limit": 6
+                }
+            ]
+            data = module.data.aggregate(User.RI(), pipeline)
+            return make_resource_response("user", list(data))
+        except Exception as e:
+            raise UnprocessableEntity("RC_400", message=str(e))

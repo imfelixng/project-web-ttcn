@@ -3,7 +3,7 @@ from foundation.common.json import bson_dumps
 import json
 
 
-def make_resource_response(resource, data):
+def make_resource_response(resource, data, status=200):
     if type(data) is list:
         response = {
             '_meta': {
@@ -25,10 +25,11 @@ def make_resource_response(resource, data):
         return response
 
 
-def make_error(status, description):
+def make_error(status, description, isSuccess=False):
     error_object = {
         'status': status,
-        'description': description
+        'description': description,
+        'isSuccess': isSuccess
     }
     response = json.dumps(error_object)
     return Response(response=response, status=status, content_type='application/json')

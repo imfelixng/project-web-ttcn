@@ -1,4 +1,4 @@
-from flask import request, Response, session
+from flask import request, session
 from foundation.core.exceptions import UnprocessableEntity, NotFoundException
 from .helper import make_resource_response
 import datetime
@@ -17,7 +17,29 @@ class BaseAPI:
     def get(self, query=None):
         data = self.data.find(self.resource, query)
         data = list(data)
+        for i in data:
+            del i["_id"]
         return make_resource_response(self.resource, data)
+
+    def get_aggregate(self):
+        try:
+            pipeline = [
+                {
+                    "$match": {}
+                },
+                {
+                    "$project": {
+                        "_id": 0,
+                        "_updated": 0,
+                        "_etag": 0,
+                        "_created": 0
+                    }
+                }
+            ]
+            data = self.data.aggregate(self.resource, pipeline)
+            return make_resource_response("resource", list(data))
+        except Exception as e:
+            raise UnprocessableEntity('RC_400', message=str(e))
 
     def get_item(self, ID):
         try:
@@ -27,38 +49,47 @@ class BaseAPI:
             else:
                 return NotFoundException(
                     'RG_404', message='Resource not found', data=dt)
+
         except Exception as e:
-            raise UnprocessableEntity('RC_400', message=e.to_primitive())
+            raise UnprocessableEntity('RC_400', message=str(e))
 
     def create(self):
         try:
             data = request.json or request.form.to_dict()
-            if session.get("AUTH_FIELD"):
+            if session.get("AUTH_FIELD") and self.resource != "category":
                 data["userID"] = session.get("userID")
+
             model = self.Model(data)
-            model.save()
-            return make_resource_response(self.resource, model.to_primitive())
+            resp = model.save()
+            return make_resource_response(self.resource, resp)
         except Exception as e:
-            raise UnprocessableEntity('RC_400', message=e.to_primitive())
+            raise UnprocessableEntity('RC_400', message=str(e))
 
     def update_item(self, ID):
         try:
             data = request.json or request.form.to_dict()
-            data['_updated'] = datetime.datetime.now()
+            data['_updated'] = datetime.datetime.now() + \
+                datetime.timedelta(hours=7)
             query = self.return_query(ID)
             if session.get("AUTH_FIELD") and self.resource != "user":
                 query["userID"] = session.get("userID")
-            result = self.data.db[self.resource].find_one_and_update(
-                query, {'$set': data})["_id"]
-            resp = self.data.db[self.resource].find_one(
-                {"_id": result})
+
+            self.data.find_one_and_update(self.resource,
+                                          query, {'$set': data})
+            resp = self.data.find_one(self.resource, ID)
+
             return make_resource_response(self.resource, resp)
         except Exception as e:
-            return UnprocessableEntity('RC_400', message="you don't have permission")
+            raise UnprocessableEntity('RC_400', message=str(e))
 
     def delete_item(self, ID):
         done = self.data.delete_one(self.resource, ID)
         if done:
-            return Response(status=204)
+            resp = {
+                "status": 204,
+                "description": "ok"
+            }
+            return make_resource_response("resource", resp)
         else:
-            return UnprocessableEntity('RC_400', message='Delete fail')
+            raise UnprocessableEntity(
+                'RC_400', message="Delete fail, you don't have permission")
