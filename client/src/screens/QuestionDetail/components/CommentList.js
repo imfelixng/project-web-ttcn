@@ -13,6 +13,8 @@ export default class CommentList extends Component {
                 comment = {comment}
                 replyCommentID = {this.props.replyCommentID}
                 checkReply = {this.props.checkReply}
+                userOther = {this.props.userOther}
+                getUserOther = {this.props.getUserOther}
                 />
             </li>
         })

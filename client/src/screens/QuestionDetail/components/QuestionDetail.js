@@ -217,7 +217,8 @@ export default class QuestionDetail extends Component {
                     />
                 }
                 if( index === 2) {
-                    return <div key = {index} className = "question_image--30 more">
+                            
+                    return <div key = {index} className = "question_image--30 more" > 
                         <img 
                             src = {Url + "/" + image.dataURL}
                             className = "img_more"
@@ -434,6 +435,9 @@ export default class QuestionDetail extends Component {
                                             comments = {this.props.comments}
                                             replyCommentID = {this.props.replyCommentID}
                                             checkReply = {this.props.checkReply}
+                                            userOther = {this.props.userOther}
+                                            getUserOther = {this.props.getUserOther}
+
                                         />
                                         {
                                             this.state.currentUserID ?  

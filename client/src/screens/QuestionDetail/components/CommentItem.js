@@ -6,6 +6,7 @@ import Lightbox from 'react-images';
 
 import {Url} from '../../../constants/configs';
 import CommentQuestion from './CommentQuestion';
+import ReplyCommentList from './ReplyCommentList';
 
 export default class CommentItem extends Component {
 
@@ -26,6 +27,13 @@ export default class CommentItem extends Component {
         }
     }
 
+    componentDidMount() {
+        if(this.props.comment.userID) {
+            this.props.getUserOther(this.props.comment.userID);
+        }
+
+    }
+    
     showContent = (contentBlock) => {
         if (contentBlock) {
             return {__html: draftToHtml(contentBlock)};
@@ -134,17 +142,22 @@ export default class CommentItem extends Component {
     }
 
   render() {
-        let {comment} = this.props;
+        let {comment, userOther} = this.props;
+        let userInfo = userOther[comment.userID];
         let timeAgo = comment ? moment(comment._created, "YYYY-MM-DD HH:mm:ss", 'vn').fromNow() : 'Thời gian đăng';
 
     return (
       <React.Fragment>
         <div className="comment-list">
             <div className="bg-img">
-                <img src="/images/resources/bg-img1.png" alt = "logo"/>
+                <img src= {userInfo ? userInfo.avatar : "/images/users/img_avatar_default.png"} alt = "logo" className = "user_avatar_comment"/>
             </div>
             <div className="comment">
-                <h3>John Doe</h3>
+                <h3>
+                    {
+                        userInfo ? userInfo.fullname : "yourname"
+                    }
+                </h3>
                 <span><img src="/images/clock.png" alt = "logo" /> {timeAgo}</span>
                 <div 
                     className = "question__content" 
@@ -204,21 +217,9 @@ export default class CommentItem extends Component {
                 </div>
                 
             </div>
-        </div>{/*comment-list end*/}
+        </div>
+            <ReplyCommentList />  
             <ul>
-                <li>
-                <div className="comment-list">
-                    <div className="bg-img">
-                    <img src="/images/resources/bg-img2.png" alt = "logo" />
-                    </div>
-                    <div className="comment">
-                    <h3>John Doe</h3>
-                    <span><img src="/images/clock.png"alt = "logo" /> 3 min ago</span>
-                    <p>Hi John </p>
-                    <a onClick = {this.onOpenReplyBox}><i className="fa fa-reply-all" />Reply</a>
-                    </div>
-                </div>{/*comment-list end*/}
-                </li>
                 <li>
                     {
                         this.state.replyCommentID && this.state.replyCommentID === this.props.comment.commentID ?
@@ -236,7 +237,7 @@ export default class CommentItem extends Component {
                         null
                     }
                 </li>
-            </ul>      
+            </ul>   
       </React.Fragment>
     )
   }
