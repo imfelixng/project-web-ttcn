@@ -159,11 +159,28 @@ export const deleteQuestion = (questionID) => {
     }
 };
 
+export const getAllCommentsQuestionRequest = (questionID) => {
+    return async (dispatch) => {
+        let result = await APIs.callAPI("questions/" + questionID + "/comments", "GET");
+        console.log(result);
+        if(result != null) {
+            dispatch(getAllCommentsQuestion(result.data._items));
+        }
+    }
+};
+
+export const getAllCommentsQuestion = (comments) => {
+    return {
+        type: types.GET_ALL_COMMENTS_QUESTION,
+        comments
+    }
+};
+
 export const addNewCommentQuestionRequest = (comment) => {
     return async (dispatch) => {
         let result = await APIs.callAPI("comments", "POST", comment);
         if(result != null) {
-            dispatch(addNewCommentQuestion(comment));
+            dispatch(addNewCommentQuestion(result.data));
         }
     }
 };
@@ -175,7 +192,12 @@ export const addNewCommentQuestion = (comment) => {
     }
 };
 
-
+export const checkReply = (commentID) => {
+    return {
+        type: types.CHECK_REPLY,
+        commentID
+    }
+}
 
 export const getAllCategoryRequest = () => {
     return async (dispatch) => {

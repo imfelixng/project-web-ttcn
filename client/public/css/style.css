@@ -5696,3 +5696,13 @@ img.loading-vote {
 .active_vote_unvote::before {
 	color: red;
 }
+
+.active_question {
+	background: #e44d3a !important;
+	color: #fff !important;
+}
+
+.active_comment {
+	background: #e44d3a !important;
+	color: #fff !important;
+}

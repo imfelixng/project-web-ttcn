@@ -148,7 +148,7 @@ export default class CommentQuestion extends Component {
                         </div>
                     </div>
                     <ul className="text-right">
-                        <li><a className="post-jb active" onClick = {this.onAddNewComment}>
+                        <li><a className="post-jb active_comment" onClick = {this.onAddNewComment}>
                             {
                                 this.state.isLoading ?
                                     <img className = "loading" src = "/images/ic_loading.gif"/>

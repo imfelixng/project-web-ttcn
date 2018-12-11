@@ -256,7 +256,7 @@ export default class QuestionTopbar extends Component {
                         </div>
                     </div>
                     <ul className="text-right">
-                        <li><a className="post-jb active" onClick = {this.onAddNewQuestion}>
+                        <li><a className="post-jb active_question" onClick = {this.onAddNewQuestion}>
                             {
                                 this.state.isLoading ?
                                     <img className = "loading" src = "/images/ic_loading.gif"/>

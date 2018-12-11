@@ -24,6 +24,7 @@ export default class QuestionDetail extends Component {
                 this.props.getUserOther(this.props.question.userID);
                 this.props.getCategoryQuestion(this.props.question.categoryID);
                 this.props.checkVoteQuestion(this.props.question.questionID);
+                this.props.getAllCommentsQuestion(this.props.question.questionID);
             }
         }).catch(err => {   
             console.log(err);
@@ -40,7 +41,8 @@ export default class QuestionDetail extends Component {
         lightboxIsOpen: false,
         currentImageIndex: 0,
         isVote: false,
-        isUnVote: false
+        isUnVote: false,
+        comments: []
     }
 
     onOpenFunctional = () => {
@@ -71,6 +73,7 @@ export default class QuestionDetail extends Component {
             categoryQuestion: prevProps.categoryQuestion,
             isVote: prevProps.isVote,
             isUnVote: prevProps.isUnVote,
+            comments: prevProps.comments
         }
 
     }
@@ -81,6 +84,7 @@ export default class QuestionDetail extends Component {
                 this.props.getUserOther(this.props.question.userID);
                 this.props.getCategoryQuestion(this.props.question.categoryID);
                 this.props.checkVoteQuestion(this.props.question.questionID);
+                this.props.getAllCommentsQuestion(this.props.question.questionID);
             }
         })
         .catch(err => console.log(err));
@@ -381,33 +385,33 @@ export default class QuestionDetail extends Component {
                                             </div>
                                         <div className="job-status-bar">
                                             <ul className="like-com">
-                                            <li>
-                                                <a  className="com" onClick = {this.onVoteQuestion}>
-                                                    {
-                                                        this.state.isLoadingVote ? 
-                                                        <img className = "loading-vote"src= "/images/ic_loading.gif" alt = "loading"/>
-                                                            :
-                                                        <i className = {this.state.isVote ? "la la-thumbs-up active_vote_unvote" : "la la-thumbs-up"}></i>
-                                                                                    }
-                                                </a>
-                                                <a  className="com">{question ? (question.votes - question.unvotes) : 0}</a>
-                                                <a  className="com" onClick = {this.onUnVoteQuestion}>
-                                                                                    {
-                                                                                        this.state.isLoadingUnVote ? 
-                                                        <img className = "loading-vote"src= "/images/ic_loading.gif" alt = "loading" />
-                                                                                        :
-                                                        <i className = {this.state.isUnVote ? "la la-thumbs-down active_vote_unvote" : "la la-thumbs-down"}></i>                
-                                                                                    }
-                                                </a>
-                                            </li> 
-                                            <li><a   className="com"><img src="/images/com.png"  /> {question ? question.comments : 0}</a></li>
-                                            <li><a className="com"><i className="la la-eye" /> {question ? question.views : 0}</a></li>
+                                                <li>
+                                                    <a  className="com" onClick = {this.onVoteQuestion}>
+                                                        {
+                                                            this.state.isLoadingVote ? 
+                                                            <img className = "loading-vote"src= "/images/ic_loading.gif" alt = "loading"/>
+                                                                :
+                                                            <i className = {this.state.isVote ? "la la-thumbs-up active_vote_unvote" : "la la-thumbs-up"}></i>
+                                                                                        }
+                                                    </a>
+                                                    <a  className="com">{question ? (question.votes - question.unvotes) : 0}</a>
+                                                    <a  className="com" onClick = {this.onUnVoteQuestion}>
+                                                                                        {
+                                                                                            this.state.isLoadingUnVote ? 
+                                                            <img className = "loading-vote"src= "/images/ic_loading.gif" alt = "loading" />
+                                                                                            :
+                                                            <i className = {this.state.isUnVote ? "la la-thumbs-down active_vote_unvote" : "la la-thumbs-down"}></i>                
+                                                                                        }
+                                                    </a>
+                                                </li> 
+                                                <li><a   className="com"><img src="/images/com.png"  /> {question ? question.comments : 0}</a></li>
+                                                <li><a className="com"><i className="la la-eye" /> {question ? question.views : 0}</a></li>
                                             </ul>
                                                                             
-                                                                </div>
+                                        </div>
 
                                                     
-                                            </div>{/*post-bar end*/}
+                                    </div>{/*post-bar end*/}
                                             {
                                                 question && this.state.currentUserID === question.userID &&
                                         <EditModal
@@ -422,7 +426,15 @@ export default class QuestionDetail extends Component {
                                                     question = {this.props.question}
                                                 />
                                             }
-                                        <CommentList />
+                                        <CommentList 
+                                            currentUserID = {this.state.currentUserID}
+                                            currentUser = {this.props.currentUser}
+                                            onAddNewComment = {this.props.addNewCommentQuestion}
+                                            questionID = { this.props.question ? this.props.question.questionID : ''}
+                                            comments = {this.props.comments}
+                                            replyCommentID = {this.props.replyCommentID}
+                                            checkReply = {this.props.checkReply}
+                                        />
                                         {
                                             this.state.currentUserID ?  
                                             <div className="post-comment">
@@ -430,13 +442,12 @@ export default class QuestionDetail extends Component {
                                                     currentUser = {this.props.currentUser}
                                                     onAddNewComment = {this.props.addNewCommentQuestion}
                                                     questionID = { question ? question.questionID : ''}
-                                                />
+                                        />
                                             </div> :
                                             <div className="post-comment">
                                         <span>Vui lòng <NavLink to = "/sign-in"><b>Login</b></NavLink> để tham gia cuộc thảo luận này!</span>
                                             </div>
                                         }
-                                    </div>{/*comment-section end*/}
                                     </div>{/*posty end*/}
 
                                 </div>
@@ -444,6 +455,7 @@ export default class QuestionDetail extends Component {
                             <div className = "col-md-4">
                                 <SidebarRight />
                             </div>
+                        </div>
                     </div>
                 </div>
             </div>
