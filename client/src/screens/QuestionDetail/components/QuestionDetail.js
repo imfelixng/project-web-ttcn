@@ -385,33 +385,33 @@ export default class QuestionDetail extends Component {
                                             </div>
                                         <div className="job-status-bar">
                                             <ul className="like-com">
-                                            <li>
-                                                <a  className="com" onClick = {this.onVoteQuestion}>
-                                                    {
-                                                        this.state.isLoadingVote ? 
-                                                        <img className = "loading-vote"src= "/images/ic_loading.gif" alt = "loading"/>
-                                                            :
-                                                        <i className = {this.state.isVote ? "la la-thumbs-up active_vote_unvote" : "la la-thumbs-up"}></i>
-                                                                                    }
-                                                </a>
-                                                <a  className="com">{question ? (question.votes - question.unvotes) : 0}</a>
-                                                <a  className="com" onClick = {this.onUnVoteQuestion}>
-                                                                                    {
-                                                                                        this.state.isLoadingUnVote ? 
-                                                        <img className = "loading-vote"src= "/images/ic_loading.gif" alt = "loading" />
-                                                                                        :
-                                                        <i className = {this.state.isUnVote ? "la la-thumbs-down active_vote_unvote" : "la la-thumbs-down"}></i>                
-                                                                                    }
-                                                </a>
-                                            </li> 
-                                            <li><a   className="com"><img src="/images/com.png"  /> {question ? question.comments : 0}</a></li>
-                                            <li><a className="com"><i className="la la-eye" /> {question ? question.views : 0}</a></li>
+                                                <li>
+                                                    <a  className="com" onClick = {this.onVoteQuestion}>
+                                                        {
+                                                            this.state.isLoadingVote ? 
+                                                            <img className = "loading-vote"src= "/images/ic_loading.gif" alt = "loading"/>
+                                                                :
+                                                            <i className = {this.state.isVote ? "la la-thumbs-up active_vote_unvote" : "la la-thumbs-up"}></i>
+                                                                                        }
+                                                    </a>
+                                                    <a  className="com">{question ? (question.votes - question.unvotes) : 0}</a>
+                                                    <a  className="com" onClick = {this.onUnVoteQuestion}>
+                                                                                        {
+                                                                                            this.state.isLoadingUnVote ? 
+                                                            <img className = "loading-vote"src= "/images/ic_loading.gif" alt = "loading" />
+                                                                                            :
+                                                            <i className = {this.state.isUnVote ? "la la-thumbs-down active_vote_unvote" : "la la-thumbs-down"}></i>                
+                                                                                        }
+                                                    </a>
+                                                </li> 
+                                                <li><a   className="com"><img src="/images/com.png"  /> {question ? question.comments : 0}</a></li>
+                                                <li><a className="com"><i className="la la-eye" /> {question ? question.views : 0}</a></li>
                                             </ul>
                                                                             
-                                                                </div>
+                                        </div>
 
                                                     
-                                            </div>{/*post-bar end*/}
+                                    </div>{/*post-bar end*/}
                                             {
                                                 question && this.state.currentUserID === question.userID &&
                                         <EditModal
