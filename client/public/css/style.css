@@ -5710,3 +5710,7 @@ img.loading-vote {
 .user_avatar_comment {
 	width: 48px;
 }
+
+.main-section {
+	margin-top: 0px;
+}
