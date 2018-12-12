@@ -1,16 +1,33 @@
 import React, { Component } from 'react'
+import {NavLink} from 'react-router-dom';
+import draftToHtml from 'draftjs-to-html';
 
 export default class QuestionItem extends Component {
+
+
+  showContent = (contentBlock) => {
+    if (contentBlock) {
+        return {__html: draftToHtml(contentBlock)};
+      }
+  }
+
   render() {
+    const {question} = this.props;
     return (
       <React.Fragment>
         <tr>
-            <th scope="row" colspan = {15}>cau hoi 1</th>
-            <td className = "text-center">An nguyen</td>
-            <td className = "text-center">10</td>
-            <td className = "text-center">6</td>
-            <td className = "text-center">20</td>
-            <td className = "text-center">3h trước</td>
+            <th scope="row" colSpan = {15}>
+              <NavLink to = {"/questions/" + question.questionID} className = "question_list_content">
+                <span 
+                    dangerouslySetInnerHTML = { question && this.showContent( question.content)}>
+                </span>
+              </NavLink>
+            </th>
+            <td className = "text-center">{question.userID}</td>
+            <td className = "text-center">{question.votes - question.unvotes}</td>
+            <td className = "text-center">{question.comments}</td>
+            <td className = "text-center">{question.views}</td>
+            <td className = "text-center">{question._updated}</td>
         </tr>
       </React.Fragment>
     )

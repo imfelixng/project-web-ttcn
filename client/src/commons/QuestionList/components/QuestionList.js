@@ -2,7 +2,23 @@ import React, { Component } from 'react'
 import QuestionItem from './QuestionItem';
 
 export default class QuestionList extends Component {
+
+
+    showQuestion = (questions) => {
+        let result = null;
+        if(questions.length > 0) {
+            result = questions.map((question, index) => {
+                return <QuestionItem 
+                            key = {index}
+                            question = {question}
+                        />
+            });
+        }
+        return result
+    }
+
   render() {
+      const {questions} = this.props;
     return (
       <React.Fragment>
         <div className = "container">
@@ -34,7 +50,7 @@ export default class QuestionList extends Component {
                             </tr>
                         </thead>
                         <tbody>
-                            <QuestionItem />
+                            { this.showQuestion(questions)}
                         </tbody>
                     </table>
                 </div>

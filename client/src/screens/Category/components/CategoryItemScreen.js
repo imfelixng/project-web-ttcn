@@ -2,14 +2,20 @@ import React, { Component } from 'react'
 import QuestionList from '../../../commons/QuestionList/components/QuestionList';
 
 export default class CategoryItemScreen extends Component {
+
+  componentDidMount() {
+    this.props.getAllQuestionsCategory(this.props.match.params.idCategory);
+  }
   render() {
     return (
       <React.Fragment>
         <div className="wrapper">
             <div className = "mt-5">
-                <QuestionList />
+                <QuestionList 
+                  questions = {this.props.questions}
+                  type = 'category'
+                />
             </div>
-
         </div>
 
       </React.Fragment>
