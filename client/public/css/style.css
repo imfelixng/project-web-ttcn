@@ -5617,15 +5617,14 @@ a.com {
 	color: white;
 }
 .flex {
-	height: 45px;
-	margin-bottom: 10px;
+    display: flex;
+    margin-bottom: 10px;
+    justify-content: space-between;
+    align-items: center;
 }
-.my-3 {
-	margin-top: 8px !important;
-}
+
 .name-list {
 	margin-left: 20px;
-	margin-top: 8px !important;
 	color: #686868;
 }
 
@@ -5725,7 +5724,7 @@ div.ReactTags__selected span.ReactTags__tag {
     margin: 5px !important;
 }
 
-div.ReactTags__tagInput {
-	width: 100% !important;
-	margin-top: 10px;
+div.ReactTags__selected span.ReactTags__tag {
+    margin-bottom: 5px !important;
+    margin-left: 0px !important;
 }
