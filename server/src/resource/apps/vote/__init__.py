@@ -11,6 +11,8 @@ def vote_or_unvote(module, model, data, query, collection, unmodel):
         "userID": data["userID"],
         "questionID": data["questionID"]
     }
+    if "comment" in model.RI():
+        unmodel_query.update({"commentID": data["commentID"]})
 
     if model.RI().find("vote") > 0:
         update = {"$inc": {"unvotes": 1}}
