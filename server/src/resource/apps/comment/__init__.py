@@ -3,6 +3,8 @@ from flask import request, session
 from foundation.common.image import save_image_base64
 from foundation.core.api.helper import make_resource_response
 from foundation.core.exceptions import UnprocessableEntity
+import datetime
+import logging
 
 
 def __setup__(module):
@@ -32,8 +34,14 @@ def __setup__(module):
     def replies(commentID):
         try:
             data_request = request.json
+            data_request = save_image_base64(module, data_request)
+            data_request["_created"] = datetime.datetime.now() + \
+                datetime.timedelta(hours=7)
+            data_request["_updated"] = datetime.datetime.now() + \
+                datetime.timedelta(hours=7)
             data = module.data.find_one("comment", ID=commentID)
             data["replies"].append(data_request)
+            logging.warn("data_replies %s" % data)
             module.data.update(
                 "comment", {"commentID": commentID}, {"$set": data})
             return make_resource_response("comment", data)

@@ -45,6 +45,12 @@ def isVote_or_isUnvote(module, Vote, Unvote, query):
         data["isVote"] = True
     if module.data.check_exist(Unvote.RI(), query):
         data["isUnvote"] = True
+    if query.get("commentID"):
+        temp = module.data.find_one(
+            "comment", query={"commentID": query.get("commentID")})
+        data["userID"] = temp["userID"]
+        data["commentID"] = query.get("commentID")
+
     return make_resource_response("votes", data)
 
 
