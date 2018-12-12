@@ -44,3 +44,17 @@ def __setup__(module):
     def get_file(path):
         logger.warning("Path %r", path)
         return send_from_directory(module.config['PUBLIC_PATH'], path)
+
+    @module.endpoint("/search", methods=["GET"])
+    def search():
+        try:
+            key_word = request.args.get("search")
+            query = {
+                "content.blocks.text": {
+                    "$regex": key_word
+                }
+            }
+            resp = module.data.find("question", query)
+            return make_resource_response("question", list(resp))
+        except Exception as e:
+            raise UnprocessableEntity("RC_400", message=str(e))
