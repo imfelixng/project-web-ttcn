@@ -32,7 +32,7 @@ class ObjectApiServer(Flask):
 
         super(ObjectApiServer, self).__init__(appname)
         # self.mqtt = Mqtt(self)
-        logging.warn("Init Mqtt %s" % self.mqtt)
+        # logging.warn("Init Mqtt %s" % self.mqtt)
         self.config.update(config)
         self.init_routes()
         self.init_resource()

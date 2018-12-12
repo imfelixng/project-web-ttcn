@@ -29,6 +29,3 @@ X_DOMAINS = ['http://localhost:5000',  # The domain where Swagger UI is running
 X_HEADERS = ['Content-Type', 'If-Match']  # Needed for the "Try it out" buttons
 
 AUTH_FIELD = "auth"
-
-MQTT_BROKER_URL = 'localhost'
-MQTT_BROKER_PORT = 1883
