@@ -10,6 +10,7 @@ class Question(BaseModel):
     class Options:
         serialize_when_none = True
 
+    title = StringType(required=True)
     questionID = StringType(required=True)
     content = JsonString(required=True)
     images = ListType(JsonString(),)
