@@ -300,6 +300,15 @@ export const getCategoryQuestion = (category) => {
     }
 }
 
+export const getAllQuestionsCategoryRequest = (categoryID) => {
+    return async (dispatch) => {
+        let result = await APIs.callAPI("categories/" + categoryID, "GET");
+        if(result != null) {
+            dispatch(getAllQuestions(result.data._items));
+        }
+    }
+};
+
 export const getAllTagsRequest = () => {
     return async (dispatch) => {
         let tags = await APIs.callAPI("tags", "GET", null);
@@ -333,6 +342,16 @@ export const addNewTag = (tag) => {
         tag
     }
 }
+
+export const getAllQuestionsTagRequest = (tagID) => {
+    return async (dispatch) => {
+        let result = await APIs.callAPI("tags/" + tagID, "GET");
+        console.log(result);
+        if(result != null) {
+            dispatch(getAllQuestions(result.data._items));
+        }
+    }
+};
 
 export const createUserRequest = (user) => {
     return async (dispatch) => {

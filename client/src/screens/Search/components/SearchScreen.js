@@ -1,13 +1,23 @@
 import React, { Component } from 'react'
+import QuestionSearchItem from './QuestionSearchItem';
+import SidebarRight from '../../../commons/Sidebar/components/SidebarRight';
 
 export default class SearchScreen extends Component {
   render() {
     return (
       <React.Fragment>
-        <p className="mb-3">List result with keyword <b>abc</b></p>
-        <div className="posts-section">
-          <h2>Search</h2>
-        </div>{/*posts-section end*/}
+        <div className = "wrapper mt-5">
+          <div className = "container">
+            <div className = "row">
+              <div className = "col-lg-8">
+                <QuestionSearchItem />
+              </div>
+              <div className = "col-lg-4">
+                <SidebarRight />
+              </div>
+            </div>
+          </div>
+        </div>
       </React.Fragment>
     )
   }

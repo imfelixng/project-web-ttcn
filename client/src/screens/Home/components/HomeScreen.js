@@ -7,7 +7,9 @@ import HeaderContainer from '../../../commons/Header/containers/HeaderContainer'
 import CategoryContainer from '../../Category/Containers/CategoryContainer';
 import TagContainer from '../../Tag/containers/TagContainer';
 import QuestionDetailContainer from '../../QuestionDetail/containers/QuestionDetailContainer';
-import CategoryItemScreen from '../../Category/components/CategoryItemScreen';
+import CategoryItemContainer from '../../Category/Containers/CategoryItemContainer';
+import SearchScreen from '../../Search/components/SearchScreen';
+import NotificationScreen from '../../Notification/components/NotificationScreen';
 export default class HomeScreen extends Component {
   
   render() {
@@ -19,7 +21,10 @@ export default class HomeScreen extends Component {
               <Route path = "/categories" component = {CategoryContainer} exact/>
               <Route path = "/tags" component = {TagContainer} exact/>
               <Route path = "/questions/:idQuestion" component = {QuestionDetailContainer}/>
-              <Route path = "/categories/:idCategory" component = {CategoryItemScreen}/>
+              <Route path = "/categories/:idCategory" component = {CategoryItemContainer}/>
+              <Route path = "/tags/:idTag" component = {CategoryItemContainer}/>
+              <Route path = "/search" component = {SearchScreen}/>
+              <Route path = "/notifications" component = {NotificationScreen}/>
               <Route path = "/sign-in" component = {LoginContainer}/>
               <Route component = {Error404Screen} />
           </Switch>

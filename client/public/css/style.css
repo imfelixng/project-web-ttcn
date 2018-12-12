@@ -5732,3 +5732,66 @@ div.ReactTags__selected span.ReactTags__tag {
 div.ReactTags__tagInput {
 	width: 100% !important;
 }
+
+.question_search_item {
+    display: flex;
+	width: 100%;
+	padding: 10px;
+	background: #fff;
+	border-radius: 10px;
+}
+
+.question_search_item__left {
+    width: 50px;
+}
+
+img.question_search_item__avatar {
+    width: 50px;
+    height: 50px;
+}
+
+.question_search_item__right {
+    margin-left: 10px;
+}
+
+.question_search_item__title {
+    font-size: 20px;
+}
+
+.question_search_item_category {
+    margin: 5px 0px;
+}
+
+span.question_search_item_category-item {
+    background: #53d690;
+    padding: 7px 15px;
+    border-radius: 30px;
+    color: #fff;
+    display: inline-block;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+
+.question_search_item_tag {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+span.question_search_item_tag-item {
+    background: #e5e5e5;
+    padding: 7px 13px;
+    border-radius: 30px;
+    color: #b2b2b2;
+	font-weight: 600;
+	margin: 5px 0px;
+	margin-right: 5px;
+}
+
+.question_search_item__time {
+    padding: 5px 0px;
+}
+
+img.question_search_item__time-icon {
+    padding-right: 5px;
+    padding-top: 2px;
+}

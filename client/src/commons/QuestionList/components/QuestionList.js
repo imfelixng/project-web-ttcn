@@ -2,49 +2,55 @@ import React, { Component } from 'react'
 import QuestionItem from './QuestionItem';
 
 export default class QuestionList extends Component {
+
+
+    showQuestion = (questions) => {
+        let result = null;
+        if(questions.length > 0) {
+            result = questions.map((question, index) => {
+                return <QuestionItem 
+                            key = {index}
+                            question = {question}
+                        />
+            });
+        }
+        return result
+    }
+
   render() {
+      const {questions} = this.props;
     return (
       <React.Fragment>
         <div className = "container">
             <div className = "row">
                 <div className = "col-12 table-responsive">
                     <table className="table table-hover">
-                        <thead className="thead-dark">
+                        <thead>
                             <tr className="table-primary">
-                            <th scope="col">Question</th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th scope="col" className = "text-center">User</th>
-                            <th scope="col" className = "text-center">Votes</th>
-                            <th scope="col" className = "text-center">Comments</th>
-                            <th scope="col" className = "text-center">Views</th>
-                            <th scope="col" className = "text-center">Activity</th>
+                                <th scope="col">Question</th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th scope="col" className = "text-center">User</th>
+                                <th scope="col" className = "text-center">Votes</th>
+                                <th scope="col" className = "text-center">Comments</th>
+                                <th scope="col" className = "text-center">Views</th>
+                                <th scope="col" className = "text-center">Activity</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th scope="row" colspan = {10}>cau hoi 1</th>
-                                <td className = "text-center">An nguyen</td>
-                                <td className = "text-center">10</td>
-                                <td className = "text-center">6</td>
-                                <td className = "text-center">20</td>
-                                <td className = "text-center">3h trước</td>
-                            </tr>
-                            <tr>
-                                <th scope="row" colspan = {10}>cau hoi 1</th>
-                                <td className = "text-center">An nguyen</td>
-                                <td className = "text-center">10</td>
-                                <td className = "text-center">6</td>
-                                <td className = "text-center">20</td>
-                                <td className = "text-center">3h trước</td>
-                            </tr>
+                            { this.showQuestion(questions)}
                         </tbody>
                     </table>
                 </div>
