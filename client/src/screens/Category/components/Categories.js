@@ -8,12 +8,13 @@ export default class Categories extends Component {
       return <Category 
                 key = {index}
                 category  = {category}
+                questions = {this.props.questions}
+                getAllQuestionsCategory = {this.props.getAllQuestionsCategory}
             />
     });
   }
 
   render() {
-    console.log(this.props);
     return (
       <React.Fragment>
         {this.onShowCategory(this.props.categories)}
