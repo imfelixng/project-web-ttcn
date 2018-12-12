@@ -7,7 +7,7 @@ def __setup__(module):
     module.resource("categories", Category)
     module.resource("tags", Tag)
 
-    @module.endpoint("/tags/<id>", methods=["GET"])
+    @module.endpoint("/tags/<id>/questions", methods=["GET"])
     def question_have_tag(id):
         try:
             pipeline = [

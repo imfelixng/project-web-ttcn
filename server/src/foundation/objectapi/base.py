@@ -74,9 +74,8 @@ class ObjectApiServer(Flask):
             ignore_resource = ["questions", "users", "comments"]
             self.add_url_rule(resource_list, "get_list_%s" %
                               name, baseApi.get, methods=['GET'])
-            if name not in ["tags"]:
-                self.add_url_rule(resource_item, "get_item_%s" %
-                                  name, baseApi.get_item, methods=['GET'])
+            self.add_url_rule(resource_item, "get_item_%s" %
+                              name, baseApi.get_item, methods=['GET'])
             if name not in ignore_resource:
                 self.add_url_rule(resource_list, "create_%s" %
                                   name, self.login_required(baseApi.create), methods=['POST'])
