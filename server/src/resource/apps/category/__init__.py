@@ -32,7 +32,7 @@ def __setup__(module):
         except Exception as e:
             raise UnprocessableEntity("RC_400", message=str(e))
 
-    @module.endpoint("/categories/<categoryID>", methods=["GET"])
+    @module.endpoint("/categories/<categoryID>/questions", methods=["GET"])
     def question_have_category(categoryID):
         try:
             pipeline = [
