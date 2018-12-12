@@ -71,7 +71,7 @@ export default class CommentQuestion extends Component {
         });
     }
 
-    onAddNewComment = () => {
+    onAdd = () => {
 
         if(this.state.isLoading) {
             return;
@@ -92,25 +92,51 @@ export default class CommentQuestion extends Component {
 
         let timesamp = new Date().getTime();
 
-        let comment = {
-            commentID: "cm_" + timesamp + this.props.currentUser.userID + this.props.questionID,
-            questionID: this.props.questionID,
-            userID: this.props.currentUser.userID,
-            content: this.state.contentState,
-            votes: 0,
-            unvotes: 0,
-            images: this.state.images,
-            replies: [],
-        }
-        this.props.onAddNewComment(comment).then(() => {
-            this.removeFile(this.state.images);
-            this.setState({
-                isLoading: false,
-                contentState: content,
-            });
+        if(this.props.type === 'comment') {
+            
+            let comment = {
+                commentID: "cm_" + timesamp + this.props.currentUser.userID + this.props.questionID,
+                questionID: this.props.questionID,
+                userID: this.props.currentUser.userID,
+                content: this.state.contentState,
+                votes: 0,
+                unvotes: 0,
+                images: this.state.images,
+                replies: [],
+            }
+            this.props.onAddNewComment(comment).then(() => {
+                this.removeFile(this.state.images);
+                this.setState({
+                    isLoading: false,
+                    contentState: content,
+                });
+    
+            })
+            .catch(err => console.log(err));
+        } else {
+            
+            let reply = {
+                replyID: "rcm_" + timesamp + this.props.currentUser.userID + this.props.comment.commentID,
+                commentID: this.props.comment.commentID,
+                userID: this.props.currentUser.userID,
+                content: this.state.contentState,
+                votes: 0,
+                unvotes: 0,
+                images: this.state.images,
+            }
+            this.props.onAddNewReplyComment(reply).then(() => {
+                this.props.addReply(reply);
+                this.removeFile(this.state.images);
+                this.setState({
+                    isLoading: false,
+                    contentState: content,
+                });
+    
+            })
+            .catch(err => console.log(err));
 
-        })
-        .catch(err => console.log(err));
+        }
+        
 
     }
 
@@ -148,7 +174,7 @@ export default class CommentQuestion extends Component {
                         </div>
                     </div>
                     <ul className="text-right">
-                        <li><a className="post-jb active_comment" onClick = {this.onAddNewComment}>
+                        <li><a className="post-jb active_comment" onClick = {this.onAdd}>
                             {
                                 this.state.isLoading ?
                                     <img className = "loading" src = "/images/ic_loading.gif"/>

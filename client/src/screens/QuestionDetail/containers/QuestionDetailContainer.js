@@ -72,6 +72,9 @@ const mapDispatchToProps = (dispatch, props) => {
         },
         checkVoteComment: (commentID) => {
             return dispatch(actions.checkVoteCommentRequest(commentID))
+        },
+        addNewReplyComment: (reply) => {
+            return dispatch(actions.addNewReplyCommentRequest(reply));
         }
 
     }

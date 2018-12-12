@@ -225,6 +225,16 @@ export default class CommentItem extends Component {
 
     }
 
+    addReply = (reply) => {
+        const commentUpdate = {
+            ...this.state.comment
+        }
+        commentUpdate.replies.push(reply);
+        this.setState({
+            comment: commentUpdate
+        })
+    }
+
   render() {
         let {comment} = this.state;
         let {userOther} = this.props;
@@ -303,7 +313,13 @@ export default class CommentItem extends Component {
                 
             </div>
         </div>
-            <ReplyCommentList />  
+            <ReplyCommentList 
+                checkReply = {this.props.checkReply}
+                comment = {comment}
+                addNewReplyComment = {this.props.addNewReplyComment}
+                userOther = {userOther}
+                getUserOther = {this.props.getUserOther}
+            />  
             <ul>
                 <li>
                     {
@@ -312,7 +328,11 @@ export default class CommentItem extends Component {
                             <div className="post-comment">
                                 <CommentQuestion
                                     currentUser = {this.props.currentUser}
-                                    onAddNewComment = {this.props.addNewCommentQuestion}
+                                    onAddNewReplyComment = {this.props.addNewReplyComment}
+                                    type = "reply"
+                                    comment = {comment}
+                                    addReply = {this.addReply}
+
                                 />
                             </div> :
                             <div className="post-comment">

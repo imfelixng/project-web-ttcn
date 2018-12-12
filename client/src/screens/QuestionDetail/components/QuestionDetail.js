@@ -90,7 +90,6 @@ export default class QuestionDetail extends Component {
         .catch(err => console.log(err));
     }
 
-
     onDeleteQuestion = (questionID) => {
         this.props.deleteQuestion(questionID).then(res => {
             this.props.history.push('/');
@@ -166,7 +165,6 @@ export default class QuestionDetail extends Component {
         })
         .catch(err => console.log(err));
     }
-
 
     showImages = (images) => {
         
@@ -442,15 +440,17 @@ export default class QuestionDetail extends Component {
                                             isVoteComment = {this.props.isVoteComment}
                                             isUnVoteComment = {this.props.isUnVoteComment}
                                             checkVoteComment = {this.props.checkVoteComment}
+                                            addNewReplyComment = {this.props.addNewReplyComment}
                                         />
                                         {
                                             this.state.currentUserID ?  
                                             <div className="post-comment">
-                                        <CommentQuestion
+                                                <CommentQuestion
                                                     currentUser = {this.props.currentUser}
                                                     onAddNewComment = {this.props.addNewCommentQuestion}
                                                     questionID = { question ? question.questionID : ''}
-                                        />
+                                                    type = "comment"
+                                                />
                                             </div> :
                                             <div className="post-comment">
                                         <span>Vui lòng <NavLink to = "/sign-in"><b>Login</b></NavLink> để tham gia cuộc thảo luận này!</span>

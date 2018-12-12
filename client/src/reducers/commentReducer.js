@@ -38,6 +38,13 @@ const comment = (state = initialState, action) => {
                 ...state,
             }
         }
+
+        case types.ADD_NEW_REPLY_COMMENT_QUESTION: {
+            return {
+                ...state,
+            }
+        }
+
         case types.CHECK_VOTE_COMMENT:
         {
             return {
