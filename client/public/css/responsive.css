@@ -183,6 +183,11 @@
 	.login-resources {text-align: left;}
 	.forum-bar ul li:last-child {margin-bottom: 0;}
 	.conversation-box {left: -20px;width: 280px;}
+	.post-category {
+		padding-left: 0px;
+		padding-right: 0px;
+		margin-bottom: 10px;
+	}
 }
 
 @media (max-width: 410px) {

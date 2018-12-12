@@ -268,6 +268,10 @@ export default class QuestionDetail extends Component {
         })
     }
 
+    calculateVote = (votes, unvotes) => {
+        return votes - unvotes;
+    }
+
   render() {
     let {question} = this.props;
     let userInfo = null;
@@ -393,7 +397,7 @@ export default class QuestionDetail extends Component {
                                                             <i className = {this.props.currentUserID && this.state.isVote ? "la la-thumbs-up active_vote_unvote" : "la la-thumbs-up"}></i>
                                                         }
                                                     </a>
-                                                    <a  className="com">{question ? (question.votes - question.unvotes) : 0}</a>
+                                                    <a  className="com">{ question ? this.calculateVote(question.votes, question.unvotes) : 0}</a>
                                                     <a  className="com" onClick = {this.onUnVoteQuestion}>
                                                         {
                                                                                             this.state.isLoadingUnVote ? 

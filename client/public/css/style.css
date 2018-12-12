@@ -5506,62 +5506,39 @@ a {
 	height: 50px;
 	border-radius: 5px;
 }
-.col-md-6 {
-	padding: 0 0 0 0 !important;
-}
-.dz-clickable {
-	float: right;
-	height: 10px;
-	margin-top: -25px !important;
-	border-radius:  5px ;
-	color: white;
-	border: 1px solid white !important;
-	background: #b2b2b2 !important;
+
+.post-relation {
+    width: 100%;
 }
 
-.dropzone {
-	padding: 0 0 0 0 !important;
-	min-height: 30px !important;
-	margin-top: -25px !important;
-}
-.dz-message {
-	margin: 0 !important;
-	margin-top: 5px !important;
-}
 .post-category {
-	margin-top: 20px;
 	border-radius: 5px;
-	margin-left: 10px;
+	padding-left: 0px;
 }
-.post-tag {
-	margin-top: 20px;
-	margin-left: 10px;
-}
+
+
 .post-category__select {
-	float: right;
-	margin-top: -5px;
-	padding: 5px;
-	border-radius: 5px;
-	color: white;
+    padding: 5px;
+    border-radius: 5px;
+    color: white;
 	background: #b2b2b2;
+	width: 100%;
+}
+
+.post-tag {
+	padding-right: 0px;
+	padding-left: 0px;
 }
 
 .react-tags-wrapper {
-	float: right;
-	margin-top: -5px;
 	border: 1px solid rgba(0, 0, 0, 0.3);
 	border-radius: 5px;
-
-
 }
 .mt-4 {
 	margin-top: 1.4rem!important;
 }
 .text-right {
 	margin-top: 10px;
-}
-.dz-image {
-	margin-top: -20px;
 }
 .main-section {
 	margin-top: -35px;
@@ -5713,4 +5690,42 @@ img.loading-vote {
 
 .main-section {
 	margin-top: 0px;
+}
+
+.post-img {
+	width: 100%;
+}
+
+.dropzone {
+    display: flex;
+	overflow-x: scroll;
+	padding: 10px;
+	background: #f1f1f1 !important;
+}
+
+.dropzone .dz-preview.dz-image-preview {
+	background: none !important;
+}
+
+.dz-default.dz-message {
+    text-align: center;
+	width: 100%;
+}
+
+.dropzone .dz-preview {
+	margin: 0px !important;
+	margin-right: 16px !important;
+}
+
+.ReactTags__selected {
+    padding: 5px;
+}
+
+div.ReactTags__selected span.ReactTags__tag {
+    margin: 5px !important;
+}
+
+div.ReactTags__tagInput {
+	width: 100% !important;
+	margin-top: 10px;
 }

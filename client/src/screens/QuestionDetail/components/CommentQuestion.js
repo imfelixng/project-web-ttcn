@@ -166,8 +166,7 @@ export default class CommentQuestion extends Component {
                         />
                     </div>
                     <div className="row post">
-                        <div className = "col-md-12 post-img">
-                            <h4 className= "mt-4">Chọn ảnh:</h4>
+                        <div className = "post-img">
                             <DropzoneComponent config={config}
                             eventHandlers={eventHandlers}
                             djsConfig={djsConfig} />
