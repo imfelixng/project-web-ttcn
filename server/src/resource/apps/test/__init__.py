@@ -7,12 +7,12 @@ from flask import current_app as app
 import logging as logger
 
 
-def on_save_test(model, *args, **kwargs):
-    app.mqtt.publish('notification', "%s created" % model.userID)
+# def on_save_test(model, *args, **kwargs):
+# app.mqtt.publish('notification', "%s created" % model.userID)
 
 
 def __setup__(module):
-    Test.register_hook('on_save', on_save_test)
+    # Test.register_hook('on_save', on_save_test)
     module.resource("tests", Test)
 
     @module.endpoint("/tester", methods=["POST"])

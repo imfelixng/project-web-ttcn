@@ -18,7 +18,7 @@ class BaseModel(Model, MongoInterface):
         default=(datetime.datetime.now() + datetime.timedelta(hours=7)))
     _created = DateTimeType(
         default=(datetime.datetime.now() + datetime.timedelta(hours=7)))
-    __hooks__ = {}
+    # __hooks__ = {}
 
     class Options:
         serialize_when_none = False
@@ -60,25 +60,25 @@ class BaseModel(Model, MongoInterface):
         self.insert_one(self.RI(), data)
         logging.warn("data in save %r", data)
 
-        self.run_hook('on_save')
+        # self.run_hook('on_save')
 
         return data
 
-    def run_hook(self, event, *args, **kwargs):
-        for name, handle in self.__hooks__.items():
-            if (self.RI(), event) == name:
-                # logger.warning("Run hook %s", name)
-                for h in handle:
-                    # map(lambda x: x(self, *args, **kwargs), handle)
-                    h(self, *args, **kwargs)
+    # def run_hook(self, event, *args, **kwargs):
+    #     for name, handle in self.__hooks__.items():
+    #         if (self.RI(), event) == name:
+    #             # logger.warning("Run hook %s", name)
+    #             for h in handle:
+    #                 # map(lambda x: x(self, *args, **kwargs), handle)
+    #                 h(self, *args, **kwargs)
 
-    @classmethod
-    def register_hook(cls, name, handle):
-        if cls.__hooks__.get((cls.RI(), name)):
-            cls.__hooks__[(cls.RI(), name)] += handle
-        else:
-            cls.__hooks__[(cls.RI(), name)] = [handle]
-        # logger.warning("register_hook %s", name)
+    # @classmethod
+    # def register_hook(cls, name, handle):
+    #     if cls.__hooks__.get((cls.RI(), name)):
+    #         cls.__hooks__[(cls.RI(), name)] += handle
+    #     else:
+    #         cls.__hooks__[(cls.RI(), name)] = [handle]
+    #     # logger.warning("register_hook %s", name)
         # logger.warning("register_hook %s", handle)
         # logger.warning("register_hook %s", cls)
 
