@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import * as actions from '../../../actions/index';
-import CategoryItemScreen from '../components/CategoryItemScreen';
+import TagItemScreen from '../components/TagItemScreen';
 
 const mapStateToProps = (state) => {
     return {
@@ -11,8 +11,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        getAllQuestionsCategory: (categoryID) => {
-            return dispatch(actions.getAllQuestionsCategoryRequest(categoryID));
+        getAllQuestionsTag: (TagID) => {
+            return dispatch(actions.getAllQuestionsTagRequest(TagID));
         },
         getUserOther: (userID) => {
             return dispatch(actions.getUserOtherRequest(userID));
@@ -20,4 +20,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CategoryItemScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(TagItemScreen);

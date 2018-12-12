@@ -302,7 +302,7 @@ export const getCategoryQuestion = (category) => {
 
 export const getAllQuestionsCategoryRequest = (categoryID) => {
     return async (dispatch) => {
-        let result = await APIs.callAPI("categories/" + categoryID, "GET");
+        let result = await APIs.callAPI("categories/" + categoryID + "/questions", "GET");
         if(result != null) {
             dispatch(getAllQuestions(result.data._items));
         }
@@ -345,7 +345,7 @@ export const addNewTag = (tag) => {
 
 export const getAllQuestionsTagRequest = (tagID) => {
     return async (dispatch) => {
-        let result = await APIs.callAPI("tags/" + tagID, "GET");
+        let result = await APIs.callAPI("tags/" + tagID +"/questions", "GET");
         console.log(result);
         if(result != null) {
             dispatch(getAllQuestions(result.data._items));

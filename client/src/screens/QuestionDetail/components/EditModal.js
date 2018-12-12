@@ -133,6 +133,7 @@ export default class EditModal extends Component {
   }
 
   onUpdate = () => {
+    let title = this.state.contentState.blocks[0].text.length > 50 ? this.state.contentState.blocks[0].text.slice(0,50) + "..." : this.state.contentState.blocks[0].text.slice(0,50);
     let questionItem = {
         questionID: this.props.question.questionID,
         content: this.state.contentState,
@@ -145,6 +146,7 @@ export default class EditModal extends Component {
         unvotes: this.props.question.unvotes,
         views: this.props.question.views,
         comments: this.props.question.comments,
+        title
     }
 
     this.props.updateQuestion(questionItem);
@@ -178,15 +180,13 @@ export default class EditModal extends Component {
                         />
                     </div>
                     
-                    <div className= "post-relation">
+                    <div className= "post-relation mt-2">
                         <div className = "post-category">
-                            <span> Chuyên mục: </span>
                             <select className = "post-category__select" onChange = {this.handleChange} value = {categoryID}>
                                 {this.showCategories(this.props.categories)}
                             </select>
                         </div>
-                        <div className = "post-tag">
-                                <span>Thẻ </span>
+                        <div className = "post-tag mt-2">
                                 <ReactTags tags={tags}
                                     suggestions={suggestions}
                                     handleDelete={this.handleDelete}

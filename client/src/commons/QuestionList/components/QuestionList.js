@@ -11,6 +11,8 @@ export default class QuestionList extends Component {
                 return <QuestionItem 
                             key = {index}
                             question = {question}
+                            userOther = {this.props.userOther}
+                            getUserOther = {this.props.getUserOther}
                         />
             });
         }
@@ -18,13 +20,13 @@ export default class QuestionList extends Component {
     }
 
   render() {
-      const {questions} = this.props;
+    const {questions} = this.props;
     return (
       <React.Fragment>
         <div className = "container">
             <div className = "row">
                 <div className = "col-12 table-responsive">
-                    <table className="table table-hover">
+                    <table className="table table-hover table-striped">
                         <thead>
                             <tr className="table-primary">
                                 <th scope="col">Question</th>
@@ -50,7 +52,13 @@ export default class QuestionList extends Component {
                             </tr>
                         </thead>
                         <tbody>
-                            { this.showQuestion(questions)}
+                            { 
+                                questions.length > 0 ? 
+                                this.showQuestion(questions) :
+                                <tr>
+                                    <td colSpan = {20} className = "text-center">Không có dữ liệu nào!</td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
                 </div>

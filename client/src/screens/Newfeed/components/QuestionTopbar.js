@@ -111,6 +111,8 @@ export default class QuestionTopbar extends Component {
 
         let timesamp = new Date().getTime();
 
+        let title = this.state.contentState.blocks[0].text.length > 50 ? this.state.contentState.blocks[0].text.slice(0,50) + "..." : this.state.contentState.blocks[0].text.slice(0,50);
+
         let questionItem = {
             questionID: "q_" + timesamp + this.props.currentUser.userID,
             content: this.state.contentState,
@@ -123,6 +125,7 @@ export default class QuestionTopbar extends Component {
             unvotes: 0,
             views: 0,
             comments: 0,
+            title
         }
         this.props.addNewQuestion(questionItem).then(() => {
             this.removeFile(this.state.images);

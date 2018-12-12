@@ -10,6 +10,7 @@ import QuestionDetailContainer from '../../QuestionDetail/containers/QuestionDet
 import CategoryItemContainer from '../../Category/Containers/CategoryItemContainer';
 import SearchScreen from '../../Search/components/SearchScreen';
 import NotificationScreen from '../../Notification/components/NotificationScreen';
+import TagItemContainer from '../../Tag/containers/TagItemContainer';
 export default class HomeScreen extends Component {
   
   render() {
@@ -22,7 +23,7 @@ export default class HomeScreen extends Component {
               <Route path = "/tags" component = {TagContainer} exact/>
               <Route path = "/questions/:idQuestion" component = {QuestionDetailContainer}/>
               <Route path = "/categories/:idCategory" component = {CategoryItemContainer}/>
-              <Route path = "/tags/:idTag" component = {CategoryItemContainer}/>
+              <Route path = "/tags/:idTag" component = {TagItemContainer}/>
               <Route path = "/search" component = {SearchScreen}/>
               <Route path = "/notifications" component = {NotificationScreen}/>
               <Route path = "/sign-in" component = {LoginContainer}/>
