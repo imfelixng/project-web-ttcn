@@ -5728,3 +5728,7 @@ div.ReactTags__selected span.ReactTags__tag {
     margin-bottom: 5px !important;
     margin-left: 0px !important;
 }
+
+div.ReactTags__tagInput {
+	width: 100% !important;
+}

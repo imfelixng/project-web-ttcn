@@ -42,7 +42,7 @@ export default class QuestionDetail extends Component {
         currentImageIndex: 0,
         isVote: false,
         isUnVote: false,
-        comments: []
+        comments: [],
     }
 
     onOpenFunctional = () => {
