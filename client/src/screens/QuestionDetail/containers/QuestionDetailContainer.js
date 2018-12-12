@@ -17,6 +17,7 @@ const mapStateToProps = (state) => {
         replyCommentID: state.commentReducer.replyCommentID,
         isVoteComment: state.commentReducer.isVoteComment,
         isUnVoteComment: state.commentReducer.isUnVoteComment,
+        checkVote: state.commentReducer.checkVoteComment
     }
 }
 

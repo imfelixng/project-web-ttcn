@@ -158,7 +158,7 @@ export default class ReplyCommentItem extends Component {
                         this.showImages(reply.images) : null
                     }
                     {
-                        reply && reply.images.length > 0 &&
+                        reply && reply.images && reply.images.length > 0 &&
                         <Lightbox 
                             images = {
                                 reply.images.map((image, index) => {

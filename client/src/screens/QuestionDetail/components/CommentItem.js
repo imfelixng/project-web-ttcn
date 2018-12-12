@@ -31,8 +31,8 @@ export default class CommentItem extends Component {
         return {
             replyCommentID: props.replyCommentID,
             comment: props.comment,
-            isVote : props.isVoteComment,
-            isUnVote : props.isUnVoteComment
+            isVote : props.checkVote[props.comment.commentID] ? props.checkVote[props.comment.commentID].isVoteComment : false,
+            isUnVote : props.checkVote[props.comment.commentID] ? props.checkVote[props.comment.commentID].isUnVoteComment : false
         }
     }
 

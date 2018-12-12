@@ -4,7 +4,8 @@ let initialState = {
     comments: [],
     replyCommentID: '',
     isVoteComment: false,
-    isUnVoteComment: false
+    isUnVoteComment: false,
+    checkVoteComment: {}
 };
 
 const comment = (state = initialState, action) => {
@@ -47,10 +48,19 @@ const comment = (state = initialState, action) => {
 
         case types.CHECK_VOTE_COMMENT:
         {
+            
+            let checkVoteComment = state.checkVoteComment;
+            checkVoteComment[action.check.commentID] = {
+                isVoteComment: action.check.isVote,
+                isUnVoteComment: action.check.isUnvote,
+                userID: action.check.userID
+            }
+
             return {
                 ...state,
                 isVoteComment: action.check.isVote,
-                isUnVoteComment: action.check.isUnvote
+                isUnVoteComment: action.check.isUnvote,
+                checkVoteComment
             }
         }
         default:

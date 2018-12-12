@@ -445,6 +445,7 @@ export default class QuestionDetail extends Component {
                                             isUnVoteComment = {this.props.isUnVoteComment}
                                             checkVoteComment = {this.props.checkVoteComment}
                                             addNewReplyComment = {this.props.addNewReplyComment}
+                                            checkVote = {this.props.checkVote}
                                         />
                                         {
                                             this.state.currentUserID ?  

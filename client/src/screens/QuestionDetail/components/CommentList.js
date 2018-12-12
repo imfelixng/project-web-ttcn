@@ -22,6 +22,7 @@ export default class CommentList extends Component {
                     checkVoteComment = {this.props.checkVoteComment}
                     questionID = {this.props.questionID}
                     addNewReplyComment = {this.props.addNewReplyComment}
+                    checkVote = {this.props.checkVote}
                 />
             </li>
         })
