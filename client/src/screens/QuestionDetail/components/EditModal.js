@@ -75,12 +75,19 @@ export default class EditModal extends Component {
         alert("Tag quá ngắn, Vui lòng nhập tối thiểu 2 kí tự!");
         return false;
     }
+ 
+    let index = this.state.tags.findIndex((tagItem) => tagItem.text === tag.text);
+
+    if(index !== -1) {
+        alert("Tag này đã tồn tại!");
+        return;
+    }
     
     if(!tag.tagID) {
         tag.id = "t_" + new Date().getTime();
         tag.tagID = tag.id;
     }
-    console.log(tag);
+ 
     this.setState(state => ({ tags: [...state.tags, tag] }));
 }
 
@@ -186,7 +193,7 @@ export default class EditModal extends Component {
                                     handleAddition={this.handleAddition}
                                     handleDrag={this.handleDrag}
                                     delimiters={delimiters} 
-                                    autocomplete = {1}
+                                    autocomplete = {0}
                                     handleFilterSuggestions = {this.handleFilterSuggestions}
                                     minQueryLength = {1}
                                 />

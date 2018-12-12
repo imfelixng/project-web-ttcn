@@ -166,6 +166,13 @@ export default class QuestionTopbar extends Component {
             return false;
         }
         
+        let index = this.state.tags.findIndex((tagItem) => tagItem.text === tag.text);
+
+        if(index !== -1) {
+            alert("Tag này đã tồn tại!");
+            return;
+        }
+
         if(!tag.tagID) {
             tag.id = "t_" + new Date().getTime();
             tag.tagID = tag.id;
@@ -245,7 +252,7 @@ export default class QuestionTopbar extends Component {
                                         handleAddition={this.handleAddition}
                                         handleDrag={this.handleDrag}
                                         delimiters={delimiters} 
-                                        autocomplete = {1}
+                                        autocomplete = {0}
                                         handleFilterSuggestions = {this.handleFilterSuggestions}
                                         minQueryLength = {1}
                                     />
