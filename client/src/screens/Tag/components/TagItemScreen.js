@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import QuestionList from '../../../commons/QuestionList/components/QuestionList';
 
-export default class CategoryItemScreen extends Component {
+export default class TagItemScreen extends Component {
   render() {
     return (
       <React.Fragment>
