@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 
-export default class NotificationScreen extends Component {
+export default class QuestionItem extends Component {
   render() {
     return (
       <React.Fragment>
-        NotificationScreen
+        QuestionItem
       </React.Fragment>
     )
   }

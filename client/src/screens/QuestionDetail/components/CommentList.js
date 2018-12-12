@@ -4,15 +4,25 @@ export default class CommentList extends Component {
 
 
     showComment = (comments) => {
-        return comments.map((comment, index) => {
+        return comments.map((commentItem, index) => {
             return <li key = {index}>
                 <CommentItem 
-                currentUserID = {this.props.currentUserID}
-                currentUser = {this.props.currentUser}
-                onAddNewComment = {this.props.addNewCommentQuestion}
-                comment = {comment}
-                replyCommentID = {this.props.replyCommentID}
-                checkReply = {this.props.checkReply}
+                    currentUserID = {this.props.currentUserID}
+                    currentUser = {this.props.currentUser}
+                    onAddNewComment = {this.props.addNewCommentQuestion}
+                    replyCommentID = {this.props.replyCommentID}
+                    checkReply = {this.props.checkReply}
+                    userOther = {this.props.userOther}
+                    getUserOther = {this.props.getUserOther}
+                    voteComment = {this.props.voteComment}
+                    unVoteComment = {this.props.unVoteComment}
+                    comment = {commentItem}
+                    isVoteComment = {this.props.isVoteComment}
+                    isUnVoteComment = {this.props.isUnVoteComment}
+                    checkVoteComment = {this.props.checkVoteComment}
+                    questionID = {this.props.questionID}
+                    addNewReplyComment = {this.props.addNewReplyComment}
+                    checkVote = {this.props.checkVote}
                 />
             </li>
         })

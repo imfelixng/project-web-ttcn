@@ -42,7 +42,7 @@ export default class QuestionDetail extends Component {
         currentImageIndex: 0,
         isVote: false,
         isUnVote: false,
-        comments: []
+        comments: [],
     }
 
     onOpenFunctional = () => {
@@ -90,7 +90,6 @@ export default class QuestionDetail extends Component {
         .catch(err => console.log(err));
     }
 
-
     onDeleteQuestion = (questionID) => {
         this.props.deleteQuestion(questionID).then(res => {
             this.props.history.push('/');
@@ -101,7 +100,7 @@ export default class QuestionDetail extends Component {
 
     onVoteQuestion = () => {
 
-        if(this.state.isLoadingVote || this.state.isLoadingUnVote || this.state.isVote) {
+        if(this.state.isLoadingVote || this.state.isLoadingUnVote || (this.props.currentUserID && this.state.isVote)) {
             return;
         }
 
@@ -136,7 +135,7 @@ export default class QuestionDetail extends Component {
 
     onUnVoteQuestion = () => {
 
-        if(this.state.isLoadingVote || this.state.isLoadingUnVote || this.state.isUnVote) {
+        if(this.state.isLoadingVote || this.state.isLoadingUnVote || (this.props.currentUserID && this.state.isUnVote)) {
             return;
         }
 
@@ -166,7 +165,6 @@ export default class QuestionDetail extends Component {
         })
         .catch(err => console.log(err));
     }
-
 
     showImages = (images) => {
         
@@ -217,7 +215,8 @@ export default class QuestionDetail extends Component {
                     />
                 }
                 if( index === 2) {
-                    return <div key = {index} className = "question_image--30 more">
+                            
+                    return <div key = {index} className = "question_image--30 more" > 
                         <img 
                             src = {Url + "/" + image.dataURL}
                             className = "img_more"
@@ -267,6 +266,10 @@ export default class QuestionDetail extends Component {
         this.setState({
             currentImageIndex: i
         })
+    }
+
+    calculateVote = (votes, unvotes) => {
+        return votes - unvotes;
     }
 
   render() {
@@ -391,17 +394,17 @@ export default class QuestionDetail extends Component {
                                                             this.state.isLoadingVote ? 
                                                             <img className = "loading-vote"src= "/images/ic_loading.gif" alt = "loading"/>
                                                                 :
-                                                            <i className = {this.state.isVote ? "la la-thumbs-up active_vote_unvote" : "la la-thumbs-up"}></i>
-                                                                                        }
+                                                            <i className = {this.props.currentUserID && this.state.isVote ? "la la-thumbs-up active_vote_unvote" : "la la-thumbs-up"}></i>
+                                                        }
                                                     </a>
-                                                    <a  className="com">{question ? (question.votes - question.unvotes) : 0}</a>
+                                                    <a  className="com">{ question ? this.calculateVote(question.votes, question.unvotes) : 0}</a>
                                                     <a  className="com" onClick = {this.onUnVoteQuestion}>
-                                                                                        {
+                                                        {
                                                                                             this.state.isLoadingUnVote ? 
                                                             <img className = "loading-vote"src= "/images/ic_loading.gif" alt = "loading" />
                                                                                             :
-                                                            <i className = {this.state.isUnVote ? "la la-thumbs-down active_vote_unvote" : "la la-thumbs-down"}></i>                
-                                                                                        }
+                                                            <i className = {this.props.currentUserID && this.state.isUnVote ? "la la-thumbs-down active_vote_unvote" : "la la-thumbs-down"}></i>                
+                                                        }
                                                     </a>
                                                 </li> 
                                                 <li><a   className="com"><img src="/images/com.png"  /> {question ? question.comments : 0}</a></li>
@@ -434,15 +437,25 @@ export default class QuestionDetail extends Component {
                                             comments = {this.props.comments}
                                             replyCommentID = {this.props.replyCommentID}
                                             checkReply = {this.props.checkReply}
+                                            userOther = {this.props.userOther}
+                                            getUserOther = {this.props.getUserOther}
+                                            voteComment = {this.props.voteComment}
+                                            unVoteComment = {this.props.unVoteComment}
+                                            isVoteComment = {this.props.isVoteComment}
+                                            isUnVoteComment = {this.props.isUnVoteComment}
+                                            checkVoteComment = {this.props.checkVoteComment}
+                                            addNewReplyComment = {this.props.addNewReplyComment}
+                                            checkVote = {this.props.checkVote}
                                         />
                                         {
                                             this.state.currentUserID ?  
                                             <div className="post-comment">
-                                        <CommentQuestion
+                                                <CommentQuestion
                                                     currentUser = {this.props.currentUser}
                                                     onAddNewComment = {this.props.addNewCommentQuestion}
                                                     questionID = { question ? question.questionID : ''}
-                                        />
+                                                    type = "comment"
+                                                />
                                             </div> :
                                             <div className="post-comment">
                                         <span>Vui lòng <NavLink to = "/sign-in"><b>Login</b></NavLink> để tham gia cuộc thảo luận này!</span>

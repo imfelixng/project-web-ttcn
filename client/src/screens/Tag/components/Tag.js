@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
+import {NavLink} from 'react-router-dom';
 
 export default class Tag extends Component {
   render() {
     return (
       <React.Fragment>
         <div className="post-bar flex">
-            <a className="name-list">{this.props.tag.text}</a>
+            <NavLink className="name-list" to = {"/tags/" + this.props.tag.id}>{this.props.tag.text}</NavLink>
             <ul className="bk-links mr-2 my-3">
               <li className="question-amount"><a href="#"><i class="fa fa-question-circle icon-ques"></i><span className="amount">19</span></a></li>
               <li><a href="#"><i class="fa fa-plus-square"></i></a></li>

@@ -226,22 +226,19 @@ export default class QuestionTopbar extends Component {
                         />
                     </div>
                     <div className="row post">
-                        <div className = "col-md-6 post-img">
-                            <h4 className= "mt-4">Chọn ảnh:</h4>
+                        <div className = "post-img">
                             <DropzoneComponent config={config}
                             eventHandlers={eventHandlers}
                             djsConfig={djsConfig} />
                         </div>
-                        <div className= " col-md-6 post-relation">
-                            <div className = "post-category">
-                                <span>Chuyên mục: </span>
+                        <div className= "post-relation row">
+                            <div className = "col-sm-4 post-category">
                                 <select className = "post-category__select" onChange = {this.handleChange} value = {this.state.categoryID}>
                                     <option value = "none">Chọn Chuyên Mục</option>
                                     {this.showCategories(this.props.categories)}
                                 </select>
                             </div>
-                            <div className = "post-tag">
-                                    <span>Thẻ: </span>
+                            <div className = "col-sm-8 post-tag">
                                     <ReactTags tags={tags}
                                         suggestions={suggestions}
                                         handleDelete={this.handleDelete}

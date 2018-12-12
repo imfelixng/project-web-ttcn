@@ -6,6 +6,7 @@ import Lightbox from 'react-images';
 
 import {Url} from '../../../constants/configs';
 import CommentQuestion from './CommentQuestion';
+import ReplyCommentList from './ReplyCommentList';
 
 export default class CommentItem extends Component {
 
@@ -14,6 +15,12 @@ export default class CommentItem extends Component {
         replyCommentID: '',
         lightboxIsOpen: false,
         currentImageIndex: 0,
+        isLoadingVote: false,
+        isLoadingUnVote: false,
+        isVote: false,
+        isUnVote: false,
+        comment: null
+
     }
 
     onOpenReplyBox = () => {
@@ -22,10 +29,21 @@ export default class CommentItem extends Component {
 
     static getDerivedStateFromProps (props, state) {
         return {
-            replyCommentID: props.replyCommentID
+            replyCommentID: props.replyCommentID,
+            comment: props.comment,
+            isVote : props.checkVote[props.comment.commentID] ? props.checkVote[props.comment.commentID].isVoteComment : false,
+            isUnVote : props.checkVote[props.comment.commentID] ? props.checkVote[props.comment.commentID].isUnVoteComment : false
         }
     }
 
+    componentDidMount() {
+        if(this.props.comment.userID) {
+            this.props.getUserOther(this.props.comment.userID);
+            this.props.checkVoteComment(this.props.comment.commentID);
+        }
+
+    }
+    
     showContent = (contentBlock) => {
         if (contentBlock) {
             return {__html: draftToHtml(contentBlock)};
@@ -133,18 +151,108 @@ export default class CommentItem extends Component {
         })
     }
 
+    onVoteComment = () => {
+        if(this.state.isLoadingVote || this.state.isLoadingUnVote || (this.props.currentUserID && this.state.isVote)) {
+            return;
+        }
+
+        this.setState({
+            isLoadingVote: true
+        })
+
+        if(!this.props.currentUserID) {
+            alert("Vui lòng login để có thể tương tác!");
+            this.setState({
+                isLoadingVote: false
+            })
+            return;
+
+        }
+
+        let vote_comment = {
+            questionID: this.props.questionID,
+            commentID: this.props.comment.commentID,
+            voteID: 'vc_' + new Date().getTime() + this.props.currentUserID + this.props.comment.commentID
+        }
+
+        this.props.voteComment(vote_comment).then(() => {
+            this.props.checkVoteComment(this.props.comment.commentID);
+            let comment = this.state.comment;
+            comment.votes += 1;
+            this.setState({
+                isLoadingVote: false,
+                comment
+            })
+        })
+        .catch(err => console.log(err));
+
+    }
+
+    onUnVoteComment = () => {
+        if(this.state.isLoadingVote || this.state.isLoadingUnVote || (this.props.currentUserID && this.state.isUnVote)) {
+            return;
+        }
+
+        this.setState({
+            isLoadingUnVote: true
+        })
+
+        if(!this.props.currentUserID) {
+            alert("Vui lòng login để có thể tương tác!");
+            this.setState({
+                isLoadingUnVote: false
+            })
+            return;
+
+        }
+
+        let unvote_comment = {
+            questionID: this.props.questionID,
+            commentID: this.props.comment.commentID,
+            unvoteID: 'uvc_' + new Date().getTime() + this.props.currentUserID + this.props.comment.commentID
+        }
+
+        this.props.unVoteComment(unvote_comment).then(() => {
+            this.props.checkVoteComment(this.props.comment.commentID);
+            let comment = this.state.comment;
+            comment.unvotes += 1;
+            this.setState({
+                isLoadingUnVote: false,
+                comment
+            })
+        })
+        .catch(err => console.log(err));
+
+    }
+
+    addReply = (reply) => {
+        const commentUpdate = {
+            ...this.state.comment
+        }
+        commentUpdate.replies.push(reply);
+        this.setState({
+            comment: commentUpdate
+        })
+    }
+
   render() {
-        let {comment} = this.props;
+        let {comment} = this.state;
+        let {userOther} = this.props;
+        let userInfo = comment ? userOther[comment.userID] : null;
         let timeAgo = comment ? moment(comment._created, "YYYY-MM-DD HH:mm:ss", 'vn').fromNow() : 'Thời gian đăng';
 
     return (
       <React.Fragment>
         <div className="comment-list">
             <div className="bg-img">
-                <img src="/images/resources/bg-img1.png" alt = "logo"/>
+                <img src= {userInfo ? userInfo.avatar : "/images/users/img_avatar_default.png"} alt = "logo" className = "user_avatar_comment"/>
             </div>
             <div className="comment">
-                <h3>John Doe</h3>
+                <h3>
+                    {
+                        userInfo ? userInfo.fullname : "yourname"
+                    }
+                </h3>
                 <span><img src="/images/clock.png" alt = "logo" /> {timeAgo}</span>
                 <div 
                     className = "question__content" 
@@ -181,21 +289,21 @@ export default class CommentItem extends Component {
                 <div className="job-status-bar">
                     <ul className="like-com">
                         <li>
-                            <a  className="com" onClick = {this.onVoteQuestion}>
+                            <a  className="com" onClick = {this.onVoteComment}>
                                 {
                                     this.state.isLoadingVote ? 
                                     <img className = "loading-vote"src= "/images/ic_loading.gif" alt = "loading"/>
                                     :
-                                    <i className = {this.state.isVote ? "la la-thumbs-up active_vote_unvote" : "la la-thumbs-up"}></i>
+                                    <i className = {this.props.currentUserID && this.state.isVote ? "la la-thumbs-up active_vote_unvote" : "la la-thumbs-up"}></i>
                                 }
                             </a>
                             <a  className="com">{comment ? (comment.votes - comment.unvotes) : 0}</a>
-                            <a  className="com" onClick = {this.onUnVotecomment}>
+                            <a  className="com" onClick = {this.onUnVoteComment}>
                                 {
                                     this.state.isLoadingUnVote ? 
                                     <img className = "loading-vote"src= "/images/ic_loading.gif" alt = "loading" />
                                     :
-                                    <i className = {this.state.isUnVote ? "la la-thumbs-down active_vote_unvote" : "la la-thumbs-down"}></i>                
+                                    <i className = {this.props.currentUserID && this.state.isUnVote ? "la la-thumbs-down active_vote_unvote" : "la la-thumbs-down"}></i>                
                                 }
                             </a>
                         </li> 
@@ -204,21 +312,15 @@ export default class CommentItem extends Component {
                 </div>
                 
             </div>
-        </div>{/*comment-list end*/}
+        </div>
+            <ReplyCommentList 
+                checkReply = {this.props.checkReply}
+                comment = {comment}
+                addNewReplyComment = {this.props.addNewReplyComment}
+                userOther = {userOther}
+                getUserOther = {this.props.getUserOther}
+            />  
             <ul>
-                <li>
-                <div className="comment-list">
-                    <div className="bg-img">
-                    <img src="/images/resources/bg-img2.png" alt = "logo" />
-                    </div>
-                    <div className="comment">
-                    <h3>John Doe</h3>
-                    <span><img src="/images/clock.png"alt = "logo" /> 3 min ago</span>
-                    <p>Hi John </p>
-                    <a onClick = {this.onOpenReplyBox}><i className="fa fa-reply-all" />Reply</a>
-                    </div>
-                </div>{/*comment-list end*/}
-                </li>
                 <li>
                     {
                         this.state.replyCommentID && this.state.replyCommentID === this.props.comment.commentID ?
@@ -226,7 +328,11 @@ export default class CommentItem extends Component {
                             <div className="post-comment">
                                 <CommentQuestion
                                     currentUser = {this.props.currentUser}
-                                    onAddNewComment = {this.props.addNewCommentQuestion}
+                                    onAddNewReplyComment = {this.props.addNewReplyComment}
+                                    type = "reply"
+                                    comment = {comment}
+                                    addReply = {this.addReply}
+
                                 />
                             </div> :
                             <div className="post-comment">
@@ -236,7 +342,7 @@ export default class CommentItem extends Component {
                         null
                     }
                 </li>
-            </ul>      
+            </ul>   
       </React.Fragment>
     )
   }
