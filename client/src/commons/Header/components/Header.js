@@ -59,22 +59,22 @@ export default class Header extends Component {
                         <ul>
                         <li>
                             <NavLink to="/categories" >
-                            <span><img src="/images/icon2.png" /></span>
-                            Category
+                            <span><img className = "header__icon-menu" alt = "icon" src="/images/ic_category.png" /></span>
+                            <span>Category</span>
                             </NavLink>
                         </li>
                         <li>
                             <NavLink to="/tags" >
-                            <span><img src="/images/icon4.png" /></span>
-                            Tag
+                            <span><img className = "header__icon-menu" alt = "icon" src="/images/ic_tags.png" /></span>
+                            <span>Tag</span>
                             </NavLink>
                         </li>
                         {
                             this.state.currentUserID && 
                             <li>
                                 <NavLink to = "/notifications">
-                                <span><img src="/images/icon7.png" /></span>
-                                Notification
+                                <span><img className = "header__icon-menu" alt = "icon" src="/images/ic_notification.png" /></span>
+                                <span>Notification</span>
                                 </NavLink>
                             </li>
                         }

@@ -36,6 +36,8 @@ export const ADD_NEW_TAGS = "ADD_NEW_TAGS";
 
 export const GET_ALL_QUESTIONS_TAG = "GET_ALL_QUESTIONS_TAG";
 
+export const GET_ALL_QUESTIONS_SEARCH = "GET_ALL_QUESTIONS_SEARCH";
+
 export const CREATE_USER = "CREATE_USER";
 export const SIGN_IN = "SIGN_IN";
 export const LOG_OUT = "LOG_OUT";
