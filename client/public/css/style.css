@@ -729,6 +729,7 @@ main {
 	border-left: 1px solid #e5e5e5;
 	border-right: 1px solid #e5e5e5;
 	border-bottom: 1px solid #e5e5e5;
+	border-radius: 5px;
 }
 .username-dt {
 	float: left;
@@ -814,12 +815,15 @@ main {
 /* ============= Suggestions ============ */
 
 .sd-title {
-	float: left;
-	width: 100%;
-	padding: 20px;
-	border-bottom: 1px solid #e5e5e5;
-	position: relative;
+    float: left;
+    width: 100%;
+    padding: 10px;
+    border-bottom: 1px solid #e5e5e5;
+    position: relative;
+    display: flex;
+    align-items: center;
 }
+
 .sd-title h3 {
 	color: #000000;
 	font-size: 18px;
@@ -5823,4 +5827,9 @@ a {
 
 .header__icon-menu {
     width: 24px;
+}
+
+.sidebar__icon {
+    width: 30px;
+    margin-right: 10px;
 }
