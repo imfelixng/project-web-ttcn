@@ -8,7 +8,11 @@ export default class SidebarRight extends Component {
         <div className="right-sidebar">
             <div className="suggestions full-width">
                 <div className="sd-title">
-                <h3>Top câu hỏi</h3>
+                    <img 
+                        className = "sidebar__icon" src = "/images/ic_top_questions.png"
+                        alt = "icon"
+                    />
+                    <h3>Top câu hỏi</h3>
                 </div>{/*sd-title end*/}
                 <div className="suggestions-list">
                     <div className="suggestion-usd">
