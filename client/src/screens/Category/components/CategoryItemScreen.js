@@ -6,6 +6,7 @@ export default class CategoryItemScreen extends Component {
   componentDidMount() {
     this.props.getAllQuestionsCategory(this.props.match.params.idCategory);
   }
+  
   render() {
     return (
       <React.Fragment>
@@ -14,6 +15,8 @@ export default class CategoryItemScreen extends Component {
                 <QuestionList 
                   questions = {this.props.questions}
                   type = 'category'
+                  userOther = {this.props.userOther}
+                  getUserOther = {this.props.getUserOther}
                 />
             </div>
         </div>

@@ -2,7 +2,10 @@ import * as types from '../constants/index';
 
 let initialState = {
     categories: [],
-    categoryQuestion: {}
+    categoryQuestion: {},
+    countCategoryItem: {
+
+    }
 };
 
 const category = (state = initialState, action) => {
@@ -27,6 +30,16 @@ const category = (state = initialState, action) => {
             return {
                 ...state,
                 categoryQuestion: newCategories
+            }
+        }
+
+        case types.GET_COUNT_QUESTIONS_CATEGORY: {
+            let countCategoryItem = {...state.countCategoryItem};
+            let categoryID = action.categoryID;
+            countCategoryItem[categoryID] = action.questions.length
+            return {
+                ...state,
+                countCategoryItem
             }
         }
 

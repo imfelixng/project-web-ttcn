@@ -16,6 +16,10 @@ export default class CategoryScreen extends Component {
           <div className="posts-section">
             <Categories 
               categories = {this.props.categories}
+              questions = {this.props.questions}
+              getAllQuestionsCategory = {this.props.getAllQuestionsCategory}
+              countCategoryItem = {this.props.countCategoryItem}
+              getCountQuestionsCategory = {this.props.getCountQuestionsCategory}
             />
           </div>{/*posts-section end*/}
         </Main>

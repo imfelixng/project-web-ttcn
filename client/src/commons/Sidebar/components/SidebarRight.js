@@ -36,7 +36,6 @@ export default class SidebarRight extends Component {
                 </div>{/*suggestions-list end*/}
             </div>{/*suggestions end*/}
         </div>{/*right-sidebar end*/}
-
       </React.Fragment>
     )
   }

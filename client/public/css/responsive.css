@@ -3,7 +3,11 @@
 @media (max-width: 1200px) {
 	header nav {position: fixed;top: 0;left: 0;width: 200px;height: 100%;background-color: #e44d3a;padding: 25px 20px;opacity: 0;visibility: hidden;z-index: 0}
 	header nav.active {opacity: 1;visibility: visible;z-index: 9999;}
-	header nav ul li {float: left;width: 100%;text-align: left;padding: 0 0 0 0;margin-bottom: 20px;}
+	header nav ul li {
+		width: 100%;
+		padding: 10px;
+		text-align: left;
+	}
 	.menu-btn {display: block;}
 	header nav ul li span {display: inline-block;margin-right: 10px;}
 	.widget-about h3 {font-size: 16px;}
@@ -40,6 +44,15 @@
 	.notification-box {left: 100%;top: 0;}
 	nav ul ul {left: 50%;top: 0;border: 1px solid #e4e4e4;padding-left: 20px;padding-right: 20px;}
 	.sgt-text span {font-size: 12px;}
+	nav.active ul li a {
+		color: #ffffff;
+		font-size: 14px;
+		display: flex;
+	}
+	nav.active ul li span {
+		display: inline-block;
+		margin-right: 10px;
+	}
 }
 
 
