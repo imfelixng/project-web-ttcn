@@ -26,7 +26,8 @@ def __setup__(module):
                 "userID": data["userID"],
                 "isSuccess": True
             }
-
+            session["userID"] = data["userID"]
+            session.permanent = True
             return make_resource_response("resource", data_response)
         except Exception as e:
             raise UnprocessableEntity('RC_400', message=str(e))
