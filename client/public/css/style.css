@@ -5795,3 +5795,54 @@ img.question_search_item__time-icon {
     padding-right: 5px;
     padding-top: 2px;
 }
+.header-notify {
+	display: block;
+	line-height: 20px;
+    min-height: 20px;
+    padding-bottom: 2px;
+    vertical-align: bottom;
+}
+.header-notify p {
+	color: #162643;
+	font-size: 18px;
+	font-weight: 600;
+}
+.notify-title {
+	margin-top: 10px;
+}
+
+.notify-setting {
+	float: right;
+	font-size: 14px;
+	margin-top: -22px;
+}
+.menu-list {
+	display: block;
+	list-style-type: none;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+
+.list-notify {
+	background-color: #fff;
+    border-bottom: 1px solid #dddfe2;
+    overflow: hidden;
+	position: relative;
+	padding: 10px;
+	display: list-item;
+    text-align: -webkit-match-parent;
+}
+.under-line {
+	border: 0.5px solid gray;
+}
+.detail-notify {
+	display: flex;
+}
+.comment-notify {
+	margin: -6px 0 0 5px;
+}
+.time-notify {
+	margin-left: 5px;
+}
