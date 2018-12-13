@@ -2,6 +2,7 @@ from .schema import VoteQuestion, UnvoteQuestion, VoteComment, UnvoteComment
 from flask import request, session
 from foundation.core.exceptions import UnprocessableEntity
 from foundation.core.api.helper import make_resource_response
+from foundation.common.helper import update_top_commment
 
 
 def vote_or_unvote(module, model, data, query, collection, unmodel):
@@ -25,13 +26,15 @@ def vote_or_unvote(module, model, data, query, collection, unmodel):
             update["$inc"].update({"unvotes": - 1})
             module.data.delete_one(unmodel.RI(), query=unmodel_query)
 
-    model = model(data)
-    resp = model.save()
+    _model = model(data)
+    resp = _model.save()
 
     userID = module.data.update(collection, query, update)["userID"]
     query = {"userID": userID}
     module.data.update("user", query, update)
 
+    if "comment" in model.RI():
+        update_top_commment(module, data["questionID"])
     return make_resource_response("resource", resp)
 
 

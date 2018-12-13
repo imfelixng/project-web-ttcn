@@ -99,6 +99,10 @@ class MongoInterface(object):
         resp = source.delete_one(query)
         return True
 
+    def delete_many(self, resource, query):
+        source = self.db[resource]
+        source.delete_many(query)
+
     def check_exist(self, resource, query=None):
         logging.warn("resource %s" % resource)
         if self.db[resource].find_one(query) is not None:

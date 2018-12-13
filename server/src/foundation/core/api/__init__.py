@@ -84,6 +84,8 @@ class BaseAPI:
 
     def delete_item(self, ID):
         done = self.data.delete_one(self.resource, ID=ID)
+        if self.resource == "question":
+            self.data.delete_many('comment', {"questionID": ID})
         if done:
             resp = {
                 "status": 204,

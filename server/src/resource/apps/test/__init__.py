@@ -1,9 +1,9 @@
 from .schema import Test
 from flask import request, send_from_directory
 import os
-from foundation.core.api.helper import make_resource_response, make_error
+from foundation.core.api.helper import make_resource_response
 from foundation.core.exceptions import UnprocessableEntity
-from flask import current_app as app
+# from flask import current_app as app
 import logging as logger
 
 
@@ -49,11 +49,13 @@ def __setup__(module):
     def search():
         try:
             key_word = request.args.get("search")
-            query = {
-                "content.blocks.text": {
-                    "$regex": key_word
+            query = {}
+            if key_word != "":
+                query = {
+                    "content.blocks.text": {
+                        "$regex": key_word.lower()
+                    }
                 }
-            }
             resp = module.data.find("question", query)
             return make_resource_response("question", list(resp))
         except Exception as e:
