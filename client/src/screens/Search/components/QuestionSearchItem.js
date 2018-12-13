@@ -38,7 +38,7 @@ export default class QuestionSearchItem extends Component {
 
     let categoryInfo = categoryQuestion[question.categoryID] ? categoryQuestion[question.categoryID] : null;
     let userInfo = userOther[question.userID] ? userOther[question.userID] : null;
-    let timeAgo = question ? moment(question._updated, "YYYY-MM-DD HH:mm:ss", 'vn').fromNow() : 'Thời gian đăng';
+    let timeAgo = question ? moment(question._created, "YYYY-MM-DD HH:mm:ss", 'vn').fromNow() : 'Thời gian đăng';
 
     return (
       <React.Fragment>

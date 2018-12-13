@@ -6,6 +6,7 @@ export default class Category extends Component {
 
   componentDidMount() {
     this.props.getAllQuestionsCategory(this.props.category.categoryID);
+    this.props.getCountQuestionsCategory(this.props.category.categoryID);
   }
 
   render() {
@@ -15,7 +16,7 @@ export default class Category extends Component {
         <div className="post-bar flex">
         <NavLink to = {"/categories/" + this.props.category.categoryID} className="name-list">{this.props.category.name}</NavLink>
             <ul className="bk-links mr-2 my-3">
-              <li className="question-amount"><a ><i className="fa fa-question-circle icon-ques"></i><span className="amount">{questions.length}</span></a></li>
+              <li className="question-amount"><a ><i className="fa fa-question-circle icon-ques"></i><span className="amount">{this.props.count}</span></a></li>
               <li><a href="#"><i className="fa fa-plus-square"></i></a></li>
             </ul>
         </div>{/*post-bar end*/}

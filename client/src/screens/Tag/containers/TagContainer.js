@@ -4,7 +4,8 @@ import TagScreen from '../components/TagScreen';
 
 const mapStateToProps = (state) => {
     return {
-        tags: state.tagReducer.tags
+        tags: state.tagReducer.tags,
+        countTagItem: state.tagReducer.countTagItem,
     }
 }
 
@@ -12,6 +13,9 @@ const mapDispatchToProps = (dispatch) => {
     return {
         onGetTags: () => {
             return dispatch(actions.getAllTagsRequest());
+        },
+        getCountQuestionsTag: (TagID) => {
+            return dispatch(actions.getAllQuestionsTagRequest(TagID));
         }
     }
 }
