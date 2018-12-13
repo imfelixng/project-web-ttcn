@@ -5,62 +5,37 @@ export default class SidebarRight extends Component {
     return (
 
       <React.Fragment>
-                                <div className="right-sidebar">
-                            <div className="suggestions full-width">
-                                <div className="sd-title">
-                                    <img 
-                                        className = "sidebar__icon" src = "/images/ic_top_questions.png"
-                                        alt = "icon"
-                                    />
-                                    <h3>Top câu hỏi</h3>
-                                </div>{/*sd-title end*/}
-                                <div className="suggestions-list">
-                                <div className="suggestion-usd">
-                                    <img src="/images/resources/s1.png" alt = "logo" />
-                                    <div className="sgt-text">
-                                    <h4>Jessica William</h4>
-                                    <span>Graphic Designer</span>
-                                    </div>
-                                </div>
-                                <div className="suggestion-usd">
-                                    <img src="/images/resources/s2.png" alt = "logo" />
-                                    <div className="sgt-text">
-                                    <h4>John Doe</h4>
-                                    <span>PHP Developer</span>
-                                    </div>
-                                </div>
-                                <div className="suggestion-usd">
-                                    <img src="/images/resources/s3.png" alt = "logo" />
-                                    <div className="sgt-text">
-                                    <h4>Poonam</h4>
-                                    <span>Wordpress Developer</span>
-                                    </div>
-                                </div>
-                                <div className="suggestion-usd">
-                                    <img src="/images/resources/s4.png" alt = "logo" />
-                                    <div className="sgt-text">
-                                    <h4>Bill Gates</h4>
-                                    <span>C &amp; C++ Developer</span>
-                                    </div>
-                                </div>
-                                <div className="suggestion-usd">
-                                    <img src="/images/resources/s5.png" alt = "logo" />
-                                    <div className="sgt-text">
-                                    <h4>Jessica William</h4>
-                                    <span>Graphic Designer</span>
-                                    </div>
-                                </div>
-                                <div className="suggestion-usd">
-                                    <img src="/images/resources/s6.png" alt = "logo" />
-                                    <div className="sgt-text">
-                                    <h4>John Doe</h4>
-                                    <span>PHP Developer</span>
-                                    </div>
-                                </div>
-                                </div>{/*suggestions-list end*/}
-                            </div>{/*suggestions end*/}
-                        </div>{/*right-sidebar end*/}
-
+        <div className="right-sidebar">
+            <div className="suggestions full-width">
+                <div className="sd-title">
+                <h3>Top câu hỏi</h3>
+                </div>{/*sd-title end*/}
+                <div className="suggestions-list">
+                    <div className="suggestion-usd">
+                        <img src="images/resources/s5.png"  />
+                        <div className="sgt-text">
+                            <h4><a className="name-question">Chia hai phân số?</a></h4>
+                            <span>Jessica</span>
+                            <div className="like-cmt">
+                            <a><i class="fa fa-heart"><span>19</span></i></a>
+                            <a><i class="fa fa-comment"><span>19</span></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="suggestion-usd">
+                        <img src="images/resources/s5.png"  />
+                        <div className="sgt-text">
+                            <h4><a className="name-question">Jessica William</a></h4>
+                            <span>Graphic Designer</span>
+                            <div className="like-cmt">
+                            <a><i class="fa fa-heart"><span>19</span></i></a>
+                            <a><i class="fa fa-comment"><span>19</span></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>{/*suggestions-list end*/}
+            </div>{/*suggestions end*/}
+        </div>{/*right-sidebar end*/}
       </React.Fragment>
     )
   }
