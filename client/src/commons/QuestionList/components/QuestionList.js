@@ -13,6 +13,7 @@ export default class QuestionList extends Component {
                             question = {question}
                             userOther = {this.props.userOther}
                             getUserOther = {this.props.getUserOther}
+                            type = {this.props.type}
                         />
             });
         }

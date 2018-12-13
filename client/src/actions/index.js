@@ -305,9 +305,18 @@ export const getAllQuestionsCategoryRequest = (categoryID) => {
         let result = await APIs.callAPI("categories/" + categoryID + "/questions", "GET");
         if(result != null) {
             dispatch(getAllQuestions(result.data._items));
+            dispatch(getCountQuestionCategory(result.data._items, categoryID));
         }
     }
 };
+
+export const getCountQuestionCategory = (questions, categoryID) => {
+    return {
+        type: types.GET_COUNT_QUESTIONS_CATEGORY,
+        questions,
+        categoryID
+    }
+}
 
 export const getAllTagsRequest = () => {
     return async (dispatch) => {
@@ -347,6 +356,24 @@ export const getAllQuestionsTagRequest = (tagID) => {
     return async (dispatch) => {
         let result = await APIs.callAPI("tags/" + tagID +"/questions", "GET");
         console.log(result);
+        if(result != null) {
+            dispatch(getAllQuestions(result.data._items));
+            dispatch(getCountQuestionTag(result.data._items, tagID));
+        }
+    }
+};
+
+export const getCountQuestionTag = (questions, tagID) => {
+    return {
+        type: types.GET_COUNT_QUESTIONS_TAG,
+        questions,
+        tagID
+    }
+}
+
+export const getAllQuestionsSearchRequest = (keyword) => {
+    return async (dispatch) => {
+        let result = await APIs.callAPI("search?search=" + keyword, "GET");
         if(result != null) {
             dispatch(getAllQuestions(result.data._items));
         }

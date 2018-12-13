@@ -8,6 +8,7 @@ export default class SidebarLeft extends Component {
                                 <div className="main-left-sidebar no-margin">
                             <div className="suggestions full-width">
                                 <div className="sd-title">
+                                    <img className = "sidebar__icon" src = "/images/ic_top_supporters.png" alt = "icon"/>
                                     <h3>Top người giúp đỡ</h3>
                                 </div>{/*sd-title end*/}
                                 <div className="suggestions-list">
@@ -60,7 +61,11 @@ export default class SidebarLeft extends Component {
                             </div>{/*suggestions end*/}
                             <div className="suggestions full-width">
                             <div className="sd-title">
-                            <h3>Top thẻ</h3>
+                                <img 
+                                    className = "sidebar__icon" src = "/images/ic_top_tags.png"
+                                    alt = "icon"
+                                />
+                                <h3>Top thẻ</h3>
                             </div>{/*sd-title end*/}
                             <div className="suggestions-list">
                             <div className="suggestion-usd">

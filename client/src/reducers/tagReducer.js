@@ -1,7 +1,8 @@
 import * as types from '../constants/index';
 
 let initialState = {
-    tags: []
+    tags: [],
+    countTagItem: {}
 }
 
 let tag = (state=initialState, action) => {
@@ -19,6 +20,17 @@ let tag = (state=initialState, action) => {
                 tags: [action.tag, ...state.tags]
             }
         }
+
+        case types.GET_COUNT_QUESTIONS_TAG: {
+            let countTagItem = {...state.countTagItem};
+            let tagID = action.tagID;
+            countTagItem[tagID] = action.questions.length
+            return {
+                ...state,
+                countTagItem
+            }
+        }
+
         default:
             return state
     }

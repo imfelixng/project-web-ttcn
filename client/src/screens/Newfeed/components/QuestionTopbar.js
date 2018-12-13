@@ -169,12 +169,14 @@ export default class QuestionTopbar extends Component {
             return false;
         }
         
-        let index = this.state.tags.findIndex((tagItem) => tagItem.text === tag.text);
+        let index = this.state.tags.findIndex((tagItem) => tagItem.text.toLowerCase().trim() === tag.text.toLowerCase().trim());
 
         if(index !== -1) {
             alert("Tag này đã tồn tại!");
             return;
         }
+
+        tag.text = tag.text.trim();
 
         if(!tag.tagID) {
             tag.id = "t_" + new Date().getTime();
