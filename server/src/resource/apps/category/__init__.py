@@ -76,6 +76,9 @@ def __setup__(module):
                     "$sort": {
                         "count": -1
                     }
+                },
+                {
+                    "$limit": 5
                 }
             ]
             resp = module.data.aggregate("question", pipeline)
