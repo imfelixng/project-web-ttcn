@@ -56,3 +56,24 @@ def __setup__(module):
             return make_resource_response("resource", resp)
         except Exception as e:
             raise UnprocessableEntity("RC_400", message=str(e))
+
+    @module.endpoint("/tags/topTags", methods=["GET"])
+    def top_tag():
+        try:
+            pipeline = [
+                {
+                    "$unwind": "$tags"
+                },
+                {
+                    "$group": {
+                        "_id": "$tags.id",
+                        "count": {
+                            "$sum": 1
+                        }
+                    }
+                }
+            ]
+            resp = module.data.aggregate("question", pipeline)
+            return make_resource_response("tag", list(resp))
+        except Exception as e:
+            raise UnprocessableEntity("RC_400", message=str(e))

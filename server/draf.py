@@ -2,43 +2,29 @@ from pymongo import MongoClient
 from pprint import pprint
 client = MongoClient()
 db = client["mongdo_test"]
-coll = db["top"]
+# coll = db["toptag"]
 
-# data = {
-#     "replies": [
-#         "1", "2", "3"
-#     ],
-#     "votes": 10,
-#     "unvote": 9
-# }
-# coll.insert_one(data)
+# coll.insert_one({
+
+# #     })
+pipeline = [
+
+]
+
 pipeline = [
     {
-        "$match": {}
+        "$unwind": "$tags"
     },
     {
-        "$project": {
-            "sub": {
-                "$divide": [
-                    {
-                        "$sum": [
-                            {
-                                "$subtract": ["$votes", "$unvote"]
-                            },
-                            {
-                                "$multiply": [
-                                    {
-                                        "$size": "$replies"
-                                    },
-                                    2
-                                ]
-                            }
-                        ]
-                    },
-                    3
-                ]
+        "$group": {
+            "_id": "$tags.id",
+            "count": {
+                "$sum": 1
             }
         }
-    }]
-data = coll.aggregate(pipeline)
+    }
+]
+
+data = db.question.aggregate(pipeline)
 pprint(list(data))
+# pprint(list(db.question.find({})))

@@ -11,7 +11,7 @@ class Question(BaseModel):
         serialize_when_none = True
 
     title = StringType(required=True)
-    summaryContent = StringType(required=True)
+    summaryContent = StringType(required=True, default="")
     questionID = StringType(required=True)
     content = JsonString(required=True)
     images = ListType(JsonString(),)

@@ -31,17 +31,6 @@ def __setup__(module):
             query = {
                 "questionID": questionID
             }
-            # lookup = {
-            #     "from": "comment",
-            #     "localField": "questionID",
-            #     "foreignField": "questionID",
-            #     "as": "comment"
-            # }
-            # project = {
-            #     "password": 0
-            # }
-            # data = module.data.find_aggregate(
-            #     "question", lookup, query, project)
             data = module.data.find("comment", query)
             return make_resource_response("resource", list(data))
         except Exception as e:
@@ -102,3 +91,47 @@ def __setup__(module):
     def delete_question(questionID):
         module.data.delete_one("question", {"questionID": questionID})
         return "ok"
+
+    @module.endpoint("/questions/topQuestions", methods=["GET"])
+    def top_questions():
+        try:
+            pipeline = [
+                {
+                    "$project": {
+                        "sub": {
+                            "$divide": [
+                                {
+                                    "$sum": [
+                                        {
+                                            "$subtract": [
+                                                "$votes", "$unvotes"
+                                            ]
+                                        },
+                                        {
+                                            "$multiply": [
+                                                "$comments", 2
+                                            ]
+                                        }
+                                    ]
+                                },
+                                3
+                            ]
+                        },
+                        "title": 1, "summaryContent": 1, "questionID": 1,
+                        "images": 1, "topComment": 1, "categoryID":1,
+                        "userID": 1, "tags": 1, "votes": 1, "unvotes": 1,
+                        "views": 1, "comments": 1
+                    }
+                },
+                {
+                    "$sort": {
+                        "sub": -1
+                    }
+                },
+                {
+                    "$limit": 5
+                }]
+            resp = module.data.aggregate("question", pipeline)
+            return make_resource_response("question", list(resp))
+        except Exception as e:
+            raise UnprocessableEntity("RC_400", message=str(e))

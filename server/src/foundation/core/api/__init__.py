@@ -56,7 +56,7 @@ class BaseAPI:
     def create(self):
         try:
             data = request.json or request.form.to_dict()
-            if session.get("AUTH_FIELD") and self.resource != "category":
+            if session.get("AUTH_FIELD") and self.resource not in ["category", "tag"]:
                 data["userID"] = session.get("userID")
 
             model = self.Model(data)

@@ -70,24 +70,27 @@ def __setup__(module):
         except Exception as e:
             raise UnprocessableEntity('RC_400', message=str(e))
 
-    @module.endpoint("/users/topusers", methods=["GET"])
+    @module.endpoint("/users/topUsers", methods=["GET"])
     def topuser():
         try:
             pipeline = [
                 {
                     "$project": {
-                        "topVote": {
+                        "rating": {
                             "$subtract": ["$votes", "$unvotes"]
-                        }
+                        },
+                        "userID": 1, "fullname": 1, "avatar": 1,
+                        "votes": 1, "unvotes": 1,
+                        "_id": 0
                     }
                 },
                 {
                     "$sort": {
-                        "topVote": -1
+                        "rating": -1
                     }
                 },
                 {
-                    "$limit": 6
+                    "$limit": 5
                 }
             ]
             data = module.data.aggregate(User.RI(), pipeline)
