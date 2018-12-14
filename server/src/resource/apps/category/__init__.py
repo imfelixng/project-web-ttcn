@@ -66,10 +66,15 @@ def __setup__(module):
                 },
                 {
                     "$group": {
-                        "_id": "$tags.id",
+                        "_id": "$tags",
                         "count": {
                             "$sum": 1
                         }
+                    }
+                },
+                {
+                    "$sort": {
+                        "count": -1
                     }
                 }
             ]
