@@ -21,8 +21,8 @@ export default class SidebarRight extends Component {
                             <h4><a className="name-question">Chia hai phân số?</a></h4>
                             <span>Jessica</span>
                             <div className="like-cmt">
-                            <a><i class="fa fa-heart"><span>19</span></i></a>
-                            <a><i class="fa fa-comment"><span>19</span></i></a>
+                            <a><i className="fa fa-heart"><span>19</span></i></a>
+                            <a><i className="fa fa-comment"><span>19</span></i></a>
                             </div>
                         </div>
                     </div>
@@ -32,8 +32,8 @@ export default class SidebarRight extends Component {
                             <h4><a className="name-question">Jessica William</a></h4>
                             <span>Graphic Designer</span>
                             <div className="like-cmt">
-                            <a><i class="fa fa-heart"><span>19</span></i></a>
-                            <a><i class="fa fa-comment"><span>19</span></i></a>
+                            <a><i className="fa fa-heart"><span>19</span></i></a>
+                            <a><i className="fa fa-comment"><span>19</span></i></a>
                             </div>
                         </div>
                     </div>
