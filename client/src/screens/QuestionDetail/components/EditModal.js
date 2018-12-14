@@ -134,6 +134,16 @@ export default class EditModal extends Component {
 
   onUpdate = () => {
     let title = this.state.contentState.blocks[0].text.length > 50 ? this.state.contentState.blocks[0].text.slice(0,50) + "..." : this.state.contentState.blocks[0].text.slice(0,50);
+    
+    let summaryContent = '';
+
+    for(let i = 0 ; i < this.state.contentState.blocks.length; i++) {
+        summaryContent += this.state.contentState.blocks[i].text + '\n ';
+    }
+
+    summaryContent = summaryContent.length > 300 ? summaryContent.slice(0,300) + "..." : summaryContent.slice(0,300);
+
+
     let questionItem = {
         questionID: this.props.question.questionID,
         content: this.state.contentState,
@@ -146,7 +156,8 @@ export default class EditModal extends Component {
         unvotes: this.props.question.unvotes,
         views: this.props.question.views,
         comments: this.props.question.comments,
-        title
+        title,
+        summaryContent
     }
 
     this.props.updateQuestion(questionItem);

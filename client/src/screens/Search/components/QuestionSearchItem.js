@@ -60,7 +60,8 @@ export default class QuestionSearchItem extends Component {
                 <div className = "question_search_item_content">
                   <p 
                     className = "question__content" 
-                    dangerouslySetInnerHTML = { question && this.showContent( question.content)}>
+                  >
+                  {question.summaryContent}
                   </p>
                 </div>
               </div>
