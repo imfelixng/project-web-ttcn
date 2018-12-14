@@ -7,10 +7,7 @@ export default class SearchScreen extends Component {
   componentDidMount() {
     let index = this.props.location.search.lastIndexOf('=');
     let keyword = this.props.location.search.slice(index + 1);
-
-    if(keyword) {
-      this.props.getAllQuestionsSearch(keyword);
-    }
+    this.props.getAllQuestionsSearch(keyword);
 
   }
 

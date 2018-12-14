@@ -374,6 +374,7 @@ export const getCountQuestionTag = (questions, tagID) => {
 export const getAllQuestionsSearchRequest = (keyword) => {
     return async (dispatch) => {
         let result = await APIs.callAPI("search?search=" + keyword, "GET");
+        console.log(result);
         if(result != null) {
             dispatch(getAllQuestions(result.data._items));
         }
