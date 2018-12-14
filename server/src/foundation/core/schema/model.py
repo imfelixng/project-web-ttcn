@@ -64,23 +64,23 @@ class BaseModel(Model, MongoInterface):
 
         return data
 
-    # def run_hook(self, event, *args, **kwargs):
-    #     for name, handle in self.__hooks__.items():
-    #         if (self.RI(), event) == name:
-    #             # logger.warning("Run hook %s", name)
-    #             for h in handle:
-    #                 # map(lambda x: x(self, *args, **kwargs), handle)
-    #                 h(self, *args, **kwargs)
+    def run_hook(self, event, *args, **kwargs):
+        for name, handle in self.__hooks__.items():
+            if (self.RI(), event) == name:
+                # logger.warning("Run hook %s", name)
+                for h in handle:
+                    # map(lambda x: x(self, *args, **kwargs), handle)
+                    h(self, *args, **kwargs)
 
-    # @classmethod
-    # def register_hook(cls, name, handle):
-    #     if cls.__hooks__.get((cls.RI(), name)):
-    #         cls.__hooks__[(cls.RI(), name)] += handle
-    #     else:
-    #         cls.__hooks__[(cls.RI(), name)] = [handle]
-    #     # logger.warning("register_hook %s", name)
-        # logger.warning("register_hook %s", handle)
-        # logger.warning("register_hook %s", cls)
+    @classmethod
+    def register_hook(cls, name, handle):
+        if cls.__hooks__.get((cls.RI(), name)):
+            cls.__hooks__[(cls.RI(), name)] += handle
+        else:
+            cls.__hooks__[(cls.RI(), name)] = [handle]
+        # logger.warning("register_hook %s", name)
+        logger.warning("register_hook %s", handle)
+        logger.warning("register_hook %s", cls)
 
     def delete(self):
         return self.delete_one(self.RI(), ID=self._id)
