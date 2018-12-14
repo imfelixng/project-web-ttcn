@@ -11,6 +11,7 @@ import CategoryItemContainer from '../../Category/Containers/CategoryItemContain
 import NotificationScreen from '../../Notification/components/NotificationScreen';
 import TagItemContainer from '../../Tag/containers/TagItemContainer';
 import SearchContainer from '../../Search/containers/SearchContainer';
+import ProfileScreen from '../../Profile/components/ProfileScreen';
 export default class HomeScreen extends Component {
   
   render() {
@@ -27,6 +28,7 @@ export default class HomeScreen extends Component {
               <Route path = "/tags/:idTag" component = {TagItemContainer}/>
               <Route path = "/search" component = {SearchContainer}/>
               <Route path = "/notifications" component = {NotificationScreen}/>
+              <Route path = "/users/:idUser" component = {ProfileScreen}/>
               <Route path = "/sign-in" component = {LoginContainer}/>
               <Route component = {Error404Screen} />
           </Switch>
