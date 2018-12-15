@@ -58,7 +58,7 @@ export default class ProfileScreen extends Component {
                      <ul className="posts-section">
                        <a className="list-item">
                         <li className="list-notify list-save-ques">
-                          <img className="img-saved-ques" src="https://scontent.fdad2-1.fna.fbcdn.net/v/t1.0-9/31958494_890304734484946_1677189054120067072_n.jpg?_nc_cat=109&_nc_oc=AQnA4NQJh0dese5xlDM59kbYzLHgjC4W2txgXo5pZ1hoTbi2K6yGhsfGG7ANCwgkEssmp5A-CCTaTxFgm9clPrL3&_nc_ht=scontent.fdad2-1.fna&oh=abd0c52f6d5b50a8491791b0fb76fa40&oe=5C961F6B" alt = "logo" />
+                          <img className="img-saved-ques" src="https://scontent.fdad1-1.fna.fbcdn.net/v/t1.0-9/32087108_890306544484765_4044307584356712448_n.jpg?_nc_cat=100&_nc_oc=AQmE8UPegyXQhwuEPUNSPQ9JrmemaDtInog0QF5cxLxVQfyHm3XoyaiWmAhw2P-lRHqxBOz3K7CQwY1FvBOMtREh&_nc_ht=scontent.fdad1-1.fna&oh=7f363decf85dad7a401688b5c9dc0ff3&oe=5CD9F50B" alt = "logo" />
                           <div className="sgt-text content-ques">
                             <div className="ques-item">
                               <h4>Jessica William</h4>
@@ -89,7 +89,7 @@ export default class ProfileScreen extends Component {
                           </div>  
                         </li>
                         <li className="list-notify list-save-ques">
-                          <img className="img-saved-ques" src="https://scontent.fdad2-1.fna.fbcdn.net/v/t1.0-9/31958494_890304734484946_1677189054120067072_n.jpg?_nc_cat=109&_nc_oc=AQnA4NQJh0dese5xlDM59kbYzLHgjC4W2txgXo5pZ1hoTbi2K6yGhsfGG7ANCwgkEssmp5A-CCTaTxFgm9clPrL3&_nc_ht=scontent.fdad2-1.fna&oh=abd0c52f6d5b50a8491791b0fb76fa40&oe=5C961F6B" alt = "logo" />
+                        <img className="img-saved-ques" src="https://scontent.fdad2-1.fna.fbcdn.net/v/t1.0-9/31958494_890304734484946_1677189054120067072_n.jpg?_nc_cat=109&_nc_oc=AQnA4NQJh0dese5xlDM59kbYzLHgjC4W2txgXo5pZ1hoTbi2K6yGhsfGG7ANCwgkEssmp5A-CCTaTxFgm9clPrL3&_nc_ht=scontent.fdad2-1.fna&oh=abd0c52f6d5b50a8491791b0fb76fa40&oe=5C961F6B" alt = "logo" />
                           <div className="sgt-text content-ques">
                             <div className="ques-item">
                               <h4>Jessica William</h4>
