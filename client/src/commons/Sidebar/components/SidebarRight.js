@@ -1,7 +1,34 @@
 import React, { Component } from 'react'
+import QuestionSidebarItem from './QuestionSidebarItem';
 
 export default class SidebarRight extends Component {
+
+    
+    componentDidMount() {
+        this.props.getTopQuestions();
+    }
+
+    showQuestion = (questions) => {
+        let result = null;
+
+        if(questions.length > 0) {
+            result = questions.map((question, index) => {
+                return <QuestionSidebarItem
+                            key = {index}
+                            question = {question}
+                            userOther = {this.props.userOther}
+                            getUserOther = {this.props.getUserOther}
+                        />
+            });
+        }
+
+        return result;
+    }
+
   render() {
+
+    const {topQuestions} = this.props;
+
     return (
 
       <React.Fragment>
@@ -15,28 +42,7 @@ export default class SidebarRight extends Component {
                     <h3>Top câu hỏi</h3>
                 </div>{/*sd-title end*/}
                 <div className="suggestions-list">
-                    <div className="suggestion-usd">
-                        <img src="images/resources/s5.png"  />
-                        <div className="sgt-text">
-                            <h4><a className="name-question">Chia hai phân số?</a></h4>
-                            <span>Jessica</span>
-                            <div className="like-cmt">
-                            <a><i className="fa fa-heart"><span>19</span></i></a>
-                            <a><i className="fa fa-comment"><span>19</span></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="suggestion-usd">
-                        <img src="images/resources/s5.png"  />
-                        <div className="sgt-text">
-                            <h4><a className="name-question">Jessica William</a></h4>
-                            <span>Graphic Designer</span>
-                            <div className="like-cmt">
-                            <a><i className="fa fa-heart"><span>19</span></i></a>
-                            <a><i className="fa fa-comment"><span>19</span></i></a>
-                            </div>
-                        </div>
-                    </div>
+                    {this.showQuestion(topQuestions)}
                 </div>{/*suggestions-list end*/}
             </div>{/*suggestions end*/}
         </div>{/*right-sidebar end*/}

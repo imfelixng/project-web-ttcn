@@ -11,7 +11,7 @@ const mapStateToProps = (state) => {
         currentUserID: state.userReducer.currentUserID,
         currentUser: state.userReducer.currentUser,
         userOther: state.userReducer.userOther,
-        categoryQuestion: state.categoryReducer.categoryQuestion
+        categoryQuestion: state.categoryReducer.categoryQuestion,
     }
 }
 
