@@ -2,7 +2,8 @@ import * as types from '../constants/index';
 
 let initialState = {
     tags: [],
-    countTagItem: {}
+    countTagItem: {},
+    topTags: []
 }
 
 let tag = (state=initialState, action) => {
@@ -28,6 +29,13 @@ let tag = (state=initialState, action) => {
             return {
                 ...state,
                 countTagItem
+            }
+        }
+
+        case types.GET_TOP_TAGS: {
+            return {
+                ...state,
+                topTags: action.tags
             }
         }
 

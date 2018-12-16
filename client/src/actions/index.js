@@ -454,3 +454,51 @@ export const getUserOther = (user) => {
     }
 }
 
+export const getTopUsersRequest = () => {
+    return async (dispatch) => {
+        let result = await APIs.callAPI("users/topUsers", "GET");
+            if(result != null) {
+                dispatch(getTopUsers(result.data._items));
+            }
+    }
+}
+
+export const getTopUsers = (users) => {
+    return {
+        type: types.GET_TOP_USERS,
+        users
+    }
+}
+
+export const getTopTagsRequest = () => {
+    return async (dispatch) => {
+        let result = await APIs.callAPI("tags/topTags", "GET");
+            if(result != null) {
+                dispatch(getTopTags(result.data._items));
+            }
+    }
+}
+
+export const getTopTags = (tags) => {
+    return {
+        type: types.GET_TOP_TAGS,
+        tags
+    }
+}
+
+export const getTopQuestionsRequest = () => {
+    return async (dispatch) => {
+        let result = await APIs.callAPI("questions/topQuestions", "GET");
+            if(result != null) {
+                dispatch(getTopQuestions(result.data._items));
+            }
+    }
+}
+
+export const getTopQuestions = (questions) => {
+    return {
+        type: types.GET_TOP_QUESTIONS,
+        questions
+    }
+}
+

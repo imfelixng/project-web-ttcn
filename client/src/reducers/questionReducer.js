@@ -4,7 +4,8 @@ let initialState = {
     questions: [],
     questionItem: null,
     isVote: false,
-    isUnVote: false
+    isUnVote: false,
+    topQuestions: []
 };
 
 const question = (state = initialState, action) => {
@@ -96,6 +97,14 @@ const question = (state = initialState, action) => {
                     ...action.question
                     
                 }
+            }
+        }
+
+        case types.GET_TOP_QUESTIONS: 
+        {
+            return {
+                ...state,
+                topQuestions: action.questions
             }
         }
 
