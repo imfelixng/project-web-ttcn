@@ -11,6 +11,7 @@ const initialState = {
     errMsgSignUp: '',
     currentUser: null,
     userOther: {},
+    topUsers: []
 }
 
 let user = (state = initialState, action) => {
@@ -48,7 +49,8 @@ let user = (state = initialState, action) => {
             }
         }
         
-        case types.GET_USER: {
+        case types.GET_USER: 
+        {
             let {user} = action;
             return {
                 ...state,
@@ -56,7 +58,8 @@ let user = (state = initialState, action) => {
             }
         }
 
-        case types.GET_USER_OTHER: {
+        case types.GET_USER_OTHER: 
+        {
             let {user} = action;
             let newUsers = {
                 ...state.userOther
@@ -67,6 +70,14 @@ let user = (state = initialState, action) => {
             return {
                 ...state,
                 userOther: newUsers
+            }
+        }
+
+        case types.GET_TOP_USERS:
+        {
+            return {
+                ...state,
+                topUsers: action.users
             }
         }
 

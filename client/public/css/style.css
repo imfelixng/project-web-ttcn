@@ -847,6 +847,7 @@ main {
 	float: left;
 	width: 100%;
 	padding: 15px 20px;
+	display: flex;
 }
 .suggestion-usd img {
 	-webkit-border-radius: 100px;
@@ -5894,6 +5895,7 @@ a {
     width: 30px;
     margin-right: 10px;
 }
+
 .img-cover {
 	height: 300px;
 	width: 100%;
@@ -5955,4 +5957,9 @@ a {
 	margin-bottom: 0 !important;
 	padding: 0 !important;
 	height: 30px;
+}
+
+.suggestion-usd__avatar {
+	width: 44px;
+	height: 44px;
 }

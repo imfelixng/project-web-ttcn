@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import SidebarRight from '../../../commons/Sidebar/components/SidebarRight';
+import SidebarRightContainer from '../../../commons/Sidebar/containers/SidebarRightContainer';
 import QuestionSearchList from './QuestionSearchList';
 
 export default class SearchScreen extends Component {
@@ -27,7 +27,9 @@ export default class SearchScreen extends Component {
                 />
               </div>
               <div className = "col-lg-4">
-                <SidebarRight />
+                <SidebarRightContainer 
+                  type = "top_questions"
+                />
               </div>
             </div>
           </div>

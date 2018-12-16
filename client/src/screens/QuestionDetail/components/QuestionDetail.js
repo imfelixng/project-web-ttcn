@@ -6,7 +6,7 @@ import Lightbox from 'react-images';
 
 import {Url} from '../../../constants/configs';
 import EditModal from './EditModal';
-import SidebarRight from '../../../commons/Sidebar/components/SidebarRight';
+import SidebarRightContainer from '../../../commons/Sidebar/containers/SidebarRightContainer';
 import CommentQuestion from './CommentQuestion';
 import CommentList from './CommentList';
 
@@ -466,7 +466,7 @@ export default class QuestionDetail extends Component {
                                 </div>
                             </div>
                             <div className = "col-md-4">
-                                <SidebarRight />
+                                <SidebarRightContainer />
                             </div>
                         </div>
                     </div>
