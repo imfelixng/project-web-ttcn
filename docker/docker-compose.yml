@@ -19,7 +19,7 @@ services:
             - 9080:5000
         links:
             - app_db:mongodb
-            - mqtt:localhost
+            - mqtt:mqtt
         depends_on:
             - app_db
             - mqtt
