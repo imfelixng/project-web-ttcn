@@ -31,7 +31,7 @@ X_HEADERS = ['Content-Type', 'If-Match']  # Needed for the "Try it out" buttons
 AUTH_FIELD = "auth"
 
 
-MQTT_BROKER_URL = 'mqtt'  # use the free broker from HIVEMQ
+MQTT_BROKER_URL = 'localhost'  # use the free broker from HIVEMQ
 MQTT_BROKER_PORT = 1883  # default port for non-tls connection
 MQTT_USERNAME = ''  # set the username here if you need authentication for the broker
 MQTT_PASSWORD = ''  # set the password here if the broker demands authentication
