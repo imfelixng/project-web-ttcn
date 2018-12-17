@@ -3,16 +3,16 @@ from flask import request, send_from_directory
 import os
 from foundation.core.api.helper import make_resource_response
 from foundation.core.exceptions import UnprocessableEntity
-from flask import current_app as app
+# from flask import current_app as app
 import logging as logger
 
 
-def on_save_test(model, *args, **kwargs):
-    app.mqtt.publish('notification', "%s created" % model.userID)
+# def on_save_test(model, *args, **kwargs):
+# app.mqtt.publish('notification', "%s created" % model.userID)
 
 
 def __setup__(module):
-    Test.register_hook('on_save', on_save_test)
+    # Test.register_hook('on_save', on_save_test)
     module.resource("tests", Test)
 
     @module.endpoint("/tester", methods=["POST"])
