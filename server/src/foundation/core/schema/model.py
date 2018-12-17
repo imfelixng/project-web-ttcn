@@ -18,7 +18,7 @@ class BaseModel(Model, MongoInterface):
         default=(datetime.datetime.now() + datetime.timedelta(hours=7)))
     _created = DateTimeType(
         default=(datetime.datetime.now() + datetime.timedelta(hours=7)))
-    # __hooks__ = {}
+    __hooks__ = {}
 
     class Options:
         serialize_when_none = False
@@ -60,7 +60,7 @@ class BaseModel(Model, MongoInterface):
         self.insert_one(self.RI(), data)
         logging.warn("data in save %r", data)
 
-        # self.run_hook('on_save')
+        self.run_hook('on_save')
 
         return data
 

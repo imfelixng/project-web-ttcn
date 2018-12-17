@@ -20,12 +20,12 @@ services:
         links:
             - app_db:mongodb
 
-    # mqtt:
-    #     image: ansi/mosquitto
-    #     container_name: mosquitto_app
-    #     ports:
-    #         - 1883:1883
-    #     entrypoint: /usr/local/sbin/mosquitto -c /mqtt/etc/mosquitto/mosquitto.conf
-    #     volumes:
-    #         - ./mqtt/etc/mosquitto:/mqtt/etc/mosquitto:ro
-    #         - ./mqtt/var/log/mosquitto:/mqtt/var/log/mosquitto:rw
+    mqtt:
+        image: ansi/mosquitto
+        container_name: mosquitto_app
+        ports:
+            - 1883:1883
+        entrypoint: /usr/local/sbin/mosquitto -c /mqtt/etc/mosquitto/mosquitto.conf
+        volumes:
+            - ./mqtt/etc/mosquitto:/mqtt/etc/mosquitto:ro
+            - ./mqtt/var/log/mosquitto:/mqtt/var/log/mosquitto:rw
