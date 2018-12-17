@@ -19,6 +19,10 @@ services:
             - 9080:5000
         links:
             - app_db:mongodb
+            - mqtt:localhost
+        depends_on:
+            - app_db
+            - mqtt
 
     mqtt:
         image: ansi/mosquitto
