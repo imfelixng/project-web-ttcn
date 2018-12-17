@@ -57,7 +57,7 @@ def __setup__(module):
         except Exception as e:
             raise UnprocessableEntity("RC_400", message=str(e))
 
-    @module.endpoint("/tags/topTags", methods=["GET"])
+    @module.endpoint("/tags/toptags", methods=["GET"])
     def top_tag():
         try:
             pipeline = [

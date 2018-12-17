@@ -92,7 +92,7 @@ def __setup__(module):
         module.data.delete_one("question", {"questionID": questionID})
         return "ok"
 
-    @module.endpoint("/questions/topQuestions", methods=["GET"])
+    @module.endpoint("/questions/topquestions", methods=["GET"])
     def top_questions():
         try:
             pipeline = [

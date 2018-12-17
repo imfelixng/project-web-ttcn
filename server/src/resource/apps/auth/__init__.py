@@ -70,7 +70,7 @@ def __setup__(module):
         except Exception as e:
             raise UnprocessableEntity('RC_400', message=str(e))
 
-    @module.endpoint("/users/topUsers", methods=["GET"])
+    @module.endpoint("/users/topusers", methods=["GET"])
     def topuser():
         try:
             pipeline = [
