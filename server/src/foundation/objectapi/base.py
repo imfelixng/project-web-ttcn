@@ -31,9 +31,9 @@ class ObjectApiServer(Flask):
         logger.warning("PUBLIC PATH %r", config["PUBLIC_PATH"])
 
         super(ObjectApiServer, self).__init__(appname)
+        self.config.update(config)
         self.mqtt = Mqtt(self)
         logging.warn("Init Mqtt %s" % self.mqtt)
-        self.config.update(config)
         self.init_routes()
         self.init_resource()
 
