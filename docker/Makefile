@@ -11,7 +11,7 @@ restart:
 	docker-compose restart
 
 log:
-	docker-compose logs -f app_srv
+	docker-compose logs --tail="100" -f app_srv 
 
 build:
 	cd appsrv && docker build -t $(TAG_BACKEND) .
