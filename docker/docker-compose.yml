@@ -1,4 +1,4 @@
-version: "2"
+version: "3"
 volumes:
   project_web_ttcn_mongo_data:
   project_web_ttcn_public_data:
