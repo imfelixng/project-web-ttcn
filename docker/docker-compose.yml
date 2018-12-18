@@ -32,6 +32,6 @@ services:
         ports:
             - 1883:1883
         entrypoint: /usr/local/sbin/mosquitto -c /mqtt/etc/mosquitto/mosquitto.conf
-        volumes:
-            - ./mqtt/etc/mosquitto:/mqtt/etc/mosquitto:ro
-            - ./mqtt/var/log/mosquitto:/mqtt/var/log/mosquitto:rw
+        # volumes:
+        #     - ./mqtt/etc/mosquitto:/mqtt/etc/mosquitto:ro
+        #     - ./mqtt/var/log/mosquitto:/mqtt/var/log/mosquitto:rw
