@@ -5,6 +5,7 @@ import moment from 'moment';
 import Lightbox from 'react-images';
 
 import {Url} from '../../../constants/configs';
+import TopComment from './TopComment';
 export default class Question extends Component {
 
     state = {
@@ -270,10 +271,12 @@ export default class Question extends Component {
                                     </div>
             <div className="question_top-comment">
                 {
-                    question.topComment.commentID && 
-                    <div className= "top-comment">
-                        Noi dung top comment
-                    </div>
+                    question.topComment.commentID && (question.topComment.votes - question.topComment.unvotes) > 0 && 
+                    <TopComment
+                        topComment = {question.topComment}
+                        userOther = {this.props.userOther}
+                        getUserOther = {this.props.getUserOther}
+                    />
                 }
                 <div>
                     <NavLink className= "btn btn-info btn-join" to={"/questions/" + question.questionID}>Join in this discuss</NavLink>

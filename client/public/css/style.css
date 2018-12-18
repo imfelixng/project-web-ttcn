@@ -5439,12 +5439,6 @@ a:hover {
 	width: 100%;
 }
 
-.top-comment {
-	background: #00b540;
-	width: 100%;
-	height: 50px;
-}
-
 .question-detail {
 	padding: 0;
 	margin: 20px 0px;
@@ -5962,4 +5956,41 @@ a {
 .suggestion-usd__avatar {
 	width: 44px;
 	height: 44px;
+}
+
+.top-comment {
+    display: flex;
+    border: 1px solid #e4e4e4;
+    padding: 10px 0px;
+}
+
+.top-comment__avatar {
+    width: 44px;
+    height: 44px;
+    margin: 0px 10px;
+}
+
+.top-comment__content {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 5px 0px;
+}
+
+.top-comment__info {
+    display: flex;
+    width: 200px;
+    justify-content: space-between;
+}
+
+.top-comment__icon {
+    font-weight: bold;
+}
+
+.top-comment__icon-pink {
+    color: #ef654c;
+}
+
+.top-comment__icon-gray {
+    color: #868e96;
 }

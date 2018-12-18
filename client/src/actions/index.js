@@ -456,7 +456,7 @@ export const getUserOther = (user) => {
 
 export const getTopUsersRequest = () => {
     return async (dispatch) => {
-        let result = await APIs.callAPI("users/topUsers", "GET");
+        let result = await APIs.callAPI("users/topusers", "GET");
             if(result != null) {
                 dispatch(getTopUsers(result.data._items));
             }
@@ -472,7 +472,7 @@ export const getTopUsers = (users) => {
 
 export const getTopTagsRequest = () => {
     return async (dispatch) => {
-        let result = await APIs.callAPI("tags/topTags", "GET");
+        let result = await APIs.callAPI("tags/toptags", "GET");
             if(result != null) {
                 dispatch(getTopTags(result.data._items));
             }
@@ -488,7 +488,7 @@ export const getTopTags = (tags) => {
 
 export const getTopQuestionsRequest = () => {
     return async (dispatch) => {
-        let result = await APIs.callAPI("questions/topQuestions", "GET");
+        let result = await APIs.callAPI("questions/topquestions", "GET");
             if(result != null) {
                 dispatch(getTopQuestions(result.data._items));
             }
