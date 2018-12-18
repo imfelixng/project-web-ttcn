@@ -16,7 +16,6 @@ def __setup__(module):
     module.resource("tests", Test)
 
     @module.endpoint("/tester", methods=["POST"])
-    @module.login_required
     def test():
         try:
             data = request.json
