@@ -65,6 +65,14 @@ class MongoInterface(object):
         data = source.find_one_and_update(query, update)
         return data
 
+    # def update_one(self, resource, _id, update, **kwargs):
+    #     if not isinstance(_id, ObjectId):
+    #         _id = ObjectId(_id)
+    #     source, query = self.datasource(resource, {'_id': _id})
+    #     data = source.update_one(query, update, **kwargs)
+    #     logging.warn("update by another user %s" % data)
+    #     return data
+
     def update_one(self, resource, _id, update, **kwargs):
         if not isinstance(_id, ObjectId):
             _id = ObjectId(_id)

@@ -44,9 +44,9 @@ class BaseModel(Model, MongoInterface):
 
     def save(self):
         _id = self.get('_id') or ObjectId()
-
         self['_id'] = _id
-        # self['_updated'] = datetime.datetime.now()
+        self['_created'] = datetime.datetime.now() + \
+            datetime.timedelta(hours=7)
 
         # self.validate()
 

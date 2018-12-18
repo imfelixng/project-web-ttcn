@@ -8,7 +8,7 @@ import logging as logger
 
 
 def on_save_test(model, *args, **kwargs):
-    app.mqtt.publish('notification', "%s created" % model.userID)
+    app.mqtt.publish('notification', "%s created" % model.to_primitive())
 
 
 def __setup__(module):

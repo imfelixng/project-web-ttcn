@@ -1,14 +1,20 @@
 from .schema import Comment
-from flask import request, session
+from flask import request
 from foundation.common.image import save_image_base64
 from foundation.common.helper import update_top_commment
 from foundation.core.api.helper import make_resource_response
 from foundation.core.exceptions import UnprocessableEntity
 import datetime
 import logging
+from flask import current_app as app
+
+
+def on_save_comment(model, *args, **kwargs):
+    app.mqtt.publish('notification', "%s created" % model.to_primitive())
 
 
 def __setup__(module):
+    Comment.register_hook('on_save', on_save_comment)
     module.resource("comments", Comment)
 
     @module.endpoint("/comments", methods=["POST"])
