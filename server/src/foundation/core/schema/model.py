@@ -47,7 +47,8 @@ class BaseModel(Model, MongoInterface):
         self['_id'] = _id
         self['_created'] = datetime.datetime.now() + \
             datetime.timedelta(hours=7)
-
+        self['_updated'] = datetime.datetime.now() + \
+            datetime.timedelta(hours=7)
         # self.validate()
 
         data = self.to_native()
