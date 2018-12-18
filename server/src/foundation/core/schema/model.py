@@ -60,7 +60,7 @@ class BaseModel(Model, MongoInterface):
         self.insert_one(self.RI(), data)
         logging.warn("data in save %r", data)
 
-        # self.run_hook('on_save')
+        self.run_hook('on_save')
 
         return data
 

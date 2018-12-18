@@ -5,7 +5,7 @@ from foundation.core.api import BaseAPI
 import functools
 from foundation.core.api.helper import make_error
 from . import config, logger
-# from flask_mqtt import Mqtt
+from flask_mqtt import Mqtt
 import logging
 
 
@@ -32,8 +32,8 @@ class ObjectApiServer(Flask):
 
         super(ObjectApiServer, self).__init__(appname)
         self.config.update(config)
-        # self.mqtt = Mqtt(self)
-        # logging.warn("Init Mqtt %s" % self.mqtt)
+        self.mqtt = Mqtt(self)
+        logging.warn("Init Mqtt %s" % self.mqtt)
         self.init_routes()
         self.init_resource()
 
