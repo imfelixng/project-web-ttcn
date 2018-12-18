@@ -23,6 +23,8 @@ services:
         depends_on:
             - app_db
             - mqtt
+        environment:
+            - MQTT_HOST=mqtt
 
     mqtt:
         image: ansi/mosquitto

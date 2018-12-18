@@ -2,6 +2,6 @@
 
 /app/x-init
 
-# cd /app/$PRODUCT_NAME/server
-# make run
-uwsgi --ini /app/uwsgi.http.ini
+cd /app/$PRODUCT_NAME/server
+make run
+# uwsgi --ini /app/uwsgi.http.ini
