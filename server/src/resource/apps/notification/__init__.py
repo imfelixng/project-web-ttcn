@@ -3,7 +3,7 @@ from flask import current_app as app
 
 
 def on_save_notification(model, *args, **kwargs):
-    app.mqtt.publish("notification", model.to_primitive())
+    app.mqtt.publish("notification", "asd")
 
 
 def __setup__(module):

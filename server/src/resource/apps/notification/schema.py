@@ -12,4 +12,3 @@ class Notification(BaseModel):
     questionID = StringType(required=True)
     commentID = StringType(required=True)
     message = StringType(required=True)
-    link = StringType()

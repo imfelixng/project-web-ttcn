@@ -10,7 +10,8 @@ MODULES = [
     'resource.apps.comment',
     'resource.apps.test',
     'resource.apps.vote',
-    'resource.apps.view'
+    'resource.apps.view',
+    'resource.apps.notification'
 ]
 
 app = ObjectApiServer(__name__, config, modules=MODULES, taskapp=None)
