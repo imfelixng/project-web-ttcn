@@ -23,3 +23,4 @@ class Question(BaseModel):
     unvotes = IntType(default=0)
     views = IntType(default=0)
     comments = IntType(default=0)
+    userFollows = ListType(StringType, default=[])

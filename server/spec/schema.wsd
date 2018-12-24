@@ -53,12 +53,27 @@ Question:
 		url: /questions/questionID
 		method: DELETE
 
+	Get all question with tags:
+		url: /tags/<id>/questions
+		method: GET
+		content-type: json
+
+	Get all question with categories:
+		url: /categories/<categoryID>/questions
+		method: GET
+		content-type: json
+
 Comment:
 	Get all comment of question
 		url: /question/<questionID>/comments
 		method: GET
 		content-type: json
 
+	Get all comment of question
+		url: /comments/<commentID>/replies
+		method: PATCH
+		content-type: json
+	
 	Add comment to a question
 		url: /comments
 		method: POST
@@ -168,5 +183,38 @@ Views:
 		url: .questions/<questionsID>/views
 		method: PATCH
 		content-type: json
+
+Follow
+	Follow questions:
+		url: /questions/<questionID>/follow
+		method: PATCH
+		content-type: json
+
+	Follow tags:
+		url: /tags/<tagID>/follow
+		method: PATCH
+		content-type: json
+
+	Follow categories:
+		url: /categories/<categoryID>/follow
+		method: PATCH
+		content-type: json
+
+Top <object>:
+	Top question:
+		url: /questions/topquestions
+		method: GET
+		content-type: json
+
+	Top users:
+		url: /users/topusers
+		method: GET
+		content-type: json
+
+	Top tags:
+		url: /tags/toptags
+		method: GET
+		content-type: json
+
 
 		

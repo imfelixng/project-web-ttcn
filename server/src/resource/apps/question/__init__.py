@@ -92,6 +92,34 @@ def __setup__(module):
         module.data.delete_one("question", {"questionID": questionID})
         return "ok"
 
+    @module.endpoint("/questions/<questionID>/follow", methods=["PATCH"])
+    @module.login_required
+    def user_follow(questionID):
+        try:
+            query = {
+                "questionID": questionID
+            }
+            data = module.data.find_one(Question.RI(), query=query)
+            data["userFollows"].append(session.get("userID"))
+            module.data.update(Question.RI(), query, {"$set": data})
+            return make_resource_response(Question.RI(), data)
+        except Exception as e:
+            raise UnprocessableEntity("RC_400", message=str(e))
+
+    @module.endpoint("/questions/<questionID>/save", methods=["PATCH"])
+    @module.login_required
+    def save_question(questionID):
+        try:
+            query = {
+                "userID": session.get("userID")
+            }
+            data = module.data.find_one("user", query=query)
+            data["saveQuestions"].append(questionID)
+            module.data.update("user", query, {"$set": data})
+            return make_resource_response("user", data)
+        except Exception as e:
+            raise UnprocessableEntity("RC_400", message=str(e))
+
     @module.endpoint("/questions/topquestions", methods=["GET"])
     def top_questions():
         try:

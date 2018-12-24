@@ -1,12 +1,11 @@
-from schematics.types import StringType, BaseType
-from foundation.core.schema.model import BaseModel
+from .schema import Notification
+from flask import current_app as app
 
 
-class Notification(BaseModel):
-    class Options:
-        serialize_when_none = True
+def on_save_notification(model, *args, **kwargs):
+    app.mqtt.publish("notification", model.to_primitive())
 
-    notificationID = StringType(required=True)
-    senderID = StringType(required=True)
-    receiverID = StringType(required=True)
-    questionID = StringType(required=True)
+
+def __setup__(module):
+    Notification.register_hook('on_save', on_save_notification)
+    module.resource("notifications", Notification)
