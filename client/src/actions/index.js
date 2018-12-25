@@ -108,7 +108,7 @@ export const voteQuestion = (vote) => {
 
 export const followQuestionRequest = (questionID, userFollowID) => {
     return async (dispatch) => {
-        let result = await APIs.callAPI("questions/" + questionID +"/follow", "POST", null);   
+        let result = await APIs.callAPI("questions/" + questionID +"/follow", "PATCH", null);   
         if(result != null) {
                 dispatch(followQuestion(questionID, userFollowID));
         }
@@ -120,6 +120,13 @@ export const followQuestion = (questionID, userFollowID) => {
         type: types.FOLLOW_QUESTION,
         questionID,
         userFollowID
+    }
+}
+
+export const getQuestionFollowers = (questionID) => {
+    return {
+        type: types.GET_QUESTION_FOLLOWERS,
+        questionID,
     }
 }
 
@@ -140,8 +147,6 @@ export const unVoteQuestion = (unvote) => {
     }
 }
 
-
-
 export const checkVoteQuestionRequest = (questionID) => {
     return async (dispatch) => {
         let result = await APIs.callAPI("questions/" + questionID +"/isvote_isunvote", "GET", null);   
@@ -158,7 +163,6 @@ export const checkVoteQuestion = (check) => {
         check
     }
 }
-
 
 export const deleteQuestionRequest = (questionID) => {
     return async (dispatch) => {
@@ -336,6 +340,25 @@ export const getCountQuestionCategory = (questions, categoryID) => {
         categoryID
     }
 }
+
+export const followCategoryRequest = (categoryID, userFollowID) => {
+    return async (dispatch) => {
+        let result = await APIs.callAPI("categories/" + categoryID +"/follow", "PATCH", null);   
+        if(result != null) {
+                dispatch(followCategory(categoryID, userFollowID));
+        }
+    }
+}
+
+export const followCategory = (categoryID, userFollowID) => {
+    return {
+        type: types.FOLLOW_CATEGORY,
+        categoryID,
+        userFollowID
+    }
+}
+
+
 
 export const getAllTagsRequest = () => {
     return async (dispatch) => {

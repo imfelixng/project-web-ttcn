@@ -5,7 +5,8 @@ let initialState = {
     questionItem: null,
     isVote: false,
     isUnVote: false,
-    topQuestions: []
+    topQuestions: [],
+    questionFollowers: {}
 };
 
 const question = (state = initialState, action) => {
@@ -80,14 +81,29 @@ const question = (state = initialState, action) => {
 
         case types.FOLLOW_QUESTION:
         {
-            let followedIndex = state.questions.map(question => {
-                return question.questionID
-            }).indexOf(action.questionID);
+            let {questionID} = action;
+            let followers = state.questionFollowers[action.questionID];
+            followers.push(action.userFollowID);
+            
+            return {
+                ...state,
+                questionFollowers: {
+                    ...state.questionFollowers,
+                    [questionID]: [...followers]
+                }
+            }
+        }
 
-            state.questions[followedIndex].userFollows.push(action.userFollowID);
+        case types.GET_QUESTION_FOLLOWERS: {
+            let index = state.questions.map(question => question.questionID)
+            .indexOf(action.questionID);
+            
+            let questionFollowers = state.questionFollowers;
+            questionFollowers[action.questionID] = state.questions[index].userFollows;
 
             return {
-                ...state
+                ...state,
+                questionFollowers
             }
         }
 

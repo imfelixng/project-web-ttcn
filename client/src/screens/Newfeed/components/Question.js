@@ -15,6 +15,7 @@ export default class Question extends Component {
         categoryQuestion: {},
         lightboxIsOpen: false,
         currentImageIndex: 0,
+        question: null
     }
 
     onOpenFunctional = () => {
@@ -41,13 +42,14 @@ export default class Question extends Component {
         return {
             currentUserID: props.currentUserID,
             userOther: props.userOther,
-            categoryQuestion: props.categoryQuestion
+            categoryQuestion: props.categoryQuestion,
         }
     }
 
     componentDidMount() {
         this.props.getUserOther(this.props.question.userID);
         this.props.getCategoryQuestion(this.props.question.categoryID);
+        this.props.getQuestionFollowers(this.props.question.questionID);
     }
 
 
@@ -163,15 +165,14 @@ export default class Question extends Component {
         })
     }
 
-    showFollow = (question) => {
+    showFollow = (followers) => {
         let result = null;
 
-        if(question.userFollows.filter(userID => userID === this.state.currentUserID).length > 0) {
+        if(followers.filter(userID => userID === this.state.currentUserID).length > 0) {
             result = <li ><a ><i className="la la-check" /></a></li>;
         } else {
-            result = result = <li ><a onClick = {() => this.onFollowQuestion(question.questionID, this.state.currentUserID)}><i className="la la-plus" /></a></li>;
+            result = <li ><a onClick = {() => this.onFollowQuestion(this.props.question.questionID, this.state.currentUserID)}><i className="la la-plus" /></a></li>;
         }
-
         return result;
     }
 
@@ -181,10 +182,11 @@ export default class Question extends Component {
 
   render() {
     
-    let {question} = this.props;
+    let {question, questionFollowers} = this.props;
     let userInfo = this.state.userOther[question.userID];
     let categoryInfo = this.state.categoryQuestion[question.categoryID];
     let timeAgo = question ? moment(question._created, "YYYY-MM-DD HH:mm:ss", 'vn').fromNow() : 'Thời gian đăng';
+    let followers = questionFollowers[question.questionID] ? questionFollowers[question.questionID] : null;
     return (
       <React.Fragment>
         <div className="post-bar">
@@ -236,7 +238,10 @@ export default class Question extends Component {
                                                     <li><a href="#" ><i className= "la la-bookmark" /></a></li>
                                                 }
                                                 
-                                                {this.showFollow(question)}
+                                                {
+                                                    !(this.state.currentUserID === question.userID) ? 
+                                                    followers && this.showFollow(followers) :
+                                                    <li><a ><i className= "la la-check" /></a></li>}
                                             </ul>
                                         }
                                     </div>
