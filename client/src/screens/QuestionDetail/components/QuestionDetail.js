@@ -85,6 +85,7 @@ export default class QuestionDetail extends Component {
                 this.props.getCategoryQuestion(this.props.question.categoryID);
                 this.props.checkVoteQuestion(this.props.question.questionID);
                 this.props.getAllCommentsQuestion(this.props.question.questionID);
+                this.props.getQuestionFollowers(this.props.question.questionID);
             }
         })
         .catch(err => console.log(err));
@@ -272,31 +273,33 @@ export default class QuestionDetail extends Component {
         return votes - unvotes;
     }
 
-    showFollow = (question) => {
+    showFollow = (followers) => {
         let result = null;
 
-        if(question.userFollows.filter(userID => userID === this.state.currentUserID).length > 0) {
+        if(followers.filter(userID => userID === this.state.currentUserID).length > 0) {
             result = <li ><a ><i className="la la-check" /></a></li>;
         } else {
-            result = result = <li ><a onClick = {() => this.onFollowQuestion(question.questionID, this.state.currentUserID)}><i className="la la-plus" /></a></li>;
+            result = <li ><a onClick = {() => this.onFollowQuestion(this.props.question.questionID, this.state.currentUserID)}><i className="la la-plus" /></a></li>;
         }
-
         return result;
     }
 
-    onFollowQuestion = (quesionID, userFollowID) => {
-        this.props.followQuestion(quesionID, userFollowID);
+    onFollowQuestion = (questionID, userFollowID) => {
+        this.props.followQuestion(questionID, userFollowID);
     }
 
   render() {
-    let {question} = this.props;
+    let {question, questionFollowers} = this.props;
     let userInfo = null;
     let categoryInfo = null;
     let timeAgo = 'Thời gian đăng';
+    let followers = null;
     if(question) {
         userInfo = this.state.userOther[question.userID];
         categoryInfo = this.state.categoryQuestion[question.categoryID];
         timeAgo = question ? moment(question._created, "YYYY-MM-DD HH:mm:ss", 'vn').fromNow() : 'Thời gian đăng';
+        followers = questionFollowers[question.questionID] ? questionFollowers[question.questionID] : null;
+        console.log(followers);
     }
 
     return (
@@ -362,10 +365,12 @@ export default class QuestionDetail extends Component {
                                                     </li>                                        
                                                 }
                                                     {
-                                                        question && this.showFollow(question)
+                                                        question && !(this.state.currentUserID === question.userID) ? 
+                                                        followers && this.showFollow(followers) :
+                                                        <li><a ><i className= "la la-check" /></a></li>
                                                     }
                                                 </ul>
-                                                }
+                                            }
                                         </div>
                                         <div className="job_descp">
                                             <div 

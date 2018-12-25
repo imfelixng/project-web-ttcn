@@ -237,11 +237,11 @@ export default class Question extends Component {
                                                 {  this.state.currentUserID !== question.userID &&
                                                     <li><a href="#" ><i className= "la la-bookmark" /></a></li>
                                                 }
-                                                
                                                 {
-                                                    !(this.state.currentUserID === question.userID) ? 
-                                                    followers && this.showFollow(followers) :
-                                                    <li><a ><i className= "la la-check" /></a></li>}
+                                                  !(this.state.currentUserID === question.userID) ? 
+                                                  followers && this.showFollow(followers) :
+                                                  <li><a ><i className= "la la-check" /></a></li>
+                                                }
                                             </ul>
                                         }
                                     </div>
