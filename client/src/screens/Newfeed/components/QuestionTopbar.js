@@ -134,7 +134,8 @@ export default class QuestionTopbar extends Component {
             views: 0,
             comments: 0,
             title,
-            summaryContent
+            summaryContent,
+            userFollows: [this.props.currentUser.userID]
         }
         this.props.addNewQuestion(questionItem).then(() => {
             this.removeFile(this.state.images);

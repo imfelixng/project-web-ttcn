@@ -78,6 +78,19 @@ const question = (state = initialState, action) => {
             }
         }
 
+        case types.FOLLOW_QUESTION:
+        {
+            let followedIndex = state.questions.map(question => {
+                return question.questionID
+            }).indexOf(action.questionID);
+
+            state.questions[followedIndex].userFollows.push(action.userFollowID);
+
+            return {
+                ...state
+            }
+        }
+
         case types.CHECK_VOTE_QUESTION:
         {
             console.log(action);

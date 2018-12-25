@@ -272,6 +272,22 @@ export default class QuestionDetail extends Component {
         return votes - unvotes;
     }
 
+    showFollow = (question) => {
+        let result = null;
+
+        if(question.userFollows.filter(userID => userID === this.state.currentUserID).length > 0) {
+            result = <li ><a ><i className="la la-check" /></a></li>;
+        } else {
+            result = result = <li ><a onClick = {() => this.onFollowQuestion(question.questionID, this.state.currentUserID)}><i className="la la-plus" /></a></li>;
+        }
+
+        return result;
+    }
+
+    onFollowQuestion = (quesionID, userFollowID) => {
+        this.props.followQuestion(quesionID, userFollowID);
+    }
+
   render() {
     let {question} = this.props;
     let userInfo = null;
@@ -345,7 +361,9 @@ export default class QuestionDetail extends Component {
                                                         <a href="#" ><i className="la la-bookmark" /></a>
                                                     </li>                                        
                                                 }
-                                                    <li><a href="#" ><i className= "la la-check" /></a></li>
+                                                    {
+                                                        question && this.showFollow(question)
+                                                    }
                                                 </ul>
                                                 }
                                         </div>

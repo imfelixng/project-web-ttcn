@@ -40,6 +40,9 @@ const mapDispatchToProps = (dispatch, props) => {
         },
         deleteQuestion: (questionID) => {
             return dispatch(actions.deleteQuestionRequest(questionID));
+        },
+        followQuestion: (questionID, userFollowID) => {
+            return dispatch(actions.followQuestionRequest(questionID, userFollowID));
         }
     }
 }

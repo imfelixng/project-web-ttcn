@@ -44,7 +44,11 @@ export default class LoginScreen extends Component {
             username: '',
             votes: 0,
             unvotes: 0,
-            avatar: '/images/users/img_avatar_default.png'
+            avatar: '/images/users/img_avatar_default.png',
+            categories: [],
+            tags: [],
+            follow: [],
+            saveQuestions: []
         }
 
         this.props.onCreateUser(user).then(res => {

@@ -163,6 +163,22 @@ export default class Question extends Component {
         })
     }
 
+    showFollow = (question) => {
+        let result = null;
+
+        if(question.userFollows.filter(userID => userID === this.state.currentUserID).length > 0) {
+            result = <li ><a ><i className="la la-check" /></a></li>;
+        } else {
+            result = result = <li ><a onClick = {() => this.onFollowQuestion(question.questionID, this.state.currentUserID)}><i className="la la-plus" /></a></li>;
+        }
+
+        return result;
+    }
+
+    onFollowQuestion = (questionID, userFollowID) => {
+        this.props.followQuestion(questionID, userFollowID);
+    }
+
   render() {
     
     let {question} = this.props;
@@ -219,7 +235,8 @@ export default class Question extends Component {
                                                 {  this.state.currentUserID !== question.userID &&
                                                     <li><a href="#" ><i className= "la la-bookmark" /></a></li>
                                                 }
-                                                <li><a href="#" ><i className="la la-check" /></a></li>
+                                                
+                                                {this.showFollow(question)}
                                             </ul>
                                         }
                                     </div>

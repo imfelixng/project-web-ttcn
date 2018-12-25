@@ -106,6 +106,23 @@ export const voteQuestion = (vote) => {
     }
 }
 
+export const followQuestionRequest = (questionID, userFollowID) => {
+    return async (dispatch) => {
+        let result = await APIs.callAPI("questions/" + questionID +"/follow", "POST", null);   
+        if(result != null) {
+                dispatch(followQuestion(questionID, userFollowID));
+        }
+    }
+}
+
+export const followQuestion = (questionID, userFollowID) => {
+    return {
+        type: types.FOLLOW_QUESTION,
+        questionID,
+        userFollowID
+    }
+}
+
 export const unVoteQuestionRequest = (unvote) => {
     return async (dispatch) => {
 
@@ -122,6 +139,8 @@ export const unVoteQuestion = (unvote) => {
         unvote
     }
 }
+
+
 
 export const checkVoteQuestionRequest = (questionID) => {
     return async (dispatch) => {

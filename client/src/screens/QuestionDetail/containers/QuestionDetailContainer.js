@@ -76,6 +76,9 @@ const mapDispatchToProps = (dispatch, props) => {
         },
         addNewReplyComment: (reply) => {
             return dispatch(actions.addNewReplyCommentRequest(reply));
+        },
+        followQuestion: (questionID, userFollowID) => {
+            return dispatch(actions.followQuestionRequest(questionID, userFollowID));
         }
 
     }

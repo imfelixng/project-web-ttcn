@@ -32,6 +32,7 @@ export default class NewfeedScreen extends Component {
           categoryQuestion = {this.props.categoryQuestion}
           deleteQuestion = {this.props.deleteQuestion}
           history = {this.props.history}
+          followQuestion = {this.props.followQuestion}
         />
       });
     }
