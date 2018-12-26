@@ -3,7 +3,6 @@ import {NavLink} from 'react-router-dom';
 import draftToHtml from 'draftjs-to-html';
 import moment from 'moment';
 import Lightbox from 'react-images';
-import {convertFromRaw} from 'draft-js';
 
 import {Url} from '../../../constants/configs';
 import TopComment from './TopComment';
@@ -71,7 +70,7 @@ export default class Question extends Component {
         if(images.length === 1) {
             return images.map((image, index) => {
                 return <img 
-                    src = {Url + "/" + image.dataURL}
+                    src = {Url + image.dataURL}
                     key = {index}
                     className = "question_image--100"
                     alt = "logo"
@@ -83,7 +82,7 @@ export default class Question extends Component {
         if(images.length === 2) {
             return images.map((image, index) => {
                 return <img 
-                    src = {Url + "/" +  image.dataURL}
+                    src = {Url +  image.dataURL}
                     key = {index}
                     className = "question_image--50"
                     alt = "logo"
@@ -95,7 +94,7 @@ export default class Question extends Component {
         if(images.length === 3) {
             return images.map((image, index) => {
                 return <img 
-                    src = {Url + "/" + image.dataURL}
+                    src = {Url + image.dataURL}
                     key = {index}
                     className = "question_image--30"
                     alt = "logo"
@@ -108,7 +107,7 @@ export default class Question extends Component {
             return images.map((image, index) => {
                 if(index < 2) {
                     return <img 
-                        src = {Url + "/" + image.dataURL}
+                        src = {Url + image.dataURL}
                         key = {index}
                         className = "question_image--30"
                         alt = "logo"
@@ -118,7 +117,7 @@ export default class Question extends Component {
                 if( index === 2) {
                     return <div key = {index} className = "question_image--30 more">
                         <img 
-                            src = {Url + "/" + image.dataURL}
+                            src = {Url + image.dataURL}
                             className = "img_more"
                             alt = "logo"
                             onClick = {() => this.openLightbox(index)}
@@ -267,7 +266,7 @@ export default class Question extends Component {
                                                                                         images = {
                                                                                             question.images.map((image, index) => {
                                                                                                 return {
-                                                                                                    src: Url + "/" +image.dataURL
+                                                                                                    src: Url +image.dataURL
                                                                                                 }
                                                                                             })
                                                                                         }
