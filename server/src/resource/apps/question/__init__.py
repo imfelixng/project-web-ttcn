@@ -94,13 +94,28 @@ def __setup__(module):
 
     @module.endpoint("/questions/<questionID>/follow", methods=["PATCH"])
     @module.login_required
-    def user_follow(questionID):
+    def question_follow(questionID):
         try:
             query = {
                 "questionID": questionID
             }
             data = module.data.find_one(Question.RI(), query=query)
             data["userFollows"].append(session.get("userID"))
+            module.data.update(Question.RI(), query, {"$set": data})
+            return make_resource_response(Question.RI(), data)
+        except Exception as e:
+            raise UnprocessableEntity("RC_400", message=str(e))
+
+    @module.endpoint("/questions/<questionID>/unfollow", methods=["PATCH"])
+    @module.login_required
+    def question_unfollow(questionID):
+        try:
+            query = {
+                "questionID": questionID
+            }
+            data = module.data.find_one(Question.RI(), query=query)
+            del data["userFollows"][data["userFollows"].index(
+                session.get("userID"))]
             module.data.update(Question.RI(), query, {"$set": data})
             return make_resource_response(Question.RI(), data)
         except Exception as e:

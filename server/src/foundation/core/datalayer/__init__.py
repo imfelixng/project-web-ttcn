@@ -36,7 +36,7 @@ class MongoInterface(object):
         source = self.db[resource]
         if query is None:
             query = {}
-        if session.get("AUTH_FIELD") and resource != "user":
+        if session.get("AUTH_FIELD") and resource not in ["user", "category", "tag"]:
             query["userID"] = session.get("userID")
         return (source, query)
 
