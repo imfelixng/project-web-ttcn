@@ -43,6 +43,7 @@ export default class QuestionDetail extends Component {
         isVote: false,
         isUnVote: false,
         comments: [],
+        idQuestion: ''
     }
 
     onOpenFunctional = () => {
@@ -67,13 +68,31 @@ export default class QuestionDetail extends Component {
 
     static getDerivedStateFromProps(prevProps, state) {
 
-        return {
-            currentUserID: prevProps.currentUserID,
-            userOther: prevProps.userOther,
-            categoryQuestion: prevProps.categoryQuestion,
-            isVote: prevProps.isVote,
-            isUnVote: prevProps.isUnVote,
-            comments: prevProps.comments
+        if(prevProps.match.params.idQuestion !== state.idQuestion) {
+            prevProps.getQuestion(prevProps.match.params.idQuestion).then(res => {
+                if(this.props.question) {
+                    if(!sessionStorage.getItem(this.props.question.questionID)) {
+                        this.props.updateViewQuestion({questionID: this.props.question.questionID,views: this.props.question.views + 1})
+                        sessionStorage.setItem(this.props.question.questionID, 'true');
+                    }
+    
+                    this.props.getUserOther(this.props.question.userID);
+                    this.props.getCategoryQuestion(this.props.question.categoryID);
+                    this.props.checkVoteQuestion(this.props.question.questionID);
+                    this.props.getAllCommentsQuestion(this.props.question.questionID);
+                }
+            }).catch(err => {   
+                console.log(err);
+            });
+            return {
+                currentUserID: prevProps.currentUserID,
+                userOther: prevProps.userOther,
+                categoryQuestion: prevProps.categoryQuestion,
+                isVote: prevProps.isVote,
+                isUnVote: prevProps.isUnVote,
+                comments: prevProps.comments,
+                idQuestion: prevProps.match.params.idQuestion
+            }
         }
 
     }
