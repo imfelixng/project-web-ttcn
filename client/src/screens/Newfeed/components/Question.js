@@ -3,6 +3,7 @@ import {NavLink} from 'react-router-dom';
 import draftToHtml from 'draftjs-to-html';
 import moment from 'moment';
 import Lightbox from 'react-images';
+import {convertToRaw} from 'draft-js';
 
 import {Url} from '../../../constants/configs';
 import TopComment from './TopComment';
@@ -15,6 +16,7 @@ export default class Question extends Component {
         categoryQuestion: {},
         lightboxIsOpen: false,
         currentImageIndex: 0,
+        question: null
     }
 
     onOpenFunctional = () => {
@@ -23,10 +25,13 @@ export default class Question extends Component {
         })
     }
 
-    showContent = (contentBlock) => {
-        if (contentBlock) {
-            return {__html: draftToHtml(contentBlock)};
+    showContent = (contentState) => {
+        if (contentState) {
+            
+            console.log(JSON.parse(contentState));
           }
+
+        return null;
     }
 
     showTags(tags) {
@@ -41,13 +46,14 @@ export default class Question extends Component {
         return {
             currentUserID: props.currentUserID,
             userOther: props.userOther,
-            categoryQuestion: props.categoryQuestion
+            categoryQuestion: props.categoryQuestion,
         }
     }
 
     componentDidMount() {
         this.props.getUserOther(this.props.question.userID);
         this.props.getCategoryQuestion(this.props.question.categoryID);
+        this.props.getQuestionFollowers(this.props.question.questionID);
     }
 
 
@@ -163,12 +169,28 @@ export default class Question extends Component {
         })
     }
 
+    showFollow = (followers) => {
+        let result = null;
+
+        if(followers.filter(userID => userID === this.state.currentUserID).length > 0) {
+            result = <li ><a ><i className="la la-check" /></a></li>;
+        } else {
+            result = <li ><a onClick = {() => this.onFollowQuestion(this.props.question.questionID, this.state.currentUserID)}><i className="la la-plus" /></a></li>;
+        }
+        return result;
+    }
+
+    onFollowQuestion = (questionID, userFollowID) => {
+        this.props.followQuestion(questionID, userFollowID);
+    }
+
   render() {
     
-    let {question} = this.props;
+    let {question, questionFollowers} = this.props;
     let userInfo = this.state.userOther[question.userID];
     let categoryInfo = this.state.categoryQuestion[question.categoryID];
     let timeAgo = question ? moment(question._created, "YYYY-MM-DD HH:mm:ss", 'vn').fromNow() : 'Thời gian đăng';
+    let followers = questionFollowers[question.questionID] ? questionFollowers[question.questionID] : null;
     return (
       <React.Fragment>
         <div className="post-bar">
@@ -219,15 +241,22 @@ export default class Question extends Component {
                                                 {  this.state.currentUserID !== question.userID &&
                                                     <li><a href="#" ><i className= "la la-bookmark" /></a></li>
                                                 }
-                                                <li><a href="#" ><i className="la la-check" /></a></li>
+                                                {
+                                                  !(this.state.currentUserID === question.userID) ? 
+                                                  followers && this.showFollow(followers) :
+                                                  <li><a ><i className= "la la-check" /></a></li>
+                                                }
                                             </ul>
                                         }
                                     </div>
             <div className="job_descp">
-                                        <div 
-                                            className = "question__content" 
-                                            dangerouslySetInnerHTML = {this.showContent(question.content)}>
-                                        </div>
+                                        
+                                            <div 
+                                                className = "question__content" 
+                                                dangerouslySetInnerHTML = {this.showContent(question.content)}>
+                                            </div>                                        
+                                       
+
                                         <div
                                             className = "question_images"
                                         >

@@ -5,7 +5,8 @@ let initialState = {
     questionItem: null,
     isVote: false,
     isUnVote: false,
-    topQuestions: []
+    topQuestions: [],
+    questionFollowers: {}
 };
 
 const question = (state = initialState, action) => {
@@ -78,9 +79,41 @@ const question = (state = initialState, action) => {
             }
         }
 
+        case types.FOLLOW_QUESTION:
+        {
+            let {questionID} = action;
+            let followers = state.questionFollowers[action.questionID];
+            followers.push(action.userFollowID);
+            
+            return {
+                ...state,
+                questionFollowers: {
+                    ...state.questionFollowers,
+                    [questionID]: [...followers]
+                }
+            }
+        }
+
+        case types.GET_QUESTION_FOLLOWERS: {
+            let index = state.questions.map(question => question.questionID)
+            .indexOf(action.questionID);
+            let questionFollowers = state.questionFollowers;
+            if(index !== -1) {
+
+                questionFollowers[action.questionID] = state.questions[index].userFollows;
+            } else {
+                questionFollowers[action.questionID] = state.questionItem.userFollows;
+            }
+
+
+            return {
+                ...state,
+                questionFollowers
+            }
+        }
+
         case types.CHECK_VOTE_QUESTION:
         {
-            console.log(action);
             return {
                 ...state,
                 isVote: action.check.isVote,
@@ -90,7 +123,6 @@ const question = (state = initialState, action) => {
 
         case types.UPDATE_VIEW_QUESTION: 
         {
-            console.log(action);
             return {
                 ...state,
                 questionItem: {

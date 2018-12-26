@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import { convertFromRaw } from 'draft-js';
+import { convertFromRaw, EditorState } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 
 import DropzoneComponent from 'react-dropzone-component';
@@ -36,13 +36,14 @@ export default class QuestionTopbar extends Component {
 
         this.contentState = convertFromRaw(content);
         this.state = {
-            contentState: content,
+            contentState: this.contentState,
             images: [],
             categoryID: 'none',
             tags: [],
             suggestions: [],
             currentUserID: null,
-            isLoading: false
+            isLoading: false,
+            editorState: EditorState.createEmpty()
         }
 
     }
@@ -50,6 +51,12 @@ export default class QuestionTopbar extends Component {
     onContentStateChange = (contentState) => {
         this.setState({
           contentState,
+        });
+      };
+
+      onEditorStateChange = (editorState) => {
+        this.setState({
+          editorState,
         });
       };
 
@@ -123,7 +130,7 @@ export default class QuestionTopbar extends Component {
 
         let questionItem = {
             questionID: "q_" + timesamp + this.props.currentUser.userID,
-            content: this.state.contentState,
+            content: JSON.stringify(this.state.editorState),
             images: this.state.images,
             topComment: {},
             categoryID: this.state.categoryID,
@@ -134,13 +141,16 @@ export default class QuestionTopbar extends Component {
             views: 0,
             comments: 0,
             title,
-            summaryContent
+            summaryContent,
+            userFollows: [this.props.currentUser.userID]
         }
+        console.log(this.state.editorState);
+        console.log(JSON.parse(JSON.stringify(this.state.editorState)));
         this.props.addNewQuestion(questionItem).then(() => {
             this.removeFile(this.state.images);
             this.setState({
                 isLoading: false,
-                contentState: content,
+                editorState: EditorState.createEmpty(),
                 categoryID: 'none',
                 tags: [],
             });
@@ -229,7 +239,7 @@ export default class QuestionTopbar extends Component {
         addedfile: this.handleFileAdded,
         removedfile: this.handleFileRemoved
     }
-    const { tags, suggestions } = this.state;
+    const { tags, suggestions,editorState } = this.state;
     return (
       <React.Fragment>
             <div className="post-topbar">
@@ -240,10 +250,11 @@ export default class QuestionTopbar extends Component {
                     <div className = "post-content">
                         <Editor
                             placeholder = "Bạn có câu hỏi gì không ?"
-                                    wrapperClassName="demo-wrapper"
-                                    editorClassName="demo-editor"
-                                    onContentStateChange={this.onContentStateChange}
-                                    initialContentState  = {this.state.contentState}
+                            wrapperClassName="demo-wrapper"
+                            editorClassName="demo-editor"
+                            editorState={editorState}
+                            onContentStateChange={this.onContentStateChange}
+                            onEditorStateChange={this.onEditorStateChange}
                         />
                     </div>
                     <div className="row post">

@@ -17,7 +17,8 @@ const mapStateToProps = (state) => {
         replyCommentID: state.commentReducer.replyCommentID,
         isVoteComment: state.commentReducer.isVoteComment,
         isUnVoteComment: state.commentReducer.isUnVoteComment,
-        checkVote: state.commentReducer.checkVoteComment
+        checkVote: state.commentReducer.checkVoteComment,
+        questionFollowers: state.questionReducer.questionFollowers
     }
 }
 
@@ -76,8 +77,13 @@ const mapDispatchToProps = (dispatch, props) => {
         },
         addNewReplyComment: (reply) => {
             return dispatch(actions.addNewReplyCommentRequest(reply));
+        },
+        followQuestion: (questionID, userFollowID) => {
+            return dispatch(actions.followQuestionRequest(questionID, userFollowID));
+        },
+        getQuestionFollowers: (questionID) => {
+            return dispatch(actions.getQuestionFollowers(questionID));
         }
-
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(QuestionDetail);
