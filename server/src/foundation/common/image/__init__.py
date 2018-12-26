@@ -10,8 +10,8 @@ def save_image_base64(module, data):
         filename = image_raw["upload"]["filename"]
 
         file = "%s_%s" % (
-            filename,
-            datetime.timestamp(datetime.now())
+            datetime.timestamp(datetime.now()),
+            filename
         )
         data["images"][i]["dataURL"] = "/media/" + file
         path = os.path.join(module.config['PUBLIC_PATH'])
