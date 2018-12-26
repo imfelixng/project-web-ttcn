@@ -3,7 +3,7 @@ import {NavLink} from 'react-router-dom';
 import draftToHtml from 'draftjs-to-html';
 import moment from 'moment';
 import Lightbox from 'react-images';
-import {convertToRaw} from 'draft-js';
+import {convertFromRaw} from 'draft-js';
 
 import {Url} from '../../../constants/configs';
 import TopComment from './TopComment';
@@ -27,10 +27,8 @@ export default class Question extends Component {
 
     showContent = (contentState) => {
         if (contentState) {
-            
-            console.log(JSON.parse(contentState));
+            return {__html: draftToHtml(contentState)};
           }
-
         return null;
     }
 

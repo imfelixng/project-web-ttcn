@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import { convertFromRaw, EditorState } from 'draft-js';
+import { convertToRaw, EditorState } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 
 import DropzoneComponent from 'react-dropzone-component';
@@ -34,7 +34,6 @@ export default class QuestionTopbar extends Component {
 
         this.questionDropzone = null;
 
-        this.contentState = convertFromRaw(content);
         this.state = {
             contentState: this.contentState,
             images: [],
@@ -130,7 +129,7 @@ export default class QuestionTopbar extends Component {
 
         let questionItem = {
             questionID: "q_" + timesamp + this.props.currentUser.userID,
-            content: JSON.stringify(this.state.editorState),
+            content: convertToRaw(this.state.editorState.getCurrentContent()),
             images: this.state.images,
             topComment: {},
             categoryID: this.state.categoryID,
@@ -144,8 +143,7 @@ export default class QuestionTopbar extends Component {
             summaryContent,
             userFollows: [this.props.currentUser.userID]
         }
-        console.log(this.state.editorState);
-        console.log(JSON.parse(JSON.stringify(this.state.editorState)));
+
         this.props.addNewQuestion(questionItem).then(() => {
             this.removeFile(this.state.images);
             this.setState({
