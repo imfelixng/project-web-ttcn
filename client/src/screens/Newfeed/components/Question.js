@@ -3,6 +3,7 @@ import {NavLink} from 'react-router-dom';
 import draftToHtml from 'draftjs-to-html';
 import moment from 'moment';
 import Lightbox from 'react-images';
+import {convertToRaw} from 'draft-js';
 
 import {Url} from '../../../constants/configs';
 import TopComment from './TopComment';
@@ -24,10 +25,13 @@ export default class Question extends Component {
         })
     }
 
-    showContent = (contentBlock) => {
-        if (contentBlock) {
-            return {__html: draftToHtml(contentBlock)};
+    showContent = (contentState) => {
+        if (contentState) {
+            
+            console.log(JSON.parse(contentState));
           }
+
+        return null;
     }
 
     showTags(tags) {
@@ -246,10 +250,13 @@ export default class Question extends Component {
                                         }
                                     </div>
             <div className="job_descp">
-                                        <div 
-                                            className = "question__content" 
-                                            dangerouslySetInnerHTML = {this.showContent(question.content)}>
-                                        </div>
+                                        
+                                            <div 
+                                                className = "question__content" 
+                                                dangerouslySetInnerHTML = {this.showContent(question.content)}>
+                                            </div>                                        
+                                       
+
                                         <div
                                             className = "question_images"
                                         >
