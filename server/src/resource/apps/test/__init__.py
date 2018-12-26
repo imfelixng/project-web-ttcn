@@ -44,6 +44,22 @@ def __setup__(module):
         logger.warning("Path %r", path)
         return send_from_directory(module.config['PUBLIC_PATH'], path)
 
+    # @module.endpoint("/search", methods=["GET"])
+    # def search():
+    #     try:
+    #         key_word = request.args.get("search")
+    #         query = {}
+    #         if key_word != "":
+    #             query = {
+    #                 "content.blocks.text": {
+    #                     "$regex": key_word.lower()
+    #                 }
+    #             }
+    #         resp = module.data.find("question", query)
+    #         return make_resource_response("question", list(resp))
+    #     except Exception as e:
+    #         raise UnprocessableEntity("RC_400", message=str(e))
+
     @module.endpoint("/search", methods=["GET"])
     def search():
         try:
@@ -51,10 +67,11 @@ def __setup__(module):
             query = {}
             if key_word != "":
                 query = {
-                    "content.blocks.text": {
-                        "$regex": key_word.lower()
+                    "$text": {
+                        "$search": key_word.lower()
                     }
                 }
+            module.data.create_index("question")
             resp = module.data.find("question", query)
             return make_resource_response("question", list(resp))
         except Exception as e:

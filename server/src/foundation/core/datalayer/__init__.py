@@ -1,4 +1,4 @@
-from pymongo import MongoClient
+from pymongo import MongoClient, TEXT
 from bson import ObjectId
 from foundation.common.log import getLogger
 from flask import session
@@ -153,3 +153,8 @@ class MongoInterface(object):
             }
         ])
         return h
+
+    def create_index(self, resource):
+        self.db[resource].create_index(
+            [('content.blocks.text', TEXT)],
+            name='text', default_language='None')
