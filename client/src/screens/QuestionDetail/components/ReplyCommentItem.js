@@ -131,7 +131,8 @@ export default class ReplyCommentItem extends Component {
     const {reply} = this.props;
     const {userOther} = this.props;
 
-    let userInfo = reply ? userOther[reply.userID] : null;;
+    let userInfo = reply ? userOther[reply.userID] : null;
+    let timeAgo = reply ? moment(reply._created, "YYYY-MM-DD HH:mm:ss", 'vn').fromNow() : 'Thời gian đăng';
 
     return (
       <React.Fragment>
@@ -145,7 +146,7 @@ export default class ReplyCommentItem extends Component {
                     userInfo ? userInfo.fullname : "yourname"
                   }
               </h3>
-              <span><img src="/images/clock.png"alt = "logo" /> 3 min ago</span>
+              <span><img src="/images/clock.png"alt = "logo" /> {timeAgo}</span>
               <div 
                 className = "question__content" 
                 dangerouslySetInnerHTML = { reply && this.showContent( reply.content)}>
