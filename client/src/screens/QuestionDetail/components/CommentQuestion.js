@@ -1,12 +1,7 @@
 import React, { Component } from 'react'
-
+import { convertToRaw, EditorState } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
-
 import DropzoneComponent from 'react-dropzone-component';
-
-
-const content = {"entityMap":{},"blocks":[{"key":"637gr","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}]};
-
 
 export default class CommentQuestion extends Component {
 
@@ -27,7 +22,7 @@ export default class CommentQuestion extends Component {
         this.questionDropzone = null;
 
         this.state = {
-            contentState: content,
+            editorState: EditorState.createEmpty(),
             images: [],
             currentUserID: null,
             isLoading: false
@@ -35,9 +30,9 @@ export default class CommentQuestion extends Component {
 
     }
 
-    onContentStateChange = (contentState) => {
+    onEditorStateChange = (editorState) => {
         this.setState({
-          contentState,
+          editorState,
         });
       };
 
@@ -81,14 +76,14 @@ export default class CommentQuestion extends Component {
             isLoading: true
         })
 
-        
-        if(this.state.contentState.blocks[0].text === "") {
-            alert("Vui lòng nhập nội dung bình luận!");
-            this.setState({
-                isLoading: false
-            })
-            return false;
-        }
+        console.log(this.state.editorState.getCurrentContent());
+        // if(this.state.editorState.getCurrentContent().blocks[0].text === "") {
+        //     alert("Vui lòng nhập nội dung bình luận!");
+        //     this.setState({
+        //         isLoading: false
+        //     })
+        //     return false;
+        // }
 
         let timesamp = new Date().getTime();
 
@@ -98,7 +93,7 @@ export default class CommentQuestion extends Component {
                 commentID: "cm_" + timesamp + this.props.currentUser.userID + this.props.questionID,
                 questionID: this.props.questionID,
                 userID: this.props.currentUser.userID,
-                content: this.state.contentState,
+                content: convertToRaw(this.state.editorState.getCurrentContent()),
                 votes: 0,
                 unvotes: 0,
                 images: this.state.images,
@@ -108,7 +103,7 @@ export default class CommentQuestion extends Component {
                 this.removeFile(this.state.images);
                 this.setState({
                     isLoading: false,
-                    contentState: content,
+                    editorState: EditorState.createEmpty(),
                 });
     
             })
@@ -119,7 +114,7 @@ export default class CommentQuestion extends Component {
                 replyID: "rcm_" + timesamp + this.props.currentUser.userID + this.props.comment.commentID,
                 commentID: this.props.comment.commentID,
                 userID: this.props.currentUser.userID,
-                content: this.state.contentState,
+                content: convertToRaw(this.state.editorState.getCurrentContent()),
                 votes: 0,
                 unvotes: 0,
                 images: this.state.images,
@@ -129,7 +124,7 @@ export default class CommentQuestion extends Component {
                 this.removeFile(this.state.images);
                 this.setState({
                     isLoading: false,
-                    contentState: content,
+                    editorState: EditorState.createEmpty(),
                 });
     
             })
@@ -149,6 +144,9 @@ export default class CommentQuestion extends Component {
         addedfile: this.handleFileAdded,
         removedfile: this.handleFileRemoved
     }
+
+    const { editorState } = this.state;
+
     return (
       <React.Fragment>
             <div className="post-topbar">
@@ -158,11 +156,11 @@ export default class CommentQuestion extends Component {
                 <div className="post-st">
                     <div className = "post-content">
                         <Editor
-                            placeholder = "Tham gia thảo luận nào ?"
+                            placeholder = "Bạn có câu hỏi gì không ?"
                             wrapperClassName="demo-wrapper"
                             editorClassName="demo-editor"
-                            onContentStateChange={this.onContentStateChange}
-                            initialContentState  = {this.state.contentState}
+                            editorState={editorState}
+                            onEditorStateChange={this.onEditorStateChange}
                         />
                     </div>
                     <div className="row post">
