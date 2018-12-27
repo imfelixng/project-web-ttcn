@@ -3,9 +3,8 @@ import * as types from '../constants/index';
 let initialState = {
     categories: [],
     categoryQuestion: {},
-    countCategoryItem: {
-
-    }
+    countCategoryItem: {},
+    categoryFollowers: {}
 };
 
 const category = (state = initialState, action) => {
@@ -42,6 +41,51 @@ const category = (state = initialState, action) => {
                 countCategoryItem
             }
         }
+
+        case types.FOLLOW_CATEGORY:
+        {
+            let {categoryID} = action;
+            let followers = state.categoryFollowers[action.categoryID] || [];
+            followers.push(action.userFollowID);
+            
+            return {
+                ...state,
+                categoryFollowers: {
+                    ...state.categoryFollowers,
+                    [categoryID]: [...followers]
+                }
+            }
+        }
+
+        case types.UNFOLLOW_CATEGORY:
+        {
+            let {categoryID} = action;
+            let followers = state.categoryFollowers[action.categoryID];
+            let newFolowers = followers.filter(follower => {
+                return follower !== action.userFollowID
+            }) || [];
+            
+            return {
+                ...state,
+                categoryFollowers: {
+                    ...state.categoryFollowers,
+                    [categoryID]: [...newFolowers]
+                }
+            }
+        }
+
+        case types.GET_CATEGORY_FOLLOWERS: {
+            let index = state.categories.map(category => category.categoryID)
+            .indexOf(action.categoryID);
+            let categoryFollowers = state.categoryFollowers;
+            if(index !== -1) {
+                categoryFollowers[action.categoryID] = state.categories[index].userFollows;
+            }
+            return {
+                ...state,
+                categoryFollowers
+            }
+        }        
 
         default:
             return state;

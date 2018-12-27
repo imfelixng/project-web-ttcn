@@ -1,4 +1,6 @@
-import {connect} from 'react-redux';
+import {
+    connect
+} from 'react-redux';
 import * as actions from '../../../actions/index';
 import Header from '../components/Header';
 

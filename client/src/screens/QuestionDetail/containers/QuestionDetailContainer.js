@@ -81,9 +81,13 @@ const mapDispatchToProps = (dispatch, props) => {
         followQuestion: (questionID, userFollowID) => {
             return dispatch(actions.followQuestionRequest(questionID, userFollowID));
         },
+        unFollowQuestion: (questionID, userFollowID) => {
+            return dispatch(actions.unFollowQuestionRequest(questionID, userFollowID));
+        },
         getQuestionFollowers: (questionID) => {
             return dispatch(actions.getQuestionFollowers(questionID));
-        }
+        },
+        
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(QuestionDetail);

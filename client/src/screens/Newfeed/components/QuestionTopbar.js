@@ -1,13 +1,8 @@
 import React, { Component } from 'react'
-
 import { convertToRaw, EditorState } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
-
 import DropzoneComponent from 'react-dropzone-component';
-
 import { WithContext as ReactTags } from 'react-tag-input';
-
-const content = {"entityMap":{},"blocks":[{"key":"637gr","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}]};
 
 const KeyCodes = {
     comma: 188,
@@ -35,7 +30,6 @@ export default class QuestionTopbar extends Component {
         this.questionDropzone = null;
 
         this.state = {
-            contentState: this.contentState,
             images: [],
             categoryID: 'none',
             tags: [],
@@ -46,12 +40,6 @@ export default class QuestionTopbar extends Component {
         }
 
     }
-
-    onContentStateChange = (contentState) => {
-        this.setState({
-          contentState,
-        });
-      };
 
       onEditorStateChange = (editorState) => {
         this.setState({
@@ -194,7 +182,7 @@ export default class QuestionTopbar extends Component {
         }
 
         tag.text = tag.text.trim();
-
+        tag.userFollows = [];
         if(!tag.tagID) {
             tag.id = "t_" + new Date().getTime();
             tag.tagID = tag.id;
@@ -251,7 +239,6 @@ export default class QuestionTopbar extends Component {
                             wrapperClassName="demo-wrapper"
                             editorClassName="demo-editor"
                             editorState={editorState}
-                            onContentStateChange={this.onContentStateChange}
                             onEditorStateChange={this.onEditorStateChange}
                         />
                     </div>

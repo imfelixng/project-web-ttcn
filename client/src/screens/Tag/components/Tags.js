@@ -10,6 +10,11 @@ export default class Tags extends Component {
               tag = {tag}
               count = {this.props.countTagItem[tag.tagID] ? this.props.countTagItem[tag.tagID] : 0}
               getCountQuestionsTag = {this.props.getCountQuestionsTag}
+              getTagFollowers = {this.props.getTagFollowers}
+              tagFollowers = {this.props.tagFollowers}
+              followTag = {this.props.followTag}
+              unFollowTag = {this.props.unFollowTag}
+              currentUserID = {this.props.currentUserID}
             />
     })
   }

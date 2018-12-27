@@ -12,7 +12,8 @@ const mapStateToProps = (state) => {
         currentUser: state.userReducer.currentUser,
         userOther: state.userReducer.userOther,
         categoryQuestion: state.categoryReducer.categoryQuestion,
-        questionFollowers: state.questionReducer.questionFollowers
+        questionFollowers: state.questionReducer.questionFollowers,
+        questionSavedUsers: state.questionReducer.questionSavedUsers
     }
 }
 
@@ -45,8 +46,20 @@ const mapDispatchToProps = (dispatch, props) => {
         followQuestion: (questionID, userFollowID) => {
             return dispatch(actions.followQuestionRequest(questionID, userFollowID));
         },
+        unFollowQuestion: (questionID, userFollowID) => {
+            return dispatch(actions.unFollowQuestionRequest(questionID, userFollowID));
+        },
         getQuestionFollowers: (questionID) => {
             return dispatch(actions.getQuestionFollowers(questionID));
+        },
+        saveQuestion: (questionID, userFollowID) => {
+            return dispatch(actions.saveQuestionRequest(questionID, userFollowID));
+        },
+        unSaveQuestion: (questionID, userFollowID) => {
+            return dispatch(actions.unSaveQuestionRequest(questionID, userFollowID));
+        },
+        getQuestionSavedUsers: (questionID) => {
+            return dispatch(actions.getQuestionSavedUsers(questionID));
         }
     }
 }

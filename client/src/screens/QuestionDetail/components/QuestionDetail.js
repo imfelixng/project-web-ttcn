@@ -43,6 +43,7 @@ export default class QuestionDetail extends Component {
         isVote: false,
         isUnVote: false,
         comments: [],
+        idQuestion: ''
     }
 
     onOpenFunctional = () => {
@@ -67,14 +68,35 @@ export default class QuestionDetail extends Component {
 
     static getDerivedStateFromProps(prevProps, state) {
 
-        return {
-            currentUserID: prevProps.currentUserID,
-            userOther: prevProps.userOther,
-            categoryQuestion: prevProps.categoryQuestion,
-            isVote: prevProps.isVote,
-            isUnVote: prevProps.isUnVote,
-            comments: prevProps.comments
+        if(prevProps.match.params.idQuestion !== state.idQuestion) {
+            prevProps.getQuestion(prevProps.match.params.idQuestion).then(res => {
+                if(this.props.question) {
+                    if(!sessionStorage.getItem(this.props.question.questionID)) {
+                        this.props.updateViewQuestion({questionID: this.props.question.questionID,views: this.props.question.views + 1})
+                        sessionStorage.setItem(this.props.question.questionID, 'true');
+                    }
+    
+                    this.props.getUserOther(this.props.question.userID);
+                    this.props.getCategoryQuestion(this.props.question.categoryID);
+                    this.props.checkVoteQuestion(this.props.question.questionID);
+                    this.props.getAllCommentsQuestion(this.props.question.questionID);
+                }
+            }).catch(err => {   
+                console.log(err);
+            });
+            return {
+                currentUserID: prevProps.currentUserID,
+                userOther: prevProps.userOther,
+                categoryQuestion: prevProps.categoryQuestion,
+                isVote: prevProps.isVote,
+                isUnVote: prevProps.isUnVote,
+                comments: prevProps.comments,
+                idQuestion: prevProps.match.params.idQuestion
+            }
         }
+        return {
+            ...state
+        };
 
     }
 
@@ -277,7 +299,9 @@ export default class QuestionDetail extends Component {
         let result = null;
 
         if(followers.filter(userID => userID === this.state.currentUserID).length > 0) {
-            result = <li ><a ><i className="la la-check" /></a></li>;
+            result = <li ><a 
+                onClick={() => this.onUnFollowQuestion(this.props.question.questionID, this.state.currentUserID)}
+            ><i className="la la-check" /></a></li>;
         } else {
             result = <li ><a onClick = {() => this.onFollowQuestion(this.props.question.questionID, this.state.currentUserID)}><i className="la la-plus" /></a></li>;
         }
@@ -286,6 +310,10 @@ export default class QuestionDetail extends Component {
 
     onFollowQuestion = (questionID, userFollowID) => {
         this.props.followQuestion(questionID, userFollowID);
+    }
+
+    onUnFollowQuestion = (questionID, userFollowID) => {
+        this.props.unFollowQuestion(questionID, userFollowID);
     }
 
   render() {
@@ -365,9 +393,7 @@ export default class QuestionDetail extends Component {
                                                     </li>                                        
                                                 }
                                                     {
-                                                        question && !(this.state.currentUserID === question.userID) ? 
-                                                        followers && this.showFollow(followers) :
-                                                        <li><a ><i className= "la la-check" /></a></li>
+                                                        followers && this.showFollow(followers)
                                                     }
                                                 </ul>
                                             }

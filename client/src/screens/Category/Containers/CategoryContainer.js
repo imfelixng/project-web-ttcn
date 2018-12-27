@@ -7,6 +7,8 @@ const mapStateToProps = (state) => {
         categories: state.categoryReducer.categories,
         questions: state.questionReducer.questions,
         countCategoryItem: state.categoryReducer.countCategoryItem,
+        categoryFollowers: state.categoryReducer.categoryFollowers,
+        currentUserID: state.userReducer.currentUserID,
     }
 }
 
@@ -20,7 +22,16 @@ const mapDispatchToProps = (dispatch) => {
         },
         getCountQuestionsCategory: (categoryID) => {
             return dispatch(actions.getAllQuestionsCategoryRequest(categoryID));
-        }
+        },
+        getCategoryFollowers: (categoryID) => {
+            return dispatch(actions.getCategoryFollowers(categoryID));
+        },
+        followCategory: (categoryID, userFollowID) => {
+            return dispatch(actions.followCategoryRequest(categoryID, userFollowID));
+        },
+        unFollowCategory: (categoryID, userFollowID) => {
+            return dispatch(actions.unFollowCategoryRequest(categoryID, userFollowID));
+        },
     }
 }
 

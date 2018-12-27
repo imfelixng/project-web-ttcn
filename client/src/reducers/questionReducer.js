@@ -6,7 +6,8 @@ let initialState = {
     isVote: false,
     isUnVote: false,
     topQuestions: [],
-    questionFollowers: {}
+    questionFollowers: {},
+    questionSavedUsers: {}
 };
 
 const question = (state = initialState, action) => {
@@ -94,6 +95,23 @@ const question = (state = initialState, action) => {
             }
         }
 
+        case types.UNFOLLOW_QUESTION:
+        {
+            let {questionID} = action;
+            let followers = state.questionFollowers[action.questionID];
+            let newFolowers = followers.filter(follower => {
+                return follower !== action.userFollowID
+            });
+            
+            return {
+                ...state,
+                questionFollowers: {
+                    ...state.questionFollowers,
+                    [questionID]: [...newFolowers]
+                }
+            }
+        }
+
         case types.GET_QUESTION_FOLLOWERS: {
             let index = state.questions.map(question => question.questionID)
             .indexOf(action.questionID);
@@ -109,6 +127,54 @@ const question = (state = initialState, action) => {
             return {
                 ...state,
                 questionFollowers
+            }
+        }
+
+        case types.SAVE_QUESTION:
+        {
+            let {questionID} = action;
+            let users = state.questionSavedUsers[action.questionID] || [];
+            users.push(action.userSaveID);
+            
+            return {
+                ...state,
+                questionSavedUsers: {
+                    ...state.questionSavedUsers,
+                    [questionID]: [...users]
+                }
+            }
+        }
+
+        case types.UNSAVE_QUESTION:
+        {
+            let {questionID} = action;
+            let users = state.questionSavedUsers[action.questionID];
+            let newUsers = users.filter(user => {
+                return user !== action.userSaveID
+            }) || [];
+            
+            return {
+                ...state,
+                questionSavedUsers: {
+                    ...state.questionSavedUsers,
+                    [questionID]: [...newUsers]
+                }
+            }
+        }
+
+        case types.GET_QUESTION_SAVED_USERS: {
+            let index = state.questions.map(question => question.questionID)
+            .indexOf(action.questionID);
+            let questionSavedUsers = state.questionSavedUsers;
+            if(index !== -1) {
+                questionSavedUsers[action.questionID] = state.questions[index].userSaves;
+            } else {
+                questionSavedUsers[action.questionID] = state.questionItem.userSaves;
+            }
+
+            return {
+                ...state,
+                questionSavedUsers
             }
         }
 
