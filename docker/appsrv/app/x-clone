@@ -1,0 +1,4 @@
+#!/bin/sh
+
+git clone -b $CODE_BRANCH $CODE_REPO /app/$PRODUCT_NAME
+pip install -r /app/$PRODUCT_NAME/server/requirements.txt

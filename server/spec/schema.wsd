@@ -2,126 +2,171 @@ FEATURE
 Schema
 
 User system:
-	Create user
-		url: /user
+	Register user
+		url: /signup
 		method: POST
 		content-type: json
 
 	Update user
-		url: /user/
+		url: /users
 		method: PATCH
 		content-type: json
 
-Account:
-	Create account:
-		url: /user
+Auth:
+	Login
+		url: /signin
 		method: POST
 		content-type: json
 
-	Update account:
-		url: /account/
-		method: PATCH
+	logout
+		url: /logout
+		method: GET
 		content-type: json
-
+			
 Question:
+	Get all question of user
+		url: /user/<userID>/question
+		method: GET
+		content-type: json
+		
 	Get list question
-		url: /question
+		url: /questions
 		method: GET
 		content-type: json
 
 	Get question item
-		url: /question/question_id
+		url: /questions/questionID
 		method: GET
 		content-type: json
 
 	Create question
-		url: /question
+		url: /questions
 		method: POST
 		content-type: json
 
 	Edit question
-		url: /question/question_id
+		url: /questions/questionID
 		method: PATCH
-		content-type: json
+		content-type: json]
 
 	Delete question
-		url: /question/question_id
+		url: /questions/questionID
 		method: DELETE
 
 Comment:
-	Get list comment of a Question
-		url: /question/<question_id>/comment
+	Get all comment of question
+		url: /question/<questionID>/comments
 		method: GET
 		content-type: json
 
 	Add comment to a question
-		url: /question/<question_id>/comment
+		url: /comments
 		method: POST
 		content-type: json
 		
 	Remove a comment of a question
-		url: /question/<question_id>/comment/<comment_id>
+		url: /comment/<commentID>
 		method: DELETE
 
 	Edit a comment of a question
-		url: /question/<question_id>/comment/<comment_id>
-		method: DELETE
+		url: /comment/<commentID>
+		method: PATCH
+		content-type: json
+
 
 Category:
 	Get list category
-		url: /category
+		url: /categories
 		method: GET
 		content-type: json
 
 	Add category
-		url: /category
+		url: /categories
 		method: POST
 		content-type: json
 		
 	Remove a category
-		url: /category/<category_id>
+		url: /categories/<categoryID>
 		method: DELETE
 
 	Edit a category
-		url: /category/<category_id>
+		url: /categories/<categoryID>
 		method: DELETE
 
 Tag:
 	Get list tag
-		url: /tag
+		url: /tags
 		method: GET
 		content-type: json
 
 	Add tag
-		url: /tag
+		url: /tags
 		method: POST
 		content-type: json
 		
-	Remove a tag
-		url: /tag/<tag_id>
+	Remove a tags
+		url: /tag/<tagID>
 		method: DELETE
 
-	Edit a tag
-		url: /tag/tag_id>
+	Edit a tags
+		url: /tag/tagID>
 		method: DELETE
 
 Notification:
 	Get list notification
-		url: /notification
+		url: /notifications
 		method: GET
 		content-type: json
 
 	Add notification
-		url: /notification
+		url: /notifications
 		method: POST
 		content-type: json
 		
 	Remove a notification
-		url: /notification/<notification_id>
+		url: /notifications/<notificationID>
 		method: DELETE
 
 	Edit a notification
-		url: /notification/notification_id>
+		url: /notifications/notificationID>
 		method: DELETE
 
+Vote:
+	Create votes questions:
+		url: /questions/<questionID>/votes
+		method: POST
+		content-type: json
+	
+	Create votes comments:
+		url: /comments/<commentID>/votes
+		method: POST
+		content-type: json
+	
+	Check isVote or isUnvote for questions:
+		url: /questions/<questionID>/isvote_isunvote
+		method: GET
+		content-type: json
 
+	Check isVote or isUnvote for comment:
+		url: /comments/<commentID>/isvote_isunvote
+		method: GET
+		content-type: json
+
+Unvotes:
+	Create unvotes questions:
+		url: /questions/<questionID>/unvotes
+		method: POST
+		content-type: json
+	
+	Create unvotes comments:
+		url: /comments/<commentID>/unvotes
+		method: POST
+		content-type: json
+
+Views:
+	Create views questions:
+		url: .questions/<questionsID>/views
+		method: PATCH
+		content-type: json
+
+		

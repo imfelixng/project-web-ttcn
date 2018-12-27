@@ -3,7 +3,11 @@
 @media (max-width: 1200px) {
 	header nav {position: fixed;top: 0;left: 0;width: 200px;height: 100%;background-color: #e44d3a;padding: 25px 20px;opacity: 0;visibility: hidden;z-index: 0}
 	header nav.active {opacity: 1;visibility: visible;z-index: 9999;}
-	header nav ul li {float: left;width: 100%;text-align: left;padding: 0 0 0 0;margin-bottom: 20px;}
+	header nav ul li {
+		width: 100%;
+		padding: 10px;
+		text-align: left;
+	}
 	.menu-btn {display: block;}
 	header nav ul li span {display: inline-block;margin-right: 10px;}
 	.widget-about h3 {font-size: 16px;}
@@ -40,6 +44,15 @@
 	.notification-box {left: 100%;top: 0;}
 	nav ul ul {left: 50%;top: 0;border: 1px solid #e4e4e4;padding-left: 20px;padding-right: 20px;}
 	.sgt-text span {font-size: 12px;}
+	nav.active ul li a {
+		color: #ffffff;
+		font-size: 14px;
+		display: flex;
+	}
+	nav.active ul li span {
+		display: inline-block;
+		margin-right: 10px;
+	}
 }
 
 
@@ -83,6 +96,13 @@
 	.profile-account-setting {margin-bottom: 50px;}
 	.profile-bx-info {margin-bottom: 25px;}
 	.profile-bx-details {margin-bottom: -25px;}
+	.right-sidebar {
+		margin-top: 0px;
+		display: none;
+	}
+	.main-left-sidebar {
+		display: none;
+	}
 }
 
 
@@ -124,7 +144,7 @@
 	.logo {width:100%;text-align: center;}
 	.logo img {float: none;width: 40px;}
 	.search-bar {width: 100%;}
-	.user-account {float: left;}
+	.user-account {float: left; margin-bottom: 10px;}
 	.cm_img {width: 100%;text-align: center;margin-bottom: 10px;}
 	.cm_img img {float: none;}
 	.comment_box {width: 100%;}
@@ -137,11 +157,10 @@
 	.cover-sec img {height: 100%;object-fit: cover;}
 	.star-descp > ul {width: 100%;margin-top: 10px;}
 	.like-com li {margin-right: 5px;}
-	.bk-links {width: 100%;margin-top: 15px;}
+	.bk-links {margin-top: 15px;}
 	main {padding: 20px 0 40px 0}
 	.bk-links {margin-bottom: 10px;}
 	.star-descp {margin-bottom: 25px;}
-	.like-com li {float: left;width: 100%;margin-bottom: 15px;}
 	.job-status-bar > a {float: left;width: 100%;margin-top: -5px;}
 	.lt-sec h4 {font-size: 14px;}
 	.cc-head ul {float: left;width: 100%;margin-top: 10px;}
@@ -176,6 +195,11 @@
 	.login-resources {text-align: left;}
 	.forum-bar ul li:last-child {margin-bottom: 0;}
 	.conversation-box {left: -20px;width: 280px;}
+	.post-category {
+		padding-left: 0px;
+		padding-right: 0px;
+		margin-bottom: 10px;
+	}
 }
 
 @media (max-width: 410px) {

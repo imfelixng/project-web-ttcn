@@ -1,6 +1,12 @@
 MODULES = [
 ]
 
+MONGO_HOST = "mongodb"
+MONGO_PORT = "27017"
+MONGO_DB   = "nvphu1306"
+MONGO_USER = "nvphu1306"
+MONGO_PASSWORD = "nvphu1306"
+
 SWAGGER_INFO = {
     'title': 'My Supercool API',
     'version': '1.0',
@@ -22,4 +28,4 @@ X_DOMAINS = ['http://localhost:5000',  # The domain where Swagger UI is running
 
 X_HEADERS = ['Content-Type', 'If-Match']  # Needed for the "Try it out" buttons
 
-AUTH_FIELD = "anonymous"
+AUTH_FIELD = "auth"

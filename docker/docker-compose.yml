@@ -1,18 +1,22 @@
-version: "3"
+version: "2"
 volumes:
-  mongo_data:
+  project_web_ttcn_mongo_data:
+  project_web_ttcn_public_data:
 
 services:
-    # app_db:
-    #     image: mongo
-    #     volumes:
-    #         - mongo_data:/data/db
-    #     ports:
-    #         - "27017:27017"
+    app_db:
+        image: mongo
+        volumes:
+            - project_web_ttcn_mongo_data:/data/db
+        ports:
+            - "27017:27017"
 
     app_srv:
-        build: .
+        image: project-web-ttcn
         volumes:
-            - /Users/nguyenphu/Desktop/document/gitlab/project-web-thuc-tap-cong-nhan/server:/app/server
+            - project_web_ttcn_public_data:/app/project-web-ttcn/public
         ports:
-            - 8080:5000
+            - 9080:5000
+        links:
+            - app_db:mongodb
+

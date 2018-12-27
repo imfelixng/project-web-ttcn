@@ -4,19 +4,72 @@ import Question from './Question';
 import LoadMore from '../../../commons/LoadMore/components/LoadMore';
 import Main from '../../../commons/Main/components/Main';
 
-export default class HomeScreen extends Component {
+export default class NewfeedScreen extends Component {
+
+  state = {
+    currentUserID: '',
+    currentUser: null
+  }
+
+  componentDidMount = () => {
+    this.props.getQuestions();
+    this.props.getCategories();
+    this.props.getTags();
+    this.props.getUser(this.props.currentUserID);
+  }
+  
+  showQuestion = (questions) => {
+    if(questions.length > 0) {
+      return questions.map((question, index) => {
+        return <Question 
+          key = {index}
+          question = {question}
+          currentUserID  = {this.props.currentUserID}
+          currentUser = {this.state.currentUser}
+          getUserOther = {this.props.getUserOther}
+          userOther = {this.props.userOther}
+          getCategoryQuestion = {this.props.getCategoryQuestion}
+          categoryQuestion = {this.props.categoryQuestion}
+          deleteQuestion = {this.props.deleteQuestion}
+          history = {this.props.history}
+          followQuestion = {this.props.followQuestion}
+          getQuestionFollowers = {this.props.getQuestionFollowers}
+          questionFollowers = {this.props.questionFollowers}
+          unFollowQuestion = {this.props.unFollowQuestion}
+          getQuestionSavedUsers = {this.props.getQuestionSavedUsers}
+          questionSavedUsers = {this.props.questionSavedUsers}
+          saveQuestion = {this.props.saveQuestion}
+          unSaveQuestion = {this.props.unSaveQuestion}
+        />
+      });
+    }
+    
+  }
+
+  static getDerivedStateFromProps(props) {
+    return {
+      currentUserID: props.currentUserID,
+      currentUser: props.currentUser
+    }
+  }
+
   render() {
     return (
       <React.Fragment>
         <Main>
           <div className="wrapper">
-              <QuestionTopbar />
+              {
+                this.state.currentUserID &&
+                <QuestionTopbar 
+                  addNewQuestion = {this.props.addNewQuestion}
+                  categories = {this.props.categories}
+                  suggestions = {this.props.tags}
+                  currentUser = {this.state.currentUser}
+                />
+              }
               <div className="posts-section">
-                                      <Question />
-                                      <Question />
-                                      <Question />
-                                      <Question />
-                                      <LoadMore />
+                {this.showQuestion(this.props.questions)}
+                <LoadMore />
               </div>{/*posts-section end*/}
           </div>{/*theme-layout end*/}
         </Main>

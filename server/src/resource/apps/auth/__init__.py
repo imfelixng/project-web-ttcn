@@ -1,25 +1,95 @@
 from .schema import User
-from pymongo import MongoClient
 from foundation.core.api.helper import make_error, make_resource_response
-from flask import request
+from foundation.core.exceptions import UnprocessableEntity
+from flask import request, session
 
-
-client = MongoClient(
-    'mongodb://data:chritsmasgood12@ds143971.mlab.com:43971/nvphu1306')
-db = client.nvphu1306
-user = db.user
+import logging as logger
 
 
 def __setup__(module):
-    module.resource("user", User)
+    module.resource("users", User)
 
-    @module.endpoint("/user/register", methods=["POST"])
+    @module.endpoint("/signup", methods=["POST"])
     def register():
-        data = request.json or request.form.to_dict()
-        if user.find_one({"username": data.get("username")}) is not None:
-            return make_error(400, description="Username is exist")
-        if user.find_one({"email": data.get("email")}) is not None:
-            return make_error(400, description="email is exist")
-        model = User(data)
-        model.save()
-        return make_resource_response("resource", model.to_primitive())
+        try:
+            # data = request.json or request.form.to_dict()
+            data = request.json
+            query = {"email": data.get("email")}
+            if module.data.check_exist(User.RI(), query):
+                return make_error(200, description="email is exist")
+
+            model = User(data)
+            model.save()
+            data_response = {
+                "status": 200,
+                "description": "ok",
+                "userID": data["userID"],
+                "isSuccess": True
+            }
+
+            return make_resource_response("resource", data_response)
+        except Exception as e:
+            raise UnprocessableEntity('RC_400', message=str(e))
+
+    @module.endpoint("/signin", methods=["POST"])
+    def login():
+        try:
+            dt = request.json or request.form.to_dict()
+
+            if not module.data.check_exist(User.RI(),
+                                           {"email": dt.get("email")}):
+                return make_error(200, description="Email is wrong")
+            if not module.data.check_exist(User.RI(),
+                                           {"password": dt.get("password")}):
+                return make_error(200, description="password is wrong")
+
+            session["userID"] = module.data.db.user.find_one(
+                {"email": dt.get("email")})["userID"]
+            session.permanent = True
+            logger.warning("Session %r", session)
+            data_response = {
+                "status": 200,
+                "description": "ok",
+                "userID": session["userID"],
+                "isSuccess": True
+            }
+            return make_resource_response("resource", data_response)
+        except Exception as e:
+            raise UnprocessableEntity('RC_400', message=str(e))
+
+    @module.endpoint("/logout", methods=["GET"])
+    def logout():
+        try:
+            session.clear()
+            data_response = {
+                "status": 200,
+                "description": "ok"
+            }
+            return make_resource_response("resource", data_response)
+        except Exception as e:
+            raise UnprocessableEntity('RC_400', message=str(e))
+
+    @module.endpoint("/users/topusers", methods=["GET"])
+    def topuser():
+        try:
+            pipeline = [
+                {
+                    "$project": {
+                        "topVote": {
+                            "$subtract": ["$votes", "$unvotes"]
+                        }
+                    }
+                },
+                {
+                    "$sort": {
+                        "topVote": -1
+                    }
+                },
+                {
+                    "$limit": 6
+                }
+            ]
+            data = module.data.aggregate(User.RI(), pipeline)
+            return make_resource_response("user", list(data))
+        except Exception as e:
+            raise UnprocessableEntity("RC_400", message=str(e))
