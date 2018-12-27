@@ -34,7 +34,7 @@ export default class QuestionDetail extends Component {
     state = {
         isOpenFunctional: false,
         currentUserID: '',
-        userOther: [],
+        userOther: {},
         categoryQuestion: {},
         isLoadingVote: false,
         isLoadingUnVote: false,
@@ -86,8 +86,6 @@ export default class QuestionDetail extends Component {
             });
             return {
                 currentUserID: prevProps.currentUserID,
-                userOther: prevProps.userOther,
-                categoryQuestion: prevProps.categoryQuestion,
                 isVote: prevProps.isVote,
                 isUnVote: prevProps.isUnVote,
                 comments: prevProps.comments,
@@ -317,17 +315,16 @@ export default class QuestionDetail extends Component {
     }
 
   render() {
-    let {question, questionFollowers} = this.props;
+    let {question, questionFollowers, userOther, categoryQuestion} = this.props;
     let userInfo = null;
     let categoryInfo = null;
     let timeAgo = 'Thời gian đăng';
     let followers = null;
     if(question) {
-        userInfo = this.state.userOther[question.userID];
-        categoryInfo = this.state.categoryQuestion[question.categoryID];
+        userInfo = userOther[question.userID];
+        categoryInfo = categoryQuestion[question.categoryID];
         timeAgo = question ? moment(question._created, "YYYY-MM-DD HH:mm:ss", 'vn').fromNow() : 'Thời gian đăng';
         followers = questionFollowers[question.questionID] ? questionFollowers[question.questionID] : null;
-        console.log(followers);
     }
 
     return (
