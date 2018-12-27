@@ -12,15 +12,16 @@ let callAPI = async (endpoint, method = 'GET', data) => {
             url: `${configs.Url}/${endpoint}`,
             data,
 
-        },
-        );
-    } catch(e) {
+        }, );
+    } catch (e) {
         console.log(e);
     } finally {
         return dataAPI;
     }
-    
+
 
 }
 
-export {callAPI}
+export {
+    callAPI
+}

@@ -194,7 +194,7 @@ export default class QuestionTopbar extends Component {
         }
 
         tag.text = tag.text.trim();
-
+        tag.userFollows = [];
         if(!tag.tagID) {
             tag.id = "t_" + new Date().getTime();
             tag.tagID = tag.id;

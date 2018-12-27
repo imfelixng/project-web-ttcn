@@ -94,6 +94,23 @@ const question = (state = initialState, action) => {
             }
         }
 
+        case types.UNFOLLOW_QUESTION:
+        {
+            let {questionID} = action;
+            let followers = state.questionFollowers[action.questionID];
+            let newFolowers = followers.filter(follower => {
+                return follower !== action.userFollowID
+            });
+            
+            return {
+                ...state,
+                questionFollowers: {
+                    ...state.questionFollowers,
+                    [questionID]: [...newFolowers]
+                }
+            }
+        }
+
         case types.GET_QUESTION_FOLLOWERS: {
             let index = state.questions.map(question => question.questionID)
             .indexOf(action.questionID);

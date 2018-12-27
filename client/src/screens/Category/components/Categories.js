@@ -12,6 +12,11 @@ export default class Categories extends Component {
                 getAllQuestionsCategory = {this.props.getAllQuestionsCategory}
                 count = {this.props.countCategoryItem[category.categoryID] ? this.props.countCategoryItem[category.categoryID] : 0}
                 getCountQuestionsCategory = {this.props.getCountQuestionsCategory}
+                getCategoryFollowers = {this.props.getCategoryFollowers}
+                categoryFollowers = {this.props.categoryFollowers}
+                followCategory = {this.props.followCategory}
+                unFollowCategory = {this.props.unFollowCategory}
+                currentUserID = {this.props.currentUserID}
             />
     });
   }

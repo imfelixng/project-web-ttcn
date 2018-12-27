@@ -35,6 +35,7 @@ export default class NewfeedScreen extends Component {
           followQuestion = {this.props.followQuestion}
           getQuestionFollowers = {this.props.getQuestionFollowers}
           questionFollowers = {this.props.questionFollowers}
+          unFollowQuestion = {this.props.unFollowQuestion}
         />
       });
     }

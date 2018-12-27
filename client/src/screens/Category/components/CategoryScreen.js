@@ -20,6 +20,11 @@ export default class CategoryScreen extends Component {
               getAllQuestionsCategory = {this.props.getAllQuestionsCategory}
               countCategoryItem = {this.props.countCategoryItem}
               getCountQuestionsCategory = {this.props.getCountQuestionsCategory}
+              getCategoryFollowers = {this.props.getCategoryFollowers}
+              categoryFollowers = {this.props.categoryFollowers}
+              followCategory = {this.props.followCategory}
+              unFollowCategory = {this.props.unFollowCategory}
+              currentUserID = {this.props.currentUserID}
             />
           </div>{/*posts-section end*/}
         </Main>

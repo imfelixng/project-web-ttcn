@@ -19,6 +19,11 @@ export default class TagScreen extends Component {
               tags = {this.props.tags}
               countTagItem = {this.props.countTagItem}
               getCountQuestionsTag = {this.props.getCountQuestionsTag}
+              getTagFollowers = {this.props.getTagFollowers}
+              tagFollowers = {this.props.tagFollowers}
+              followTag = {this.props.followTag}
+              unFollowTag = {this.props.unFollowTag}
+              currentUserID = {this.props.currentUserID}
             />
           </div>{/*posts-section end*/}
         </Main>
