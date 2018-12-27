@@ -594,6 +594,7 @@ export const getUserRequest = (userID) => {
     return async (dispatch) => {
         if (userID) {
             let result = await APIs.callAPI("users/" + userID, "GET");
+            console.log(result);
             if (result != null) {
                 dispatch(getUser(result.data));
             }
