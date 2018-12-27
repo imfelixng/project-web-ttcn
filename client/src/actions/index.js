@@ -147,6 +147,49 @@ export const getQuestionFollowers = (questionID) => {
     }
 }
 
+
+export const saveQuestionRequest = (questionID, userSaveID) => {
+    return async (dispatch) => {
+        let result = await APIs.callAPI("questions/" + questionID + "/save", "PATCH", null);
+        if (result != null) {
+            dispatch(saveQuestion(questionID, userSaveID));
+        }
+    }
+}
+
+export const saveQuestion = (questionID, userSaveID) => {
+    return {
+        type: types.SAVE_QUESTION,
+        questionID,
+        userSaveID
+    }
+}
+
+export const unSaveQuestionRequest = (questionID, userSaveID) => {
+    return async (dispatch) => {
+        let result = await APIs.callAPI("questions/" + questionID + "/unsave", "PATCH", null);
+        if (result != null) {
+            dispatch(unSaveQuestion(questionID, userSaveID));
+        }
+    }
+}
+
+export const unSaveQuestion = (questionID, userSaveID) => {
+    return {
+        type: types.UNSAVE_QUESTION,
+        questionID,
+        userSaveID
+    }
+}
+
+export const getQuestionSavedUsers = (questionID) => {
+    return {
+        type: types.GET_QUESTION_SAVED_USERS,
+        questionID,
+    }
+}
+
+
 export const unVoteQuestionRequest = (unvote) => {
     return async (dispatch) => {
 

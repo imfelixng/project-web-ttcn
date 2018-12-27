@@ -187,13 +187,35 @@ export default class Question extends Component {
         this.props.unFollowQuestion(questionID, userFollowID);
     }
 
+    showSave = (users) => {
+        let result = null;
+
+        if (users.filter(userID => userID === this.state.currentUserID).length > 0) {
+            result = <li ><a ><i className="la la-check" 
+                onClick={() => this.onUnSaveQuestion(this.props.question.questionID, this.state.currentUserID)}
+            /></a></li>;
+        } else {
+            result = <li ><a onClick={() => this.onSaveQuestion(this.props.question.questionID, this.state.currentUserID)}><i className="la la-bookmark" /></a></li>;
+        }
+        return result;
+    }
+
+    onSaveQuestion = (questionID, userFollowID) => {
+        this.props.saveQuestion(questionID, userFollowID);
+    }
+
+    onUnSaveQuestion = (questionID, userFollowID) => {
+        this.props.unSaveQuestion(questionID, userFollowID);
+    }
+
     render() {
 
-        let { question, questionFollowers } = this.props;
+        let { question, questionFollowers, questionSavedUsers } = this.props;
         let userInfo = this.state.userOther[question.userID];
         let categoryInfo = this.state.categoryQuestion[question.categoryID];
         let timeAgo = question ? moment(question._created, "YYYY-MM-DD HH:mm:ss", 'vn').fromNow() : 'Thời gian đăng';
         let followers = questionFollowers[question.questionID] ? questionFollowers[question.questionID] : null;
+        let users = questionSavedUsers[question.questionID] ? questionSavedUsers[question.questionID] : null;
         return (
             <React.Fragment>
                 <div className="post-bar">
@@ -243,7 +265,10 @@ export default class Question extends Component {
                             <ul className="bk-links">
                                 {
                                     this.state.currentUserID !== question.userID &&
-                                    <li><a href="#" ><i className="la la-bookmark" /></a></li>
+                                    (
+                                        users ? this.showSave(users) :
+                                        <li ><a onClick={() => this.onSaveQuestion(this.props.question.questionID, this.state.currentUserID)}><i className="la la-bookmark" /></a></li>
+                                    )
                                 }
                                 {
                                     followers && this.showFollow(followers)
