@@ -95,7 +95,7 @@ export default class QuestionTopbar extends Component {
             return false;
         }
 
-        if(this.state.contentState.blocks[0].text === "") {
+        if(!this.state.editorState.getCurrentContent().hasText()) {
             alert("Vui lòng nhập nội dung câu hỏi!");
             this.setState({
                 isLoading: false
@@ -105,15 +105,11 @@ export default class QuestionTopbar extends Component {
 
         let timesamp = new Date().getTime();
 
-        let title = this.state.contentState.blocks[0].text.length > 50 ? this.state.contentState.blocks[0].text.slice(0,50) + "..." : this.state.contentState.blocks[0].text.slice(0,50);
+        let title = this.state.editorState.getCurrentContent().getPlainText().length > 50 ? this.state.editorState.getCurrentContent().getPlainText().slice(0,50) + "..." : this.state.editorState.getCurrentContent().getPlainText().slice(0,50);
 
         let summaryContent = '';
 
-        for(let i = 0 ; i < this.state.contentState.blocks.length; i++) {
-            summaryContent += this.state.contentState.blocks[i].text + '\n ';
-        }
-
-        summaryContent = summaryContent.length > 300 ? summaryContent.slice(0,300) + "..." : summaryContent.slice(0,300);
+        summaryContent = this.state.editorState.getCurrentContent().getPlainText().length > 300 ? this.state.editorState.getCurrentContent().getPlainText().slice(0,300) + "..." : this.state.editorState.getCurrentContent().getPlainText().slice(0,300);
 
         let questionItem = {
             questionID: "q_" + timesamp + this.props.currentUser.userID,
