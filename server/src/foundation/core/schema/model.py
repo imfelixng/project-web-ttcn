@@ -59,7 +59,7 @@ class BaseModel(Model, MongoInterface):
         self['_etag'] = data['_etag']
         # self.update_one(self.RI(), _id, {'$set': data}, upsert=True)
         self.insert_one(self.RI(), data)
-        logging.warn("data in save %r", data)
+        # logging.warn("data in save %r", data)
 
         self.run_hook('on_save')
 

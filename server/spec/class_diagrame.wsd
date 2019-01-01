@@ -1,59 +1,67 @@
 @startuml class_diagrame
 class User {
-    _id: objectID
-    username: string
+    userID: string
+    fullname: string
+    avatar: string
     categories: list
-    vote: list
-    unvote: list
-    list_follow: list
-}
-
-class Account {
-    _id: objectID
-    userId: User
-    gmail: string
-    pass: string
+    tags: list
+    follow: list
+    votes: int
+    unvotes: int
+    password: string
+    email: emailtype
+    username: string
+    saveQuestions: list
 }
 
 class Question {
-    _id: objectID
+    questionID: string
     title: string
+    summaryContent: string
     content: text
-    image: string
-    categories: Categery
-    tags: Tag
+    image: listobject
+    topComment: JsonString
+    categoryID: string
+    userID: User
+    tags: listTag
+    votes: int
+    unvotes: int
     views: int
-    userId: User
-    time:datetime
-    likes: list
+    comments: int
+    userFollows: listUser
 }
 
 class Comment {
-    _id: objectID
-    userId: User
-    questionId: Question
-    content: string
-    image: string
-    time: datetime
+    commentID: string
+    userID: User
+    questionID: Question
+    content: JsonString
+    images: listJsonString
+    votes: int
+    unvotes: int
+    replies: listJsonString
 }
 
 class Categery {
-    _id: objectID
+    categoryID: string
     name: string
+    userFollows: listUser
 }
 
 class Tag {
-    _id: objectID
-    name: string
+    id: string
+    text: string
+    tagID: string
+    userFollows: listUser
 }
 
 class Notification {
-    _id: objectID
-    userRecieve: User
-    userSend: User
-    questionId: Question
-    isRead: boolean
-    time: datetime
+    notificationID: string
+    senderID: User
+    receiverID: User
+    questionID: Question
+    commentID: Comment
+    message: string
 }
 
 class Mark {
@@ -69,16 +77,30 @@ class Follow {
     questionId: Question
 }
 
-class Vote {
-    _id: objectID
-    userId: User
-    questionId: Question
+class VoteQuestion {
+    userID: User
+    questionID: Question
+    voteID: string
 }
 
-class Unvote {
-    _id: objectID
-    userId: User
-    questionId: Question
+class UnvoteQuestion {
+    userID: User
+    questionID: Question
+    unvoteID: string
+}
+
+class VoteComment {
+    userID: User
+    questionID: Question
+    voteID: string
+    commentID: string
+}
+
+class UnvoteComment {
+    userID: User
+    questionID: Question
+    unvoteID: string
+    commentID: string
 }
 
 Account -down-> User 
@@ -93,9 +115,13 @@ Mark -left-> User
 Mark -down-> Question
 Follow -right-> User
 Follow -> Question
-Vote -left-> User
-Vote -right-> Question
-Unvote -right-> User
-Unvote -right-> Question
+VoteQuestion -left-> User
+VoteQuestion -right-> Question
+UnvoteQuestion -right-> User
+UnvoteQuestion -right-> Question
+VoteComment -right-> User
+VoteComment -right-> Question
+UnvoteComment -right-> User
+UnvoteComment -right-> Question
 
 @enduml

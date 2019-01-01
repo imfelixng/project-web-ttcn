@@ -78,11 +78,11 @@ class MongoInterface(object):
             _id = ObjectId(_id)
         source, query = self.datasource(resource, {'_id': _id})
         data = source.update_one(query, update, **kwargs)
-        logging.warn("update by another user %s" % data)
+        # logging.warn("update by another user %s" % data)
         return data
 
     def update(self, resource, query, updates, **kwargs):
-        logging.warn("update before %s" % updates)
+        # logging.warn("update before %s" % updates)
         if not updates.get("$set"):
             updates["$set"] = {
                 "_updated": datetime.datetime.now() +
@@ -91,7 +91,7 @@ class MongoInterface(object):
             updates["$set"].update({
                 "_updated": datetime.datetime.now() +
                 datetime.timedelta(hours=7)})
-        logging.warn("update after%s" % updates)
+        # logging.warn("update after%s" % updates)
         source = self.db[resource]
         data = source.find_one_and_update(query, updates, **kwargs)
         return data

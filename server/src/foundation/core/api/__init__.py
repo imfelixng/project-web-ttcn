@@ -67,7 +67,7 @@ class BaseAPI:
 
     def update_item(self, ID):
         try:
-            data = request.json or request.form.to_dict()
+            data = request.json
             data['_updated'] = datetime.datetime.now() + \
                 datetime.timedelta(hours=7)
             query = self.return_query(ID)

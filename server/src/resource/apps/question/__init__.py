@@ -117,6 +117,10 @@ def __setup__(module):
             del data["userFollows"][data["userFollows"].index(
                 session.get("userID"))]
             module.data.update(Question.RI(), query, {"$set": data})
+            module.data.delete_one("notification", {
+                "userID": session.get("userID"),
+                "questionID": questionID
+            })
             return make_resource_response(Question.RI(), data)
         except Exception as e:
             raise UnprocessableEntity("RC_400", message=str(e))
