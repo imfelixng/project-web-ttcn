@@ -70,7 +70,8 @@ export default class SidebarLeft extends Component {
             result = tags.map((tag, index) => {
                 return <div className="link-tag" key = {index}>
                             <NavLink to = {"/tags/" + tag._id.id} className="name-tag">{tag._id.text}</NavLink>
-                            <button className="amount-tag">{tag.count}</button>
+                            <button className="amount-tag"><i className="fa fa-circle itags"></i>{tag.count}</button>
+
                         </div>
             });
         }

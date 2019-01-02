@@ -594,6 +594,7 @@ export const getUserRequest = (userID) => {
     return async (dispatch) => {
         if (userID) {
             let result = await APIs.callAPI("users/" + userID, "GET");
+            console.log(result);
             if (result != null) {
                 dispatch(getUser(result.data));
             }
@@ -605,6 +606,26 @@ export const getUserRequest = (userID) => {
 export const getUser = (user) => {
     return {
         type: types.GET_USER,
+        user
+    }
+}
+
+export const getUserProfileRequest = (userID) => {
+    return async (dispatch) => {
+        if (userID) {
+            let result = await APIs.callAPI("users/" + userID, "GET");
+            console.log(result);
+            if (result != null) {
+                dispatch(getUserProfile(result.data));
+            }
+        }
+
+    }
+}
+
+export const getUserProfile = (user) => {
+    return {
+        type: types.GET_USER_PROFILE,
         user
     }
 }
@@ -669,6 +690,22 @@ export const getTopQuestionsRequest = () => {
 export const getTopQuestions = (questions) => {
     return {
         type: types.GET_TOP_QUESTIONS,
+        questions
+    }
+}
+
+export const getAllQuestionsUserRequest = (userID) => {
+    return async (dispatch) => {
+        let result = await APIs.callAPI("users/" + userID + "/questions", "GET");
+        if (result != null) {
+            dispatch(getAllQuestionsUser(result.data._items));
+        }
+    }
+}
+
+export const getAllQuestionsUser = (questions) => {
+    return {
+        type: types.GET_ALL_QUESTIONS_USER,
         questions
     }
 }

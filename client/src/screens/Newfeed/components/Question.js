@@ -291,7 +291,7 @@ export default class Question extends Component {
                                 question.images && this.showImages(question.images)
                             }
                             {
-                                question && question.images.length > 0 &&
+                                question && question.images && question.images.length > 0 &&
                                 <Lightbox
                                     images={
                                         question.images.map((image, index) => {
@@ -327,7 +327,7 @@ export default class Question extends Component {
                     </div>
                     <div className="question_top-comment">
                         {
-                            question.topComment.commentID && (question.topComment.votes - question.topComment.unvotes) > 0 &&
+                            question.topComment && question.topComment.commentID && (question.topComment.votes - question.topComment.unvotes) > 0 &&
                             <TopComment
                                 topComment={question.topComment}
                                 userOther={this.props.userOther}

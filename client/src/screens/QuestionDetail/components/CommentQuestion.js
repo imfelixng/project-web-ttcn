@@ -76,14 +76,13 @@ export default class CommentQuestion extends Component {
             isLoading: true
         })
 
-        console.log(this.state.editorState.getCurrentContent());
-        // if(this.state.editorState.getCurrentContent().blocks[0].text === "") {
-        //     alert("Vui lòng nhập nội dung bình luận!");
-        //     this.setState({
-        //         isLoading: false
-        //     })
-        //     return false;
-        // }
+        if(!this.state.editorState.getCurrentContent().hasText()) {
+            alert("Vui lòng nhập nội dung câu hỏi!");
+            this.setState({
+                isLoading: false
+            })
+            return false;
+        }
 
         let timesamp = new Date().getTime();
 

@@ -5635,8 +5635,10 @@ a {
 	float: right;
 	background: transparent;
 	border: none;
-	border-left: 1px solid #b2b2b2;
-	color: #b2b2b2;
+	/* border-left: 1px solid #b2b2b2; */
+	/* color: #b2b2b2; */
+	color: #fff;
+
 }
 
 .top-tag {
@@ -5644,14 +5646,15 @@ a {
     flex-wrap: wrap;
     justify-content: flex-start;
 }
-.link-tag {
+/* .link-tag {
 	border-radius: 10px;
 	padding: 5px;
 	margin: 0 10px 10px 0;
 	background: #e5e5e5;
-}
+} */
  .name-tag {
-	 color: #b2b2b2;
+	 /* color: #b2b2b2; */
+	 color: #fff;
  }
  .like-cmt {
 	display: flex;
@@ -5993,4 +5996,64 @@ a {
 
 .top-comment__icon-gray {
     color: #868e96;
+}
+
+  
+.link-tag{
+	display: inline-block;
+	background: #e44d3a;
+	color: #FFF;
+	padding: 5px 10px;
+	font: normal 16px sans-serif;
+	position: relative;
+	cursor: default;
+	box-shadow:1px 1px 0 rgba(0,0,0,.2);
+	-webkit-transform-origin:0% 50%;
+	-webkit-animation: swing 1s;
+	-o-animation: swing 1s;
+	animation: swing 1s ;
+	margin: 5px 10px;
+}
+  
+.link-tag:before{
+	content: " ";
+	position: absolute;
+	width: 0;
+	background: inherit;
+	height: 10px;
+	border: 14px solid #fafafa;
+	border-right-color: transparent;
+	-webkit-border-radius: 10px 0 0 10px;
+	-moz-border-radius:10px 0 0 10px;
+	border-radius:10px 0 0 10px;
+	left: -20px;
+	top: 0;
+}
+.itags {
+	font-size: 8px;
+	margin-right: 4px;
+}
+.profile-question {
+	margin-top: 20px !important;
+}
+
+.title{
+	font-weight:bold;
+	font-size: 25px;
+	margin-top: 10px;
+}
+.mail-icon {
+	color: #e44d3a;
+}
+.name-user {
+	font-size: 18px;
+	font-weight: bold;
+	color: black;
+}
+
+.user-pro__fullname {
+    color: #000;
+    font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 20px;
 }

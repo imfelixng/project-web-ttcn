@@ -12,7 +12,7 @@ import NotificationScreen from '../../Notification/components/NotificationScreen
 import TagItemContainer from '../../Tag/containers/TagItemContainer';
 import SearchContainer from '../../Search/containers/SearchContainer';
 import ProfileScreen from '../../Profile/components/ProfileScreen';
-import GuestProfileScreen from '../../GuestProfile/components/GuestProfileScreen';
+import GuestProfileScreenContainer from '../../GuestProfile/containers/GuestProfileScreenContainer';
 export default class HomeScreen extends Component {
   
   render() {
@@ -30,7 +30,7 @@ export default class HomeScreen extends Component {
               <Route path = "/search" component = {SearchContainer}/>
               <Route path = "/notifications" component = {NotificationScreen}/>
               <Route path = "/profile" component = {ProfileScreen}/>
-              <Route path = "/users/:idUser" component = {GuestProfileScreen}/>
+              <Route path = "/users/:idUser" component = {GuestProfileScreenContainer}/>
               <Route path = "/sign-in" component = {LoginContainer}/>
               <Route component = {Error404Screen} />
           </Switch>
