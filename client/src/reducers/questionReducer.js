@@ -206,6 +206,14 @@ const question = (state = initialState, action) => {
             }
         }
 
+        case types.GET_ALL_QUESTIONS_USER:
+        {
+            return {
+                ...state,
+                questions: action.questions
+            };
+        }
+
         default:
             return state;
     }

@@ -6036,4 +6036,9 @@ a {
 .profile-question {
 	margin-top: 20px !important;
 }
-
+.user-pro__fullname {
+    color: #000;
+    font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 20px;
+}
