@@ -154,8 +154,12 @@ export default class LoginScreen extends Component {
                 <div className="col-lg-6">
                     <div className="cmp-info">
                     <div className="cm-logo">
-                        <img src="images/cm-logo.png" alt = "logo" />
-                        <p>Workwise,  is a global freelancing platform and social networking where businesses and independent professionals connect and collaborate remotely</p>
+                        <img src="images/users/iconLogo.png" alt = "logo" />
+                        <div className="title">Cộng đồng hỗ trợ học tập</div>
+                        <p>Website hỗ trợ học tập trực tuyến là website tạo ra một góc thảo luận cho
+                            các bạn học sinh, sinh viên nhằm có thể giúp các bạn học sinh, sinh viên có thể thảo
+                            luận, trao đổi, đóng góp ý kiến cho nhau nhằm mục đích nâng cao, mở rộng và tích lũy
+                            thêm nhiều kiến thức cho mình hơn.</p>
                     </div>{/*cm-logo end*/}	
                     <img src="images/cm-main-img.png" alt = "logo" />			
                     </div>{/*cmp-info end*/}

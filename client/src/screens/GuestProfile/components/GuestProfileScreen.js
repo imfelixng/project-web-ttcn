@@ -24,6 +24,7 @@ export default class GuestProfileScreen extends Component {
                       <a href="">
                         <i className="fa fa-camera"></i>
                       </a>
+                      <p className="name-user">Nguyễn Quang An</p>
                     </div>
                     <div className="user_pro_status">
                      <ul className="flw-status">
@@ -42,6 +43,18 @@ export default class GuestProfileScreen extends Component {
                          <a href="https://www.facebook.com/mai.thao.2206">
                            <i className= "fa fa-facebook-square"></i>
                            "Http://www.facebook.com/mai..."
+                         </a>
+                       </li>
+                       <li>
+                         <a href="https://www.facebook.com/mai.thao.2206">
+                         <i className= "fa fa-envelope mail-icon"></i>
+                           "Http://www.gmail.com/mai..."
+                         </a>
+                       </li>
+                       <li>
+                         <a href="https://www.facebook.com/mai.thao.2206">
+                         <i className= "fa fa-twitter-square"></i>
+                           "Http://www.twitter.com/mai..."
                          </a>
                        </li>
                      </ul>
