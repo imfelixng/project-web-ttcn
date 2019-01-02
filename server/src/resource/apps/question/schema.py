@@ -24,3 +24,4 @@ class Question(BaseModel):
     views = IntType(default=0)
     comments = IntType(default=0)
     userFollows = ListType(StringType, default=[])
+    userSaves = ListType(StringType, default=[])

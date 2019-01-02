@@ -100,7 +100,8 @@ def __setup__(module):
                 "questionID": questionID
             }
             data = module.data.find_one(Question.RI(), query=query)
-            data["userFollows"].append(session.get("userID"))
+            if session.get("userID") not in data["userFollows"]:
+                data["userFollows"].append(session.get("userID"))
             module.data.update(Question.RI(), query, {"$set": data})
             return make_resource_response(Question.RI(), data)
         except Exception as e:
@@ -125,16 +126,46 @@ def __setup__(module):
         except Exception as e:
             raise UnprocessableEntity("RC_400", message=str(e))
 
+    @module.endpoint("/questions/<questionID>/unsave", methods=["PATCH"])
+    @module.login_required
+    def question_unsave(questionID):
+        try:
+            query = {
+                "questionID": questionID
+            }
+            data = module.data.find_one(Question.RI(), query=query)
+            del data["userSaves"][data["userSaves"].index(
+                session.get("userID"))]
+            module.data.update(Question.RI(), query, {"$set": data})
+            module.data.delete_one("notification", {
+                "userID": session.get("userID"),
+                "questionID": questionID
+            })
+            return make_resource_response(Question.RI(), data)
+        except Exception as e:
+            raise UnprocessableEntity("RC_400", message=str(e))
+
     @module.endpoint("/questions/<questionID>/save", methods=["PATCH"])
     @module.login_required
     def save_question(questionID):
         try:
+            # update for user
             query = {
                 "userID": session.get("userID")
             }
             data = module.data.find_one("user", query=query)
-            data["saveQuestions"].append(questionID)
+            if questionID not in data["saveQuestions"]:
+                data["saveQuestions"].append(questionID)
             module.data.update("user", query, {"$set": data})
+
+            # update for question
+            query = {
+                "questionID": questionID
+            }
+            question = module.data.find_one(Question.RI(), query=query)
+            if session.get("userID") not in question["userSaves"]:
+                question["userSaves"].append(session.get("userID"))
+            module.data.update(Question.RI(), query, {"$set": question})
             return make_resource_response("user", data)
         except Exception as e:
             raise UnprocessableEntity("RC_400", message=str(e))

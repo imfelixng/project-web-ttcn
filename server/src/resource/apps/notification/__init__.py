@@ -23,3 +23,14 @@ def __setup__(module):
             return make_resource_response("notification", list(resp))
         except Exception as e:
             raise UnprocessableEntity("RC_400", message=str(e))
+
+    @module.endpoint("/users/<userID>/allnotifications", methods=["GET"])
+    @module.login_required
+    def get_allnotification(userID):
+        try:
+            resp = module.data.find("notification", {
+                "receiverID": userID,
+            })
+            return make_resource_response("notification", list(resp))
+        except Exception as e:
+            raise UnprocessableEntity("RC_400", message=str(e))
