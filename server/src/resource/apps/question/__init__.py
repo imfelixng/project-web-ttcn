@@ -166,7 +166,7 @@ def __setup__(module):
             if session.get("userID") not in question["userSaves"]:
                 question["userSaves"].append(session.get("userID"))
             module.data.update(Question.RI(), query, {"$set": question})
-            return make_resource_response("user", data)
+            return make_resource_response("questions", question)
         except Exception as e:
             raise UnprocessableEntity("RC_400", message=str(e))
 
