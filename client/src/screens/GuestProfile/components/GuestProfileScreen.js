@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 
 
 export default class GuestProfileScreen extends Component {
-
-
   componentDidMount () {
     let userID = this.props.match.params.idUser;
     this.props.getUserProfile(userID);
@@ -14,10 +12,6 @@ export default class GuestProfileScreen extends Component {
     let result = null;
     if(questions.length > 0) {
       return questions.map((question, index) => {
-
-
-        
-
         return (
           <div class="post-bar profile-question" key = {index}>
                     <div class="post_topbar">

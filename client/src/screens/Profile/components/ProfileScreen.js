@@ -23,6 +23,7 @@ export default class ProfileScreen extends Component {
                       <a href="">
                         <i className="fa fa-camera"></i>
                       </a>
+                      <p className="name-user">Gà Chíp</p>
                     </div>
                     <div className="user_pro_status">
                      <ul className="flw-status">
@@ -31,7 +32,7 @@ export default class ProfileScreen extends Component {
                          <b>15</b>
                        </li>
                        <li>
-                         <span>Post</span>
+                         <span>Following</span>
                          <b>15</b>
                        </li>
                      </ul>
@@ -41,6 +42,18 @@ export default class ProfileScreen extends Component {
                          <a href="https://www.facebook.com/mai.thao.2206">
                            <i className= "fa fa-facebook-square"></i>
                            "Http://www.facebook.com/mai..."
+                         </a>
+                       </li>
+                       <li>
+                         <a href="https://www.facebook.com/mai.thao.2206">
+                         <i className= "fa fa-envelope mail-icon"></i>
+                           "Http://www.gmail.com/mai..."
+                         </a>
+                       </li>
+                       <li>
+                         <a href="https://www.facebook.com/mai.thao.2206">
+                         <i className= "fa fa-twitter-square"></i>
+                           "Http://www.twitter.com/mai..."
                          </a>
                        </li>
                      </ul>
