@@ -6012,6 +6012,7 @@ a {
 	-webkit-animation: swing 1s;
 	-o-animation: swing 1s;
 	animation: swing 1s ;
+	margin: 5px 10px;
 }
   
 .link-tag:before{
