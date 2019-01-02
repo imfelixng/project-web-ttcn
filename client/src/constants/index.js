@@ -67,8 +67,11 @@ export const SIGN_IN = "SIGN_IN";
 export const LOG_OUT = "LOG_OUT";
 
 export const GET_USER = "GET_USER";
+export const GET_USER_PROFILE = "GET_USER_PROFILE";
 export const GET_USER_OTHER = "GET_USER_OTHER";
 
 export const GET_TOP_USERS = "GET_TOP_USERS";
 export const GET_TOP_TAGS = "GET_TOP_TAGS";
 export const GET_TOP_QUESTIONS = "GET_TOP_QUESTIONS";
+
+export const GET_ALL_QUESTIONS_USER = "GET_ALL_QUESTIONS_USER";

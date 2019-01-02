@@ -58,6 +58,15 @@ let user = (state = initialState, action) => {
             }
         }
 
+        case types.GET_USER_PROFILE: 
+        {
+            let {user} = action;
+            return {
+                ...state,
+                userItem: user
+            }
+        }
+
         case types.GET_USER_OTHER: 
         {
             let {user} = action;
