@@ -51,6 +51,7 @@ export default class Question extends Component {
         this.props.getUserOther(this.props.question.userID);
         this.props.getCategoryQuestion(this.props.question.categoryID);
         this.props.getQuestionFollowers(this.props.question.questionID);
+        this.props.getQuestionSavedUsers(this.props.question.questionID);
     }
 
 

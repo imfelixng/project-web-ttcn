@@ -15,16 +15,16 @@ export default class QuestionDetail extends Component {
     constructor(props) {
         super(props);
         props.getQuestion(props.match.params.idQuestion).then(res => {
-            if(props.question) {
-                if(!sessionStorage.getItem(props.question.questionID)) {
-                    props.updateViewQuestion({questionID: props.question.questionID,views: props.question.views + 1})
-                    sessionStorage.setItem(props.question.questionID, 'true');
+            if(this.props.question) {
+                if(!sessionStorage.getItem(this.props.question.questionID)) {
+                    this.props.updateViewQuestion({questionID: this.props.question.questionID,views: this.props.question.views + 1})
+                    sessionStorage.setItem(this.props.question.questionID, 'true');
                 }
 
-                props.getUserOther(props.question.userID);
-                props.getCategoryQuestion(props.question.categoryID);
-                props.checkVoteQuestion(props.question.questionID);
-                props.getAllCommentsQuestion(props.question.questionID);
+                this.props.getUserOther(this.props.question.userID);
+                this.props.getCategoryQuestion(this.props.question.categoryID);
+                this.props.checkVoteQuestion(this.props.question.questionID);
+                this.props.getAllCommentsQuestion(this.props.question.questionID);
             }
         }).catch(err => {   
             console.log(err);
@@ -106,6 +106,7 @@ export default class QuestionDetail extends Component {
                 this.props.checkVoteQuestion(this.props.question.questionID);
                 this.props.getAllCommentsQuestion(this.props.question.questionID);
                 this.props.getQuestionFollowers(this.props.question.questionID);
+                this.props.getQuestionSavedUsers(this.props.question.questionID);
             }
         })
         .catch(err => console.log(err));
@@ -314,17 +315,40 @@ export default class QuestionDetail extends Component {
         this.props.unFollowQuestion(questionID, userFollowID);
     }
 
+    showSave = (users) => {
+        let result = null;
+
+        if (users.filter(userID => userID === this.state.currentUserID).length > 0) {
+            result = <li ><a ><i className="la la-check" 
+                onClick={() => this.onUnSaveQuestion(this.props.question.questionID, this.state.currentUserID)}
+            /></a></li>;
+        } else {
+            result = <li ><a onClick={() => this.onSaveQuestion(this.props.question.questionID, this.state.currentUserID)}><i className="la la-bookmark" /></a></li>;
+        }
+        return result;
+    }
+
+    onSaveQuestion = (questionID, userFollowID) => {
+        this.props.saveQuestion(questionID, userFollowID);
+    }
+
+    onUnSaveQuestion = (questionID, userFollowID) => {
+        this.props.unSaveQuestion(questionID, userFollowID);
+    }
+
   render() {
-    let {question, questionFollowers, userOther, categoryQuestion} = this.props;
+    let {question, questionFollowers, userOther, categoryQuestion, questionSavedUsers} = this.props;
     let userInfo = null;
     let categoryInfo = null;
     let timeAgo = 'Thời gian đăng';
     let followers = null;
+    let users = null;
     if(question) {
         userInfo = userOther[question.userID];
         categoryInfo = categoryQuestion[question.categoryID];
         timeAgo = question ? moment(question._created, "YYYY-MM-DD HH:mm:ss", 'vn').fromNow() : 'Thời gian đăng';
         followers = questionFollowers[question.questionID] ? questionFollowers[question.questionID] : null;
+        users = questionSavedUsers[question.questionID] ? questionSavedUsers[question.questionID] : null;
     }
 
     return (
@@ -383,12 +407,13 @@ export default class QuestionDetail extends Component {
                                             {
                                                 this.state.currentUserID && 
                                                 <ul className="bk-links">
-                                                {
-                                                    (question && (this.state.currentUserID !== question.userID))&&
-                                                    <li>
-                                                        <a href="#" ><i className="la la-bookmark" /></a>
-                                                    </li>                                        
-                                                }
+                                                    {
+                                                        question && this.state.currentUserID !== question.userID &&
+                                                        (
+                                                            users ? this.showSave(users) :
+                                                            <li ><a onClick={() => this.onSaveQuestion(this.props.question.questionID, this.state.currentUserID)}><i className="la la-bookmark" /></a></li>
+                                                        )
+                                                    }
                                                     {
                                                         followers && this.showFollow(followers)
                                                     }

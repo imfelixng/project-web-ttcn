@@ -169,11 +169,10 @@ const question = (state = initialState, action) => {
             .indexOf(action.questionID);
             let questionSavedUsers = state.questionSavedUsers;
             if(index !== -1) {
-                questionSavedUsers[action.questionID] = state.questions[index].saveQuestions;
+                questionSavedUsers[action.questionID] = state.questions[index].userSaves;
             } else {
-                questionSavedUsers[action.questionID] = state.questionItem.saveQuestions;
+                questionSavedUsers[action.questionID] = state.questionItem.userSaves;
             }
-
             return {
                 ...state,
                 questionSavedUsers
