@@ -1,4 +1,5 @@
 import * as types from '../constants/index';
+import { addNewCommentQuestionRequest } from '../actions';
 
 let initialState = {
     comments: [],
@@ -30,13 +31,22 @@ const comment = (state = initialState, action) => {
             }
         }
         case types.VOTE_COMMENT: {
+            let index = state.comments.findIndex(comment => comment.commentID === action.vote_comment.commentID);
+            state.comments[index].votes = state.comments[index].votes + 1;
+            state.comments[index].unvotes = state.isUnVoteComment ? state.comments[index].unvotes - 1 : state.comments[index].unvotes;
+            console.log(state.comments);
             return {
                 ...state,
+                comments: [...state.comments]
             }
         }
         case types.UNVOTE_COMMENT: {
+            let index = state.comments.findIndex(comment => comment.commentID === action.unvote_comment.commentID);
+            state.comments[index].unvotes = state.comments[index].unvotes + 1;
+            state.comments[index].votes = state.isVoteComment ? state.comments[index].votes - 1 : state.comments[index].votes;
             return {
                 ...state,
+                comments: [...state.comments]
             }
         }
 

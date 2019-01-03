@@ -91,7 +91,6 @@ export const updateViewQuestion = (question) => {
 
 export const voteQuestionRequest = (vote) => {
     return async (dispatch) => {
-        //dispatch(voteQuestion(vote));
         let result = await APIs.callAPI("questions/" + vote.questionID + "/votes", "POST", vote);
         if (result != null) {
             dispatch(voteQuestion(result.data));
@@ -189,10 +188,8 @@ export const getQuestionSavedUsers = (questionID) => {
     }
 }
 
-
 export const unVoteQuestionRequest = (unvote) => {
     return async (dispatch) => {
-
         let result = await APIs.callAPI("questions/" + unvote.questionID + "/unvotes", "POST", unvote);
         if (result != null) {
             dispatch(unVoteQuestion(result.data));

@@ -15,16 +15,16 @@ export default class QuestionDetail extends Component {
     constructor(props) {
         super(props);
         props.getQuestion(props.match.params.idQuestion).then(res => {
-            if(this.props.question) {
-                if(!sessionStorage.getItem(this.props.question.questionID)) {
-                    this.props.updateViewQuestion({questionID: this.props.question.questionID,views: this.props.question.views + 1})
-                    sessionStorage.setItem(this.props.question.questionID, 'true');
+            if(props.question) {
+                if(!sessionStorage.getItem(props.question.questionID)) {
+                    props.updateViewQuestion({questionID: props.question.questionID,views: props.question.views + 1})
+                    sessionStorage.setItem(props.question.questionID, 'true');
                 }
 
-                this.props.getUserOther(this.props.question.userID);
-                this.props.getCategoryQuestion(this.props.question.categoryID);
-                this.props.checkVoteQuestion(this.props.question.questionID);
-                this.props.getAllCommentsQuestion(this.props.question.questionID);
+                props.getUserOther(props.question.userID);
+                props.getCategoryQuestion(props.question.categoryID);
+                props.checkVoteQuestion(props.question.questionID);
+                props.getAllCommentsQuestion(props.question.questionID);
             }
         }).catch(err => {   
             console.log(err);
@@ -70,16 +70,16 @@ export default class QuestionDetail extends Component {
 
         if(prevProps.match.params.idQuestion !== state.idQuestion) {
             prevProps.getQuestion(prevProps.match.params.idQuestion).then(res => {
-                if(this.props.question) {
-                    if(!sessionStorage.getItem(this.props.question.questionID)) {
-                        this.props.updateViewQuestion({questionID: this.props.question.questionID,views: this.props.question.views + 1})
-                        sessionStorage.setItem(this.props.question.questionID, 'true');
+                if(prevProps.question) {
+                    if(!sessionStorage.getItem(prevProps.question.questionID)) {
+                        prevProps.updateViewQuestion({questionID: prevProps.question.questionID,views: prevProps.question.views + 1})
+                        sessionStorage.setItem(prevProps.question.questionID, 'true');
                     }
     
-                    this.props.getUserOther(this.props.question.userID);
-                    this.props.getCategoryQuestion(this.props.question.categoryID);
-                    this.props.checkVoteQuestion(this.props.question.questionID);
-                    this.props.getAllCommentsQuestion(this.props.question.questionID);
+                    prevProps.getUserOther(prevProps.question.userID);
+                    prevProps.getCategoryQuestion(prevProps.question.categoryID);
+                    prevProps.checkVoteQuestion(prevProps.question.questionID);
+                    prevProps.getAllCommentsQuestion(prevProps.question.questionID);
                 }
             }).catch(err => {   
                 console.log(err);
@@ -440,16 +440,16 @@ export default class QuestionDetail extends Component {
                                                             this.state.isLoadingVote ? 
                                                             <img className = "loading-vote"src= "/images/ic_loading.gif" alt = "loading"/>
                                                                 :
-                                                            <i className = {this.props.currentUserID && this.state.isVote ? "la la-thumbs-up active_vote_unvote" : "la la-thumbs-up"}></i>
+                                                            <i className = {this.props.currentUserID && this.props.isVote ? "la la-thumbs-up active_vote_unvote" : "la la-thumbs-up"}></i>
                                                         }
                                                     </a>
                                                     <a  className="com">{ question ? this.calculateVote(question.votes, question.unvotes) : 0}</a>
                                                     <a  className="com" onClick = {this.onUnVoteQuestion}>
                                                         {
-                                                                                            this.state.isLoadingUnVote ? 
+                                                            this.state.isLoadingUnVote ? 
                                                             <img className = "loading-vote"src= "/images/ic_loading.gif" alt = "loading" />
-                                                                                            :
-                                                            <i className = {this.props.currentUserID && this.state.isUnVote ? "la la-thumbs-down active_vote_unvote" : "la la-thumbs-down"}></i>                
+                                                                :
+                                                            <i className = {this.props.currentUserID && this.props.isUnVote ? "la la-thumbs-down active_vote_unvote" : "la la-thumbs-down"}></i>                
                                                         }
                                                     </a>
                                                 </li> 

@@ -33,9 +33,6 @@ export default class CommentList extends Component {
     return (
       <React.Fragment>
         <div className="comment-section">
-            <div className="plus-ic">
-                <i className="la la-plus" />
-            </div>
             <div className="comment-sec">
                 <ul>
                     {

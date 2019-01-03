@@ -178,7 +178,6 @@ export default class CommentItem extends Component {
         this.props.voteComment(vote_comment).then(() => {
             this.props.checkVoteComment(this.props.comment.commentID);
             let comment = this.state.comment;
-            comment.votes += 1;
             this.setState({
                 isLoadingVote: false,
                 comment
@@ -215,7 +214,6 @@ export default class CommentItem extends Component {
         this.props.unVoteComment(unvote_comment).then(() => {
             this.props.checkVoteComment(this.props.comment.commentID);
             let comment = this.state.comment;
-            comment.unvotes += 1;
             this.setState({
                 isLoadingUnVote: false,
                 comment

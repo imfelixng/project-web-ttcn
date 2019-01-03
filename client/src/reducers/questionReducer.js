@@ -64,7 +64,8 @@ const question = (state = initialState, action) => {
                 ...state,
                 questionItem: {
                     ...state.questionItem,
-                    votes: state.questionItem.votes + 1
+                    votes: state.questionItem.votes + 1,
+                    unvotes: state.isUnVote ? state.questionItem.unvotes - 1 : state.questionItem.unvotes
                 }
             }
         }
@@ -75,7 +76,8 @@ const question = (state = initialState, action) => {
                 ...state,
                 questionItem: {
                     ...state.questionItem,
-                    votes: state.questionItem.votes - 1
+                    unvotes: state.questionItem.unvotes + 1,
+                    votes: state.isVote ? state.questionItem.votes - 1 : state.questionItem.votes
                 }
             }
         }
