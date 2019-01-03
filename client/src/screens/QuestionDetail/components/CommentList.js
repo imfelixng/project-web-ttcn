@@ -33,7 +33,7 @@ export default class CommentList extends Component {
     return (
       <React.Fragment>
         {
-            this.props.currentUserID &&
+            comments.length > 0 &&
             <div className="comment-section">
                 <div className="comment-sec">
                     <ul>

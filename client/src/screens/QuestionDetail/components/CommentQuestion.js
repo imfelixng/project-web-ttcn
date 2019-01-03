@@ -43,7 +43,6 @@ export default class CommentQuestion extends Component {
     }
 
     handleFileRemoved = (file) => {
-        console.log(file);
         let imgID = file.upload.uuid;
         this.setState({
             images: this.state.images.filter(img => img.upload.uuid !== imgID)

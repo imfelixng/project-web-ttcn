@@ -23,7 +23,6 @@ export const addNewQuestionRequest = (questionItem) => {
     return async (dispatch) => {
         console.log(questionItem);
         let result = await APIs.callAPI("questions", "POST", questionItem);
-        console.log(result);
         if (result != null) {
             dispatch(addNewQuestion(result.data));
         }
@@ -58,7 +57,6 @@ export const updateQuestionRequest = (question) => {
     return async (dispatch) => {
         console.log(question);
         let result = await APIs.callAPI("questions/" + question.questionID, "PATCH", question);
-        console.log(result);
         if (result != null) {
             dispatch(updateQuestion(result.data));
         }
@@ -75,7 +73,6 @@ export const updateQuestion = (question) => {
 export const updateViewQuestionRequest = (question) => {
     return async (dispatch) => {
         let result = await APIs.callAPI("questions/" + question.questionID + "/views", "PATCH", question);
-        console.log(result);
         if (result != null) {
             dispatch(updateViewQuestion(result.data));
         }
@@ -207,7 +204,6 @@ export const unVoteQuestion = (unvote) => {
 export const checkVoteQuestionRequest = (questionID) => {
     return async (dispatch) => {
         let result = await APIs.callAPI("questions/" + questionID + "/isvote_isunvote", "GET", null);
-        console.log(result);
         if (result != null) {
             dispatch(checkVoteQuestion(result.data));
         }
@@ -224,7 +220,6 @@ export const checkVoteQuestion = (check) => {
 export const deleteQuestionRequest = (questionID) => {
     return async (dispatch) => {
         let result = await APIs.callAPI("questions/" + questionID, "DELETE", null);
-        console.log(result);
         if (result != null) {
             dispatch(deleteQuestion(questionID));
         }
@@ -241,7 +236,6 @@ export const deleteQuestion = (questionID) => {
 export const getAllCommentsQuestionRequest = (questionID) => {
     return async (dispatch) => {
         let result = await APIs.callAPI("questions/" + questionID + "/comments", "GET");
-        console.log(result);
         if (result != null) {
             dispatch(getAllCommentsQuestion(result.data._items));
         }
@@ -277,7 +271,6 @@ export const voteCommentRequest = (vote_comment) => {
             questionID: vote_comment.questionID,
             voteID: vote_comment.voteID
         });
-        console.log(result);
         if (result != null) {
             dispatch(voteComment(result.data));
         }
@@ -297,7 +290,6 @@ export const unVoteCommentRequest = (unvote_comment) => {
             questionID: unvote_comment.questionID,
             unvoteID: unvote_comment.unvoteID
         });
-        console.log(result);
         if (result != null) {
             dispatch(unVoteComment(result.data));
         }
@@ -314,7 +306,6 @@ export const unVoteComment = (unvote_comment) => {
 export const checkVoteCommentRequest = (commentID) => {
     return async (dispatch) => {
         let result = await APIs.callAPI("comments/" + commentID + "/isvote_isunvote", "GET", null);
-        console.log(result);
         if (result != null) {
             dispatch(checkVoteComment(result.data));
 
@@ -332,7 +323,6 @@ export const checkVoteComment = (check) => {
 export const addNewReplyCommentRequest = (reply) => {
     return async (dispatch) => {
         let result = await APIs.callAPI("comments/" + reply.commentID + "/replies", "PATCH", reply);
-        console.log(result);
         if (result != null) {
             dispatch(addNewReplyComment(result.data));
         }
@@ -523,7 +513,6 @@ export const getTagFollowers = (tagID) => {
 export const getAllQuestionsTagRequest = (tagID) => {
     return async (dispatch) => {
         let result = await APIs.callAPI("tags/" + tagID + "/questions", "GET");
-        console.log(result);
         if (result != null) {
             dispatch(getAllQuestions(result.data._items));
             dispatch(getCountQuestionTag(result.data._items, tagID));
@@ -542,7 +531,6 @@ export const getCountQuestionTag = (questions, tagID) => {
 export const getAllQuestionsSearchRequest = (keyword) => {
     return async (dispatch) => {
         let result = await APIs.callAPI("search?search=" + keyword, "GET");
-        console.log(result);
         if (result != null) {
             dispatch(getAllQuestions(result.data._items));
         }
@@ -591,7 +579,7 @@ export const getUserRequest = (userID) => {
     return async (dispatch) => {
         if (userID) {
             let result = await APIs.callAPI("users/" + userID, "GET");
-            console.log(result);
+
             if (result != null) {
                 dispatch(getUser(result.data));
             }
@@ -611,7 +599,7 @@ export const getUserProfileRequest = (userID) => {
     return async (dispatch) => {
         if (userID) {
             let result = await APIs.callAPI("users/" + userID, "GET");
-            console.log(result);
+
             if (result != null) {
                 dispatch(getUserProfile(result.data));
             }

@@ -22,7 +22,6 @@ export default class EditModal extends Component {
     props.getTags();
     props.getQuestion(props.questionID).then(() => {
         if(props.question) {
-            console.log("ahha");
             this.setState({
                 contentState: props.question.content,
                 categoryID: props.question.categoryID,
@@ -117,7 +116,6 @@ export default class EditModal extends Component {
   }
 
   componentDidMount() {
-      console.log("aaa");
     this.props.getCategories();
     this.props.getTags();
     this.props.getQuestion(this.props.questionID).then(() => {

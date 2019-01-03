@@ -34,7 +34,6 @@ let tag = (state=initialState, action) => {
         }
 
         case types.GET_TOP_TAGS: {
-            console.log(action.tags);
             return {
                 ...state,
                 topTags: action.tags
