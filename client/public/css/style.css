@@ -6061,3 +6061,7 @@ a {
 .login-intro__img {
 	width: 48px;
 }
+
+.noti__user-avatar {
+	width: 50px;
+}

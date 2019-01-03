@@ -11,7 +11,7 @@ export default class NewfeedScreen extends Component {
     currentUser: null
   }
 
-  componentDidMount = () => {
+  componentDidMount() {
     this.props.getQuestions();
     this.props.getCategories();
     this.props.getTags();
@@ -40,6 +40,7 @@ export default class NewfeedScreen extends Component {
           questionSavedUsers = {this.props.questionSavedUsers}
           saveQuestion = {this.props.saveQuestion}
           unSaveQuestion = {this.props.unSaveQuestion}
+          getTags = {this.props.getTags}
         />
       });
     }

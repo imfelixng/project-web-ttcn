@@ -15,10 +15,10 @@ export default class NotificationScreen extends Component {
             <ul className="menu-list">
              <a className="list-item">
               <li className="list-notify">
-                <img src="/images/resources/s1.png" alt = "logo" />
+                <img className = "noti__user-avatar" src="/images/users/img_avatar_default.png" alt = "logo" />
                 <div className="sgt-text">
                 <div className="detail-notify">
-                <h4>Jessica William</h4>
+                <h4>An Nguyễn</h4>
                 <p className="comment-notify"> đã thích bài viết của bạn</p>
                 </div>
                 <span><i className="fa fa-heart"></i></span>
@@ -26,10 +26,10 @@ export default class NotificationScreen extends Component {
                 </div>
               </li>
               <li className="list-notify">
-                <img src="/images/resources/s1.png" alt = "logo" />
+                <img className = "noti__user-avatar" src="/images/users/img_avatar_default.png" alt = "logo" />
                 <div className="sgt-text">
                 <div className="detail-notify">
-                <h4>Jessica William</h4>
+                <h4>An Nguyễn</h4>
                 <p className="comment-notify"> đã thích bài viết của bạn</p>
                 </div>
                 <span><i className="fa fa-heart"></i></span>
@@ -37,10 +37,10 @@ export default class NotificationScreen extends Component {
                 </div>
               </li>
               <li className="list-notify">
-                <img src="/images/resources/s1.png" alt = "logo" />
+                <img className = "noti__user-avatar" src="/images/users/img_avatar_default.png" alt = "logo" />
                 <div className="sgt-text">
                 <div className="detail-notify">
-                <h4>Jessica William</h4>
+                <h4>An Nguyễn</h4>
                 <p className="comment-notify"> đã thích bài viết của bạn</p>
                 </div>
                 <span><i className="fa fa-heart"></i></span>
@@ -48,10 +48,10 @@ export default class NotificationScreen extends Component {
                 </div>
               </li>
               <li className="list-notify">
-                <img src="/images/resources/s1.png" alt = "logo" />
+                <img className = "noti__user-avatar" src="/images/users/img_avatar_default.png" alt = "logo" />
                 <div className="sgt-text">
                 <div className="detail-notify">
-                <h4>Jessica William</h4>
+                <h4>An Nguyễn</h4>
                 <p className="comment-notify"> đã thích bài viết của bạn</p>
                 </div>
                 <span><i className="fa fa-heart"></i></span>

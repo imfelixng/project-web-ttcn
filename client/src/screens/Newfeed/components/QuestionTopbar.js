@@ -54,7 +54,6 @@ export default class QuestionTopbar extends Component {
     }
 
     handleFileRemoved = (file) => {
-        console.log(file);
         let imgID = file.upload.uuid;
         this.setState({
             images: this.state.images.filter(img => img.upload.uuid !== imgID)
@@ -136,7 +135,7 @@ export default class QuestionTopbar extends Component {
                 categoryID: 'none',
                 tags: [],
             });
-
+            this.props.getTags();
         })
         .catch(err => console.log(err));
 
