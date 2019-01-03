@@ -32,15 +32,18 @@ export default class CommentList extends Component {
       const {comments} = this.props;
     return (
       <React.Fragment>
-        <div className="comment-section">
-            <div className="comment-sec">
-                <ul>
-                    {
-                        comments.length > 0 && this.showComment(comments)
-                    }
-                </ul>
+        {
+            this.props.currentUserID &&
+            <div className="comment-section">
+                <div className="comment-sec">
+                    <ul>
+                        {
+                            comments.length > 0 && this.showComment(comments)
+                        }
+                    </ul>
+                </div>
             </div>
-        </div>
+        }
       </React.Fragment>
     )
   }

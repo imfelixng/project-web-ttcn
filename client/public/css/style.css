@@ -6057,3 +6057,7 @@ a {
     font-size: 20px;
     margin-bottom: 20px;
 }
+
+.login-intro__img {
+	width: 48px;
+}

@@ -154,7 +154,7 @@ export default class LoginScreen extends Component {
                 <div className="col-lg-6">
                     <div className="cmp-info">
                     <div className="cm-logo">
-                        <img src="images/users/iconLogo.png" alt = "logo" />
+                        <img className = "login-intro__img" src="images/users/iconLogo.png" alt = "logo" />
                         <div className="title">Cộng đồng hỗ trợ học tập</div>
                         <p>Website hỗ trợ học tập trực tuyến là website tạo ra một góc thảo luận cho
                             các bạn học sinh, sinh viên nhằm có thể giúp các bạn học sinh, sinh viên có thể thảo
